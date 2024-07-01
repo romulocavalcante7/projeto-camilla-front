@@ -21,9 +21,9 @@ export default async function RootLayout({
 }) {
   const session = await auth();
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} overflow-hidden`}>
-        <NextTopLoader />
+    <html lang="pt-br" suppressHydrationWarning>
+      <body className={`${inter.className}`}>
+        <NextTopLoader showSpinner color="#B743D0" />
         <Providers session={session}>
           <Toaster />
           {children}

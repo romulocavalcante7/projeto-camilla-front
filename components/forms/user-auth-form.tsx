@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,25 +11,29 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Lock, User } from 'lucide-react';
 import * as z from 'zod';
-import GoogleSignInButton from '../github-auth-button';
+import AuthContext from '@/contexts/auth-context';
 
 const formSchema = z.object({
-  email: z.string().email({ message: 'Enter a valid email address' })
+  email: z.string().email({ message: 'Insira um email válido' }),
+  password: z.string().min(1, { message: 'Senha é obrigatória' })
 });
 
 type UserFormValue = z.infer<typeof formSchema>;
 
 export default function UserAuthForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
+
+  const { login } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const defaultValues = {
-    email: 'demo@gmail.com'
+    email: 'johndoe@example.com',
+    password: ''
   };
   const form = useForm<UserFormValue>({
     resolver: zodResolver(formSchema),
@@ -36,10 +41,14 @@ export default function UserAuthForm() {
   });
 
   const onSubmit = async (data: UserFormValue) => {
-    signIn('credentials', {
-      email: data.email,
-      callbackUrl: callbackUrl ?? '/dashboard'
-    });
+    setLoading(true);
+    try {
+      await login(data.email, data.password);
+    } catch (error) {
+      console.error('Login failed', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,43 +56,69 @@ export default function UserAuthForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-2"
+          className="flex w-full flex-col gap-5"
         >
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="Enter your email..."
-                    disabled={loading}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex flex-col gap-2">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      startIcon={User}
+                      className="rounded-lg border border-neutral-200 bg-zinc-100 py-6 backdrop-blur-[12.16px] disabled:cursor-not-allowed disabled:opacity-50"
+                      type="email"
+                      placeholder="Coloque seu email..."
+                      disabled={loading}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.email?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Senha</FormLabel>
+                  <FormControl>
+                    <Input
+                      startIcon={Lock}
+                      className="rounded-lg border border-neutral-200 bg-zinc-100 py-6 backdrop-blur-[12.16px] disabled:cursor-not-allowed disabled:opacity-50"
+                      type="password"
+                      placeholder="Coloque sua senha..."
+                      disabled={loading}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage>
+                    {form.formState.errors.password?.message}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+            <p className="cursor-pointer self-end text-sm font-semibold text-[#AA47B3]">
+              Esqueceu a senha?
+            </p>
+          </div>
 
-          <Button disabled={loading} className="ml-auto w-full" type="submit">
-            Continue With Email
+          {error && <div className="text-red-500">{error}</div>}
+
+          <Button
+            disabled={loading}
+            className="ml-auto w-full rounded-lg bg-gradient-to-r from-purple-600 to-red-500 py-6 text-lg font-semibold uppercase"
+            type="submit"
+          >
+            Entrar
           </Button>
         </form>
       </Form>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <GoogleSignInButton />
     </>
   );
 }

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import UserAuthForm from '@/components/forms/user-auth-form';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Authentication',
@@ -51,16 +52,26 @@ export default function AuthenticationPage() {
       </div>
       <div className="flex h-full items-center p-4 lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Create an account
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Enter your email below to create your account
-            </p>
+          <div className="flex flex-col items-center gap-5 text-center">
+            <Image
+              className="w-48"
+              src="/logo.png"
+              width={1200}
+              height={800}
+              quality={100}
+              alt="logo"
+            />
+            <div className="flex flex-col items-center gap-1">
+              <h1 className="text-2xl font-semibold tracking-tight">
+                Acesse o Portal Story Plus
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Entre com seu email e senha
+              </p>
+            </div>
           </div>
           <UserAuthForm />
-          <p className="px-8 text-center text-sm text-muted-foreground">
+          {/* <p className="px-8 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our{' '}
             <Link
               href="/terms"
@@ -76,7 +87,7 @@ export default function AuthenticationPage() {
               Privacy Policy
             </Link>
             .
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
