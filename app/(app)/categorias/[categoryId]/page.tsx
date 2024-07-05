@@ -1,13 +1,15 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { getSubnichesByCategoryId, Subniche } from '@/services/subnicheService';
 import Link from 'next/link';
 import { useScroll } from 'framer-motion';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import InfiniteScroll from '@/components/ui/InfiniteScroll';
+import Search from '@/components/search';
 
 interface SubnicheProps {
   params: {
@@ -20,63 +22,101 @@ const SubnicheList = ({ params }: SubnicheProps) => {
   const name = searchParams.get('name');
   const { categoryId } = params;
   const { scrollY } = useScroll();
+  const router = useRouter();
   const [subniches, setSubniches] = useState<Subniche[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [search, setSearch] = useState<string | undefined>(
+    searchParams.get('search') || undefined
+  );
 
-  const fetchSubniches = async (pageNum: number) => {
+  const fetchSubniches = async (page: number, search?: string) => {
     setLoading(true);
     try {
       const data = await getSubnichesByCategoryId(
         categoryId as string,
-        pageNum,
-        10
+        page,
+        10,
+        search
       );
       console.log('data', data);
-
+      //@ts-ignore
       setSubniches((prev) => {
         const newSubniches = data.subniches.map((subniche) => ({
           id: subniche.id,
           name: subniche.name,
           attachment: subniche.attachment
         }));
-        return pageNum === 1 ? newSubniches : [...prev, ...newSubniches];
+        return page === 1 ? newSubniches : [...prev, ...newSubniches];
       });
 
-      setHasMore(pageNum < data.totalPages);
+      setHasMore(page < data.totalPages);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchSubniches(page);
-  }, [page]);
+    fetchSubniches(page, search);
+  }, [page, search]);
 
   useEffect(() => {
     return scrollY.onChange((latest) => {});
   }, [scrollY]);
 
   const loadMore = () => {
-    if (!loading && hasMore) {
-      setPage((prevPage) => prevPage + 1);
+    if (!loading) {
+      setTimeout(() => {
+        setPage((prevPage) => prevPage + 1);
+      }, 1000);
     }
   };
 
-  if (loading && page === 1) return <div>Loading...</div>;
+  const handleSearch = (newSearch: string) => {
+    if (!newSearch) {
+      return setSearch(newSearch);
+    }
+    setSearch(newSearch);
+    setPage(1);
+    setSubniches([]);
+  };
+
+  if (loading && page === 1) return <></>;
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <div
-        className={cn(
-          'sticky left-0 top-0 z-10 flex w-full items-center gap-5 bg-white py-5 pr-10 transition-all'
-        )}
-      >
-        <Link href="/">
-          <ArrowLeft size={30} />
-        </Link>
-        <p className="text-2xl font-bold">{name}</p>
+      <div className="sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white py-5 transition-all">
+        <div className="flex flex-col gap-2">
+          <Link className="w-fit" href="/">
+            <Image
+              src="/logo-v2.png"
+              width={160}
+              height={40}
+              alt="icone logo"
+            />
+          </Link>
+          <Image
+            className="absolute right-0 top-5 cursor-pointer"
+            src="/icons/menu-home.svg"
+            width={40}
+            height={40}
+            alt="menu icone home"
+          />
+          <div className="flex items-center gap-5">
+            <ArrowLeft
+              className="cursor-pointer"
+              size={30}
+              onClick={() => router.back()}
+            />
+            <p className="text-2xl font-bold">{name}</p>
+          </div>
+        </div>
+        <Search
+          onSearch={handleSearch}
+          placeholder="Busque por um subnicho"
+          defaultValues={{ search }}
+        />
       </div>
       <ul className="flex h-full w-full flex-col items-center justify-center gap-5 overflow-y-auto">
         {subniches.map((subniche) => (
@@ -88,14 +128,16 @@ const SubnicheList = ({ params }: SubnicheProps) => {
             )}`}
           >
             <li className="relative flex h-40 w-full items-center justify-center rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white">
-              <Image
-                className="absolute left-0 top-0 h-full w-full rounded-2xl object-cover"
-                src={subniche?.attachment?.url}
-                width={1200}
-                height={800}
-                quality={100}
-                alt="image"
-              />
+              {subniche?.attachment?.url && (
+                <Image
+                  className="absolute left-0 top-0 h-full w-full rounded-2xl object-cover object-bottom"
+                  src={subniche?.attachment?.url}
+                  width={1200}
+                  height={800}
+                  quality={100}
+                  alt="image"
+                />
+              )}
               <p>{subniche.name}</p>
             </li>
           </Link>
@@ -108,6 +150,9 @@ const SubnicheList = ({ params }: SubnicheProps) => {
         >
           {hasMore && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
         </InfiniteScroll>
+        {!hasMore && subniches.length === 0 && (
+          <p className="text-xl text-gray-500">Não foi encontrado subnichos</p>
+        )}
       </ul>
     </div>
   );

@@ -2,16 +2,20 @@
 // https://next-auth.js.org/configuration/nextjs#middleware
 // https://nextjs.org/docs/app/building-your-application/routing/middleware
 
-import NextAuth from 'next-auth';
-import authConfig from './auth.config';
+import { NextRequest, NextResponse } from 'next/server';
 
-const { auth } = NextAuth(authConfig);
+// export default auth((req) => {
+//   // if (!req.auth) {
+//   //   const url = req.url.replace(req.nextUrl.pathname, '/');
+//   //   return Response.redirect(url);
+//   // }
+// });
 
-export default auth((req) => {
-  // if (!req.auth) {
-  //   const url = req.url.replace(req.nextUrl.pathname, '/');
-  //   return Response.redirect(url);
-  // }
-});
+export function middleware(request: NextRequest) {
+  // const allCookies = request.cookies.getAll();
+  // const token = request.cookies.get('accessToken');
+  // console.log(token);
 
+  return;
+}
 // export const config = { matcher: ['/dashboard/:path*'] };
