@@ -5,17 +5,23 @@ import Link from 'next/link';
 import Image from 'next/image';
 import InfiniteScroll from '@/components/ui/InfiniteScroll';
 import { Loader2 } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import Search from './search';
 
 const CategoryList = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
+  const searchParams = useSearchParams();
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [search, setSearch] = useState<string | undefined>(
+    searchParams.get('search') || undefined
+  );
 
-  const fetchCategories = async (pageNum: number) => {
+  const fetchCategories = async (pageNum: number, search?: string) => {
     setLoading(true);
     try {
-      const data = await getAllCategories(pageNum, 12);
+      const data = await getAllCategories(pageNum, 5, search);
       console.log('data', data);
 
       // Update categories list, avoiding duplicates
@@ -36,21 +42,34 @@ const CategoryList = () => {
   };
 
   useEffect(() => {
-    fetchCategories(page);
-  }, [page]);
+    fetchCategories(page, search);
+  }, [page, search]);
 
   const loadMore = () => {
     if (!loading) {
       setPage((prevPage) => prevPage + 1);
     }
   };
+  const handleSearch = (newSearch: string) => {
+    if (!newSearch) {
+      return setSearch(newSearch);
+    }
+    setSearch(newSearch);
+    setPage(1);
+    setCategories([]);
+  };
 
-  // Initial loading state
-  if (loading && page === 1) return <div>Loading...</div>;
+  if (loading) return <></>;
 
   return (
-    <div className="max-h-full w-full overflow-y-auto">
-      <div className="grid w-full grid-cols-1 gap-10 sm:grid-cols-2">
+    <div className="flex max-h-full w-full flex-col items-center gap-8 overflow-y-auto">
+      <Search
+        className="w-full"
+        onSearch={handleSearch}
+        placeholder="Busque uma categoria"
+        defaultValues={{ search }}
+      />
+      <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2">
         {categories.map((category) => (
           <Link
             key={category.id}
@@ -58,10 +77,10 @@ const CategoryList = () => {
               category.name
             )}`}
           >
-            <div className="relative flex h-48 cursor-pointer items-center justify-center rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white">
+            <div className="md:bg-fill relative flex h-52 cursor-pointer items-center justify-center rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white sm:h-64">
               {category?.attachment?.url && (
                 <Image
-                  className="absolute left-0 top-0 h-full w-full rounded-2xl object-cover"
+                  className="absolute left-0 top-0 h-full w-full rounded-2xl object-cover object-left"
                   src={category?.attachment?.url}
                   width={1200}
                   height={800}
@@ -82,6 +101,11 @@ const CategoryList = () => {
       >
         {loading && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
       </InfiniteScroll>
+      {!hasMore && categories.length === 0 && (
+        <p className="text-center text-xl text-gray-500">
+          Não foi encontrado nichos
+        </p>
+      )}
     </div>
   );
 };

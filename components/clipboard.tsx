@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { CopyIcon } from 'lucide-react';
 import { copyImageToClipboard } from 'copy-image-clipboard';
 import Image from 'next/image';
@@ -12,6 +12,18 @@ import {
   removeFavoriteSticker
 } from '@/services/favoriteSticker';
 import { cn } from '@/lib/utils';
+import {
+  Credenza,
+  CredenzaBody,
+  CredenzaClose,
+  CredenzaContent,
+  CredenzaDescription,
+  CredenzaFooter,
+  CredenzaHeader,
+  CredenzaTitle,
+  CredenzaTrigger
+} from '@/components/ui/credenza';
+import { Button } from './ui/button';
 
 interface StickerProps {
   stickers: Sticker[];
@@ -32,6 +44,7 @@ const Clipboard = ({ stickers, isFavorite }: StickerProps) => {
 
   useEffect(() => {
     const initialFavorites = stickers.reduce((acc, sticker) => {
+      //@ts-ignore
       acc[sticker.id] = sticker.isFavorite;
       return acc;
     }, {});
@@ -67,6 +80,7 @@ const Clipboard = ({ stickers, isFavorite }: StickerProps) => {
   const handleTransformDataTransferIntoURL = (
     dataTransfer: DataTransfer
   ): string => {
+    //@ts-ignore
     const [firstItem] = dataTransfer.items;
     const blob = firstItem.getAsFile();
     return URL.createObjectURL(blob);
@@ -224,15 +238,14 @@ const Clipboard = ({ stickers, isFavorite }: StickerProps) => {
             onClick={() => handleCopyImage(index)}
           >
             <CopyIcon className="w-10 sm:h-10" />
-            <span className="text-base font-normal sm:text-2xl">Copiar</span>
+            <span className="text-lg font-normal sm:text-2xl">Copiar</span>
           </div>
         </div>
       ))}
       <ConfirmationModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
         onConfirm={handleRemoveFavoriteSticker}
-        message="Tem certeza que deseja remover esta figurinha dos favoritos?"
+        setIsModalOpen={setIsModalOpen}
       />
       <ToastContainer />
     </div>
@@ -243,35 +256,42 @@ export default Clipboard;
 
 interface ConfirmationModalProps {
   isOpen: boolean;
-  onClose: () => void;
   onConfirm: () => void;
-  message: string;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   isOpen,
-  onClose,
   onConfirm,
-  message
+  setIsModalOpen
 }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="rounded-lg bg-white p-6 shadow-lg">
-        <p className="mb-4">{message}</p>
-        <div className="flex justify-end gap-2">
-          <button onClick={onClose} className="rounded bg-gray-300 px-4 py-2">
-            Cancelar
-          </button>
-          <button
+    <Credenza onOpenChange={setIsModalOpen} open={isOpen}>
+      <CredenzaContent>
+        <CredenzaHeader>
+          <CredenzaTitle className="text-xl">Deseja remover?</CredenzaTitle>
+        </CredenzaHeader>
+        <CredenzaBody className="mb-5 text-center text-lg">
+          Ao deletar essa figurinha será removida dos favoritos
+        </CredenzaBody>
+        <CredenzaFooter className="gap-5">
+          <Button
             onClick={onConfirm}
-            className="rounded bg-red-600 px-4 py-2 text-white"
+            variant="destructive"
+            size="lg"
+            className="text-xl"
           >
-            Confirmar
-          </button>
-        </div>
-      </div>
-    </div>
+            Deletar
+          </Button>
+          <CredenzaClose asChild>
+            <Button variant="outline" size="lg" className="text-xl">
+              Fechar
+            </Button>
+          </CredenzaClose>
+        </CredenzaFooter>
+      </CredenzaContent>
+    </Credenza>
   );
 };

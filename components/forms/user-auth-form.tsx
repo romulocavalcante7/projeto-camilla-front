@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSearchParams } from 'next/navigation';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Lock, User } from 'lucide-react';
@@ -26,8 +25,6 @@ const formSchema = z.object({
 type UserFormValue = z.infer<typeof formSchema>;
 
 export default function UserAuthForm() {
-  const searchParams = useSearchParams();
-
   const { login } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
