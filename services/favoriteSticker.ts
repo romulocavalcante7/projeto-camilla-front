@@ -25,10 +25,11 @@ const prefix = 'v1/favoriteSticker';
 
 export const getAllFavoriteStickers = async (
   page: number = 1,
-  pageSize: number = 10
+  pageSize: number = 10,
+  search?: string
 ): Promise<FavoriteStickerResponse> => {
   const response = await Api.get<FavoriteStickerResponse>(`${prefix}/all`, {
-    params: { page, pageSize }
+    params: { page, pageSize, search }
   });
   return response.data;
 };

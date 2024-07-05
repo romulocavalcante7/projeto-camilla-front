@@ -32,10 +32,12 @@ Api.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshToken = await getCookie('refreshToken');
+        console.log('refreshToken', refreshToken);
         const { data } = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/refresh-tokens`,
           { refreshToken: refreshToken?.value }
         );
+        console.log('data refresh token', data);
         document.cookie = `accessToken=${data.access.token}; path=/`;
         originalRequest.headers.Authorization = `Bearer ${data.access.token}`;
         return Api(originalRequest);

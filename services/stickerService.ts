@@ -2,7 +2,7 @@ import Api from './api';
 import { Attachment } from './types/entities';
 
 export interface Sticker {
-  isFavorite: any;
+  isFavorite: boolean;
   id: string;
   name: string;
   attachmentId: string;
@@ -46,6 +46,14 @@ export interface UpdateStickerPayload {
   }[];
 }
 
+export interface StickerResponse {
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  stickers: Sticker[];
+}
+
 const prefix = 'v1/stickers';
 
 export const getAllStickers = async (): Promise<Sticker[]> => {
@@ -78,8 +86,16 @@ export const deleteSticker = async (stickerId: string): Promise<void> => {
 };
 
 export const getStickersBySubnicheId = async (
-  subnicheId: string
-): Promise<Sticker[]> => {
-  const response = await Api.get<Sticker[]>(`${prefix}/subniche/${subnicheId}`);
+  subnicheId: string,
+  page: number = 1,
+  pageSize: number = 10,
+  search?: string
+): Promise<StickerResponse> => {
+  const response = await Api.get<StickerResponse>(
+    `${prefix}/subniche/${subnicheId}`,
+    {
+      params: { page, pageSize, search }
+    }
+  );
   return response.data;
 };

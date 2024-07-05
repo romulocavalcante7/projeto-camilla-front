@@ -66,10 +66,18 @@ export const deleteSubniche = async (subnicheId: string): Promise<void> => {
 export const getSubnichesByCategoryId = async (
   categoryId: string,
   page: number = 1,
-  pageSize: number = 10
+  pageSize: number = 10,
+  search?: string
 ): Promise<SubnicheByCategoryIdResponse> => {
   const response = await Api.get<SubnicheByCategoryIdResponse>(
-    `${prefix}/category/${categoryId}?page=${page}&pageSize=${pageSize}`
+    `${prefix}/category/${categoryId}`,
+    {
+      params: {
+        page,
+        pageSize,
+        search
+      }
+    }
   );
   return response.data;
 };
