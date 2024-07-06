@@ -47,7 +47,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
           name: subniche.name,
           attachment: subniche.attachment
         }));
-        return page === 1 ? newSubniches : [...prev, ...newSubniches];
+        return [...prev, ...newSubniches];
       });
 
       setHasMore(page < data.totalPages);
@@ -80,8 +80,6 @@ const SubnicheList = ({ params }: SubnicheProps) => {
     setPage(1);
     setSubniches([]);
   };
-
-  if (loading && page === 1) return <></>;
 
   return (
     <div className="flex w-full flex-col gap-2">

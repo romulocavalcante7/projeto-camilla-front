@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Loader2, ArrowLeft } from 'lucide-react';
 import {
   getAllFavoriteStickers,
@@ -30,7 +30,6 @@ const Favorites = () => {
     setLoading(true);
     try {
       const data = await getAllFavoriteStickers(page, 10, search);
-      console.log('data', data);
       setStickersFavorites((prev) => {
         const newFavorites = data.favorites.filter(
           (favorite) =>
@@ -70,8 +69,6 @@ const Favorites = () => {
       prev.filter((favorite) => favorite.sticker.id !== stickerId)
     );
   };
-
-  if (loading && page === 1) return <></>;
 
   return (
     <div className="flex w-full flex-col gap-3">

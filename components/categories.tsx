@@ -22,17 +22,13 @@ const CategoryList = () => {
     setLoading(true);
     try {
       const data = await getAllCategories(pageNum, 5, search);
-      console.log('data', data);
 
-      // Update categories list, avoiding duplicates
       setCategories((prevCategories) => {
         const newCategories = data.categories.filter(
           (category) => !prevCategories.some((prev) => prev.id === category.id)
         );
         return [...prevCategories, ...newCategories];
       });
-
-      // Check if there are more pages to load
       setHasMore(pageNum < data.totalPages);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -58,8 +54,6 @@ const CategoryList = () => {
     setPage(1);
     setCategories([]);
   };
-
-  if (loading) return <></>;
 
   return (
     <div className="flex max-h-full w-full flex-col items-center gap-8">
