@@ -192,7 +192,7 @@ const Clipboard = ({
           className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white"
         >
           <Image
-            className="scale-115"
+            className="scale-115 h-full w-full bg-cover"
             ref={(el) => (imageRefs.current[index] = el)}
             width={600}
             height={600}
