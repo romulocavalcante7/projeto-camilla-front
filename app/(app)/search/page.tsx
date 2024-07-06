@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 
-import Search from '@/components/search';
+// import Search from '@/components/search';
 import Link from 'next/link';
 
-const RecentStickerList = () => {
+const Page = () => {
   const router = useRouter();
   return (
     <div className="flex w-full flex-col gap-3">
@@ -34,18 +34,18 @@ const RecentStickerList = () => {
               size={30}
               onClick={() => router.back()}
             />
-            <p className="text-2xl font-bold">Recentes</p>
+            <p className="text-2xl font-bold">Pesquisa</p>
           </div>
         </div>
-        <Search
+        {/* <Search
           onSearch={() => {}}
           placeholder="Busque uma figurinha"
           defaultValues={{ search: '' }}
-        />
+        /> */}
       </div>
-      <p>Recentes ...</p>
+      <p>Pesquisa ...</p>
     </div>
   );
 };
 
-export default RecentStickerList;
+export default Page;

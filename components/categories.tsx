@@ -62,7 +62,7 @@ const CategoryList = () => {
   if (loading) return <></>;
 
   return (
-    <div className="flex max-h-full w-full flex-col items-center gap-8 overflow-y-auto">
+    <div className="flex max-h-full w-full flex-col items-center gap-8">
       <Search
         className="w-full"
         onSearch={handleSearch}

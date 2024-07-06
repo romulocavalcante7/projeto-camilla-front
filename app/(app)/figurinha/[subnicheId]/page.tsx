@@ -79,7 +79,7 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <div className="sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white py-5 transition-all">
+      <div className="sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white py-5 transition-all dark:bg-background">
         <div className="flex flex-col gap-2">
           <Link className="w-fit" href="/">
             <Image
