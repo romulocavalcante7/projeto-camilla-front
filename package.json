@@ -1,6 +1,6 @@
 {
-  "name": "nextshcdndashboardstarter",
-  "version": "0.1.0",
+  "name": "story-plus",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
