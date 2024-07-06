@@ -232,17 +232,17 @@ const Clipboard = ({
   return (
     <div
       className={cn(
-        'grid w-full grid-cols-2 gap-5 sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-10',
+        'grid h-full w-full grid-cols-2 gap-5 sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-10',
         stickers.length === 1 && 'w-fit self-start'
       )}
     >
       {stickers.map((sticker, index) => (
         <div
           key={index}
-          className="relative flex h-full min-w-full flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white"
+          className="relative flex aspect-square h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white"
         >
           <Image
-            className="scale-115 h-full w-full bg-cover"
+            className="scale-115 h-full w-full object-cover"
             ref={(el) => (imageRefs.current[index] = el)}
             width={600}
             height={600}
