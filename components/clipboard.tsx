@@ -35,7 +35,7 @@ const snapshotCreator = (imgElement: any) => {
       const context = canvas.getContext('2d');
       if (!context) throw new Error('Contexto do canvas não disponível');
 
-      const scale = window.devicePixelRatio;
+      const scale = window.devicePixelRatio * 2;
       canvas.width = imgElement.width * scale;
       canvas.height = imgElement.height * scale;
 
