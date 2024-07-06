@@ -2,7 +2,6 @@
 
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { CopyIcon } from 'lucide-react';
-import { copyImageToClipboard } from 'copy-image-clipboard';
 import Image from 'next/image';
 import { Sticker } from '@/services/stickerService';
 import { ToastContainer, toast } from 'react-toastify';
@@ -28,6 +27,56 @@ interface StickerProps {
   isFavorite?: boolean;
   onFavoriteRemoved?: (stickerId: string) => void;
 }
+
+const snapshotCreator = (imgElement: any) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      if (!context) throw new Error('Contexto do canvas não disponível');
+
+      const scale = window.devicePixelRatio;
+      canvas.width = imgElement.width * scale;
+      canvas.height = imgElement.height * scale;
+
+      context.scale(scale, scale);
+      context.drawImage(imgElement, 0, 0, imgElement.width, imgElement.height);
+
+      canvas.toBlob((blob) => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error('Erro ao criar blob da imagem'));
+        }
+      }, 'image/png');
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const copyImageToClipboard = async (
+  imgElement: any,
+  done: any,
+  failed: any
+) => {
+  try {
+    const makeImagePromise = async () => {
+      const blob = await snapshotCreator(imgElement);
+      //@ts-ignore
+      return new Blob([blob], { type: 'image/png' });
+    };
+
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        'image/png': makeImagePromise()
+      })
+    ]);
+    done();
+  } catch (err) {
+    failed(err);
+  }
+};
 
 const Clipboard = ({
   stickers,
@@ -55,28 +104,29 @@ const Clipboard = ({
   }, [stickers]);
 
   const handleCopyImage = async (index: number) => {
-    try {
-      setIsCopyingImage((prev) => ({ ...prev, [index]: true }));
-      const imageSrc = imageRefs.current[index]?.src;
-      if (imageSrc) {
-        await copyImageToClipboard(imageSrc);
-        toast.success('Figurinha copiada com sucesso!', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light'
-        });
-      }
-    } catch (e: any) {
-      if (e?.message) {
-        alert(e.message);
-      }
-    } finally {
-      setIsCopyingImage((prev) => ({ ...prev, [index]: false }));
+    setIsCopyingImage((prev) => ({ ...prev, [index]: true }));
+    const imgElement = imageRefs.current[index];
+    if (imgElement) {
+      copyImageToClipboard(
+        imgElement,
+        () => {
+          toast.success('Figurinha copiada com sucesso!', {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light'
+          });
+          setIsCopyingImage((prev) => ({ ...prev, [index]: false }));
+        },
+        (error: { message: string }) => {
+          alert('Erro ao copiar a imagem: ' + error.message);
+          setIsCopyingImage((prev) => ({ ...prev, [index]: false }));
+        }
+      );
     }
   };
 
