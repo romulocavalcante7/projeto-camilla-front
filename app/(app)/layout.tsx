@@ -8,7 +8,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <main className="px-5">
       <div className="mb-20 flex-1">
-        {children}
+        <Suspense fallback={<></>}>{children}</Suspense>
         <Navbar />
       </div>
     </main>
