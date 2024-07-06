@@ -13,6 +13,8 @@ import Clipboard from '@/components/clipboard';
 import InfiniteScroll from '@/components/ui/InfiniteScroll';
 import Search from '@/components/search';
 import Link from 'next/link';
+import { useScroll } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface SubnicheProps {
   params: {
@@ -30,6 +32,8 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [stickers, setStickers] = useState<Sticker[]>([]);
+  const { scrollY } = useScroll();
+  const [scrollAbove10, setScrollAbove10] = useState<boolean>(false);
   const [search, setSearch] = useState<string | undefined>(
     searchParams.get('search') || undefined
   );
@@ -60,6 +64,15 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
     fetchStickers(page, search);
   }, [page, search]);
 
+  useEffect(() => {
+    const unsubscribe = scrollY.onChange((latest) => {
+      setScrollAbove10(latest > 10);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [scrollY]);
+
   const loadMore = () => {
     if (!loading) {
       setTimeout(() => {
@@ -79,8 +92,13 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <div className="sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white py-5 transition-all dark:bg-background">
-        <div className="flex flex-col gap-2">
+      <div
+        className={cn(
+          'sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white px-5 py-5 transition-all dark:bg-transparent',
+          scrollAbove10 && 'dark:bg-[#1a101b]/80 dark:backdrop-blur-md'
+        )}
+      >
+        <div className="relative flex flex-col gap-2">
           <Link className="w-fit" href="/">
             <Image
               src="/logo-v2.png"
@@ -90,7 +108,7 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
             />
           </Link>
           <Image
-            className="absolute right-0 top-5 cursor-pointer"
+            className="absolute right-0 top-0 cursor-pointer"
             src="/icons/menu-home.svg"
             width={40}
             height={40}
@@ -111,7 +129,7 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
           defaultValues={{ search }}
         />
       </div>
-      <div className="max-h-full w-full overflow-y-auto">
+      <div className="max-h-full w-full overflow-y-auto px-5">
         <div className="flex w-full flex-col items-center gap-3">
           <Clipboard stickers={stickers} />
           <InfiniteScroll

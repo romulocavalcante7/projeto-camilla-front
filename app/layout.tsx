@@ -19,8 +19,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-br" suppressHydrationWarning>
-      <body className={`${inter.className}`}>
+    <html lang="pt-br" className="min-h-screen" suppressHydrationWarning>
+      <body className={`${inter.className} dark:bg-dark-gradient`}>
         <NextTopLoader showSpinner color="#B743D0" />
         <Providers>
           <Toaster />

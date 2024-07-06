@@ -6,8 +6,8 @@ import { Suspense } from 'react';
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   useAuthentication();
   return (
-    <main className="px-5">
-      <div className="mb-20 flex-1">
+    <main>
+      <div className="flex-1 pb-20">
         <Suspense fallback={<></>}>{children}</Suspense>
         <Navbar />
       </div>

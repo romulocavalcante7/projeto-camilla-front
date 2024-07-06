@@ -57,7 +57,7 @@ const CategoryList = () => {
   };
 
   return (
-    <div className="flex max-h-full w-full flex-col items-center gap-8">
+    <div className="flex max-h-full w-full flex-col items-center gap-8 px-5">
       <motion.div
         className="w-full"
         initial={{ opacity: 0, y: -10 }}
