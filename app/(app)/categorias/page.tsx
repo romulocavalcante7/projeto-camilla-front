@@ -5,6 +5,7 @@ import Image from 'next/image';
 import CategoryList from '@/components/categories';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { AnimatePresence } from 'framer-motion';
 
 const Category = () => {
   const router = useRouter();
@@ -38,7 +39,9 @@ const Category = () => {
           </div>
         </div>
       </div>
-      <CategoryList />
+      <AnimatePresence>
+        <CategoryList />
+      </AnimatePresence>
     </div>
   );
 };

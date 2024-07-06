@@ -2,11 +2,15 @@
 import CategoryList from '@/components/categories';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import { motion } from 'framer-motion';
 export default function page() {
   return (
     <div className="flex flex-col items-center justify-center gap-10">
-      <div className="flex flex-col items-center gap-5">
+      <motion.div
+        initial={{ opacity: 0, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col items-center gap-5"
+      >
         <div>
           <Image
             className="w-48"
@@ -100,7 +104,7 @@ export default function page() {
             <p className="font-semibold">Fontes</p>
           </Link>
         </div>
-      </div>
+      </motion.div>
       <CategoryList />
     </div>
   );

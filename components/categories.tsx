@@ -7,6 +7,7 @@ import InfiniteScroll from '@/components/ui/InfiniteScroll';
 import { Loader2 } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import Search from './search';
+import { motion } from 'framer-motion';
 
 const CategoryList = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -57,13 +58,24 @@ const CategoryList = () => {
 
   return (
     <div className="flex max-h-full w-full flex-col items-center gap-8">
-      <Search
+      <motion.div
         className="w-full"
-        onSearch={handleSearch}
-        placeholder="Busque uma categoria"
-        defaultValues={{ search }}
-      />
-      <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2">
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <Search
+          className="w-full"
+          onSearch={handleSearch}
+          placeholder="Busque uma categoria"
+          defaultValues={{ search }}
+        />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: -100 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2"
+      >
         {categories.map((category) => (
           <Link
             key={category.id}
@@ -86,7 +98,7 @@ const CategoryList = () => {
             </div>
           </Link>
         ))}
-      </div>
+      </motion.div>
       <InfiniteScroll
         hasMore={hasMore}
         isLoading={loading}
