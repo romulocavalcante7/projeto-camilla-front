@@ -21,6 +21,8 @@ import {
   CredenzaTitle
 } from '@/components/ui/credenza';
 import { Button } from './ui/button';
+import { fadeIn } from '@/lib/variants';
+import { motion } from 'framer-motion';
 
 interface StickerProps {
   stickers: Sticker[];
@@ -237,7 +239,11 @@ const Clipboard = ({
       )}
     >
       {stickers.map((sticker, index) => (
-        <div
+        <motion.div
+          initial={'hidden'}
+          whileInView={'show'}
+          viewport={{ once: true }}
+          variants={fadeIn('up', -0.3)}
           key={index}
           className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white"
           style={{ minHeight: '150px', minWidth: '150px' }}
@@ -300,7 +306,7 @@ const Clipboard = ({
             <CopyIcon className="w-10 sm:h-10" />
             <span className="text-lg font-normal sm:text-2xl">Copiar</span>
           </div>
-        </div>
+        </motion.div>
       ))}
       <ConfirmationModal
         isOpen={isModalOpen}
