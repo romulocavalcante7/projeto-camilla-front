@@ -239,12 +239,12 @@ const Clipboard = ({
       {stickers.map((sticker, index) => (
         <div
           key={index}
-          className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white"
+          className="relative flex w-full flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white"
           style={{ minHeight: '150px', minWidth: '150px' }}
         >
           <div className="relative w-full" style={{ paddingBottom: '100%' }}>
             <Image
-              className="scale-115 absolute left-0 top-0 h-full w-full object-cover"
+              className="scale-115 absolute left-0 top-0 w-full object-cover"
               ref={(el) => (imageRefs.current[index] = el)}
               width={600}
               height={600}
