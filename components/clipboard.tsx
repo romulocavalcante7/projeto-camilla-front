@@ -239,18 +239,21 @@ const Clipboard = ({
       {stickers.map((sticker, index) => (
         <div
           key={index}
-          className="relative flex aspect-square h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white"
+          className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white"
         >
-          <Image
-            className="scale-115 h-full w-full object-cover"
-            ref={(el) => (imageRefs.current[index] = el)}
-            width={600}
-            height={600}
-            quality={100}
-            src={sticker.attachment.url}
-            draggable={false}
-            alt={sticker.name}
-          />
+          <div className="relative w-full" style={{ paddingBottom: '100%' }}>
+            <Image
+              className="scale-115 absolute left-0 top-0 h-full w-full object-cover"
+              ref={(el) => (imageRefs.current[index] = el)}
+              width={600}
+              height={600}
+              quality={100}
+              src={sticker.attachment.url}
+              draggable={false}
+              alt={sticker.name}
+            />
+          </div>
+
           <div className="absolute right-4 top-4 cursor-pointer transition-all">
             {isFavorite ? (
               <svg
