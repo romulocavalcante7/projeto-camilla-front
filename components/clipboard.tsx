@@ -17,20 +17,23 @@ import {
   CredenzaBody,
   CredenzaClose,
   CredenzaContent,
-  CredenzaDescription,
   CredenzaFooter,
   CredenzaHeader,
-  CredenzaTitle,
-  CredenzaTrigger
+  CredenzaTitle
 } from '@/components/ui/credenza';
 import { Button } from './ui/button';
 
 interface StickerProps {
   stickers: Sticker[];
   isFavorite?: boolean;
+  onFavoriteRemoved: (stickerId: string) => void;
 }
 
-const Clipboard = ({ stickers, isFavorite }: StickerProps) => {
+const Clipboard = ({
+  stickers,
+  isFavorite,
+  onFavoriteRemoved
+}: StickerProps) => {
   const [copiedImageURL, setCopiedImageURL] = useState('');
   const [isCopyingImage, setIsCopyingImage] = useState<{
     [key: number]: boolean;
@@ -109,6 +112,7 @@ const Clipboard = ({ stickers, isFavorite }: StickerProps) => {
           ...prev,
           [stickerToRemove]: false
         }));
+        onFavoriteRemoved(stickerToRemove);
       } catch (e: any) {
         if (e?.message) {
           alert(e.message);

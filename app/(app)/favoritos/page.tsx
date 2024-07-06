@@ -65,6 +65,12 @@ const Favorites = () => {
     setStickersFavorites([]);
   };
 
+  const handleFavoriteRemoved = (stickerId: string) => {
+    setStickersFavorites((prev) =>
+      prev.filter((favorite) => favorite.sticker.id !== stickerId)
+    );
+  };
+
   if (loading && page === 1) return <></>;
 
   return (
@@ -106,6 +112,7 @@ const Favorites = () => {
           <Clipboard
             isFavorite={true}
             stickers={stickersFavorites.map((Favorites) => Favorites.sticker)}
+            onFavoriteRemoved={handleFavoriteRemoved}
           />
           <InfiniteScroll
             hasMore={hasMore}
