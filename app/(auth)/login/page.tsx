@@ -12,7 +12,13 @@ export const metadata: Metadata = {
 
 export default function AuthenticationPage() {
   return (
-    <div className="relative h-screen flex-col items-center justify-center lg:px-0">
+    <div
+      style={{
+        backgroundImage:
+          'radial-gradient(151.92% 127.02% at 15.32% 21.04%, rgba(179, 121, 223, 0.22) 0%, rgba(204, 88, 84, 0.02) 77.08%, rgba(179, 121, 223, 0.22) 100%)'
+      }}
+      className="relative h-screen flex-col items-center justify-center  backdrop-blur-[80px] lg:px-0"
+    >
       {/* <Link
         href="/examples/authentication"
         className={cn(
