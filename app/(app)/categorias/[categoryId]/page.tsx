@@ -7,7 +7,7 @@ import { useScroll } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
+// import { cn } from '@/lib/utils';
 import InfiniteScroll from '@/components/ui/InfiniteScroll';
 import Search from '@/components/search';
 
@@ -40,7 +40,6 @@ const SubnicheList = ({ params }: SubnicheProps) => {
         10,
         search
       );
-      console.log('data', data);
       //@ts-ignore
       setSubniches((prev) => {
         const newSubniches = data.subniches.map((subniche) => ({
@@ -86,7 +85,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white py-5 transition-all">
+      <div className="sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white py-5 transition-all dark:bg-background">
         <div className="flex flex-col gap-2">
           <Link className="w-fit" href="/">
             <Image
