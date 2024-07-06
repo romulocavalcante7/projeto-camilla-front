@@ -26,7 +26,7 @@ import { Button } from './ui/button';
 interface StickerProps {
   stickers: Sticker[];
   isFavorite?: boolean;
-  onFavoriteRemoved: (stickerId: string) => void;
+  onFavoriteRemoved?: (stickerId: string) => void;
 }
 
 const Clipboard = ({
@@ -112,7 +112,9 @@ const Clipboard = ({
           ...prev,
           [stickerToRemove]: false
         }));
-        onFavoriteRemoved(stickerToRemove);
+        if (onFavoriteRemoved) {
+          onFavoriteRemoved(stickerToRemove);
+        }
       } catch (e: any) {
         if (e?.message) {
           alert(e.message);
