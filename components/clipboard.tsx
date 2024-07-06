@@ -240,6 +240,7 @@ const Clipboard = ({
         <div
           key={index}
           className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white"
+          style={{ minHeight: '150px', minWidth: '150px' }}
         >
           <div className="relative w-full" style={{ paddingBottom: '100%' }}>
             <Image
