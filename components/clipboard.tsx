@@ -232,7 +232,7 @@ const Clipboard = ({
   return (
     <div
       className={cn(
-        'grid h-full w-full grid-cols-2 gap-5 sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-10',
+        'grid w-full grid-cols-2 gap-5 sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:gap-10',
         stickers.length === 1 && 'w-fit self-start'
       )}
     >
