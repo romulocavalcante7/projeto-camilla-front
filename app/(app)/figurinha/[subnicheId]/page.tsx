@@ -13,7 +13,7 @@ import Clipboard from '@/components/clipboard';
 import InfiniteScroll from '@/components/ui/InfiniteScroll';
 import Search from '@/components/search';
 import Link from 'next/link';
-import { useScroll } from 'framer-motion';
+import { useScroll, motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface SubnicheProps {
@@ -92,7 +92,14 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          type: 'tween',
+          duration: 0.4,
+          ease: [0.25, 0.25, 0.25, 0.75]
+        }}
         className={cn(
           'sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white px-5 py-5 transition-all dark:bg-transparent',
           scrollAbove10 && 'dark:bg-[#1a101b]/80 dark:backdrop-blur-md'
@@ -128,7 +135,7 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
           placeholder="Busque uma figurinha"
           defaultValues={{ search }}
         />
-      </div>
+      </motion.div>
       <div className="max-h-full w-full overflow-y-auto px-5">
         <div className="flex w-full flex-col items-center gap-3">
           <Clipboard stickers={stickers} />

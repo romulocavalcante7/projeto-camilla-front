@@ -15,7 +15,6 @@ import { useScroll } from 'framer-motion';
 import Search from '@/components/search';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { fadeIn } from '@/lib/variants';
 
 const Favorites = () => {
   const router = useRouter();

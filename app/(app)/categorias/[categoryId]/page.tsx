@@ -3,11 +3,10 @@
 import { useEffect, useState } from 'react';
 import { getSubnichesByCategoryId, Subniche } from '@/services/subnicheService';
 import Link from 'next/link';
-import { useScroll } from 'framer-motion';
+import { useScroll, motion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import Image from 'next/image';
-// import { cn } from '@/lib/utils';
 import InfiniteScroll from '@/components/ui/InfiniteScroll';
 import Search from '@/components/search';
 import { cn } from '@/lib/utils';
@@ -90,7 +89,14 @@ const SubnicheList = ({ params }: SubnicheProps) => {
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          type: 'tween',
+          duration: 0.4,
+          ease: [0.25, 0.25, 0.25, 0.75]
+        }}
         className={cn(
           'sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white px-5 py-5 transition-all dark:bg-transparent',
           scrollAbove10 && 'dark:bg-[#1a101b]/80 dark:backdrop-blur-md'
@@ -126,7 +132,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
           placeholder="Busque por um subnicho"
           defaultValues={{ search }}
         />
-      </div>
+      </motion.div>
       <ul className="flex h-full w-full flex-col items-center justify-center gap-5 overflow-y-auto px-5">
         {subniches.map((subniche) => (
           <Link

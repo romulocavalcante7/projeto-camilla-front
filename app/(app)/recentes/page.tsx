@@ -6,13 +6,33 @@ import Image from 'next/image';
 
 import Search from '@/components/search';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
+import { useScroll } from 'framer-motion';
 
 const RecentStickerList = () => {
   const router = useRouter();
+  const { scrollY } = useScroll();
+  const [scrollAbove10, setScrollAbove10] = useState<boolean>(false);
+
+  useEffect(() => {
+    const unsubscribe = scrollY.onChange((latest) => {
+      setScrollAbove10(latest > 10);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [scrollY]);
+
   return (
     <div className="flex w-full flex-col gap-3">
-      <div className="sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white py-5 transition-all dark:bg-background">
-        <div className="flex flex-col gap-2">
+      <div
+        className={cn(
+          'sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white px-5 py-5 transition-all dark:bg-transparent',
+          scrollAbove10 && 'dark:bg-[#1a101b]/80 dark:backdrop-blur-md'
+        )}
+      >
+        <div className="relative flex flex-col gap-2">
           <Link className="w-fit" href="/">
             <Image
               src="/logo-v2.png"
@@ -22,7 +42,7 @@ const RecentStickerList = () => {
             />
           </Link>
           <Image
-            className="absolute right-0 top-5 cursor-pointer"
+            className="absolute right-0 top-0 cursor-pointer"
             src="/icons/menu-home.svg"
             width={40}
             height={40}
@@ -43,7 +63,9 @@ const RecentStickerList = () => {
           defaultValues={{ search: '' }}
         />
       </div>
-      <p>Recentes ...</p>
+      <div className="px-5">
+        <p>Recentes ...</p>
+      </div>
     </div>
   );
 };
