@@ -7,7 +7,6 @@ const Api = axios.create({
 
 Api.interceptors.request.use(
   async (config) => {
-    console.log('INTECEPTOR');
     if (typeof window === 'undefined') {
       const token = await getCookie('accessToken');
       if (token) {
@@ -33,20 +32,21 @@ Api.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshToken = await getCookie('refreshToken');
-        console.log('refreshToken', refreshToken);
-        const { data } = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/refresh-tokens`,
-          { refreshToken: refreshToken?.value }
-        );
-        console.log('data refresh token', data);
-        document.cookie = `accessToken=${data.access.token}; path=/`;
-        originalRequest.headers.Authorization = `Bearer ${data.access.token}`;
-        return Api(originalRequest);
+        if (refreshToken) {
+          const { data } = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/refresh-tokens`,
+            { refreshToken: refreshToken?.value }
+          );
+          document.cookie = `accessToken=${data.access.token}; path=/`;
+          originalRequest.headers.Authorization = `Bearer ${data.access.token}`;
+          return Api(originalRequest);
+        }
       } catch (err) {
-        // handle logout here if refresh token fails
         document.cookie = 'accessToken=; Max-Age=0; path=/';
         document.cookie = 'refreshToken=; Max-Age=0; path=/';
-        window.location.href = '/login';
+        if (!window.location.href.includes('/login')) {
+          window.location.href = '/login';
+        }
         return Promise.reject(err);
       }
     }

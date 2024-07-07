@@ -1,21 +1,7 @@
-// Protecting routes with next-auth
-// https://next-auth.js.org/configuration/nextjs#middleware
-// https://nextjs.org/docs/app/building-your-application/routing/middleware
-
 import { NextRequest, NextResponse } from 'next/server';
 
-// export default auth((req) => {
-//   // if (!req.auth) {
-//   //   const url = req.url.replace(req.nextUrl.pathname, '/');
-//   //   return Response.redirect(url);
-//   // }
-// });
-
 export function middleware(request: NextRequest) {
-  // console.log('request', request);
-  // const allCookies = request.cookies.getAll();
   const token = request.cookies.get('accessToken');
-  // console.log(token?.value);
   if (!token?.value) {
     return NextResponse.redirect(new URL('/login', request.url));
   }

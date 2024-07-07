@@ -49,8 +49,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       const { tokens, user } = await loginService({ email, password });
-      setCookie('accessToken', tokens.access.token);
-      setCookie('refreshToken', tokens.refresh.token);
+      await setCookie('accessToken', tokens.access.token);
+      await setCookie('refreshToken', tokens.refresh.token);
+
       setUser(user);
       setIsAuthenticated(true);
       router.replace('/');
@@ -70,10 +71,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async () => {
     setIsLoading(true);
+    const refreshToken = await getCookie('refreshToken');
     try {
-      const token = await getCookie('refreshToken');
-      console.log('token', token);
-      await logoutService({ refreshToken: token?.value || '' });
+      await logoutService({ refreshToken: refreshToken?.value || '' });
       deleteCookie('accessToken');
       deleteCookie('refreshToken');
       setUser(null);
@@ -88,7 +88,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const accessToken = await getCookie('accessToken');
       if (accessToken) {
-        // Here you can add logic to fetch user data using accessToken
         setIsAuthenticated(true);
       }
     } finally {
