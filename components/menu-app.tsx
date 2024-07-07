@@ -25,7 +25,7 @@ export const Menu = () => {
     <Sheet>
       <SheetTrigger asChild>
         <Image
-          className="absolute right-5 top-5 cursor-pointer"
+          className="fixed right-5 top-5 z-10 cursor-pointer"
           src="/icons/menu-home.svg"
           width={40}
           height={40}

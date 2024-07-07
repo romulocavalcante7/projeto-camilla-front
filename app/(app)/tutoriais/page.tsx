@@ -33,7 +33,7 @@ const Page = () => {
           ease: [0.25, 0.25, 0.25, 0.75]
         }}
         className={cn(
-          'sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white px-5 py-5 transition-all dark:bg-transparent',
+          'sticky left-0 top-0 z-[2] flex w-full flex-col gap-5 bg-white px-5 py-5 transition-all dark:bg-transparent',
           scrollAbove10 && 'dark:bg-[#1a101b]/80 dark:backdrop-blur-md'
         )}
       >
