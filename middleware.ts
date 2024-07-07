@@ -12,10 +12,15 @@ import { NextRequest, NextResponse } from 'next/server';
 // });
 
 export function middleware(request: NextRequest) {
+  // console.log('request', request);
   // const allCookies = request.cookies.getAll();
-  // const token = request.cookies.get('accessToken');
-  // console.log(token);
-
+  const token = request.cookies.get('accessToken');
+  // console.log(token?.value);
+  if (!token?.value) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
   return;
 }
-// export const config = { matcher: ['/dashboard/:path*'] };
+export const config = {
+  matcher: ['/', '/favoritos', '/categorias']
+};

@@ -114,13 +114,6 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
               alt="icone logo"
             />
           </Link>
-          <Image
-            className="absolute right-0 top-0 cursor-pointer"
-            src="/icons/menu-home.svg"
-            width={40}
-            height={40}
-            alt="menu icone home"
-          />
           <div className="flex items-center gap-5">
             <ArrowLeft
               className="cursor-pointer"

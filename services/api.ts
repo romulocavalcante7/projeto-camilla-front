@@ -7,6 +7,7 @@ const Api = axios.create({
 
 Api.interceptors.request.use(
   async (config) => {
+    console.log('INTECEPTOR');
     if (typeof window === 'undefined') {
       const token = await getCookie('accessToken');
       if (token) {

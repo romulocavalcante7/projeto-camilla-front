@@ -24,13 +24,6 @@ export default function page() {
             height={120}
             alt="logo versão 2"
           />
-          <Image
-            className="absolute right-5 top-5 cursor-pointer"
-            src="/icons/menu-home.svg"
-            width={40}
-            height={40}
-            alt="menu icone home"
-          />
         </div>
         <div className="flex w-full max-w-[380px] items-center gap-6 overflow-x-auto px-5 sm:max-w-full [&::-webkit-scrollbar]:hidden">
           <Link href="/categorias" className="flex flex-col items-center gap-1">

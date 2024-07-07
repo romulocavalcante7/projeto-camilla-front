@@ -51,7 +51,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { tokens, user } = await loginService({ email, password });
       setCookie('accessToken', tokens.access.token);
       setCookie('refreshToken', tokens.refresh.token);
-      console.log(getCookie('accessToken'));
       setUser(user);
       setIsAuthenticated(true);
       router.replace('/');
@@ -72,7 +71,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     setIsLoading(true);
     try {
-      await logoutService({ refreshToken: await getCookie('refreshToken') });
+      const token = await getCookie('refreshToken');
+      console.log('token', token);
+      await logoutService({ refreshToken: token?.value || '' });
       deleteCookie('accessToken');
       deleteCookie('refreshToken');
       setUser(null);
