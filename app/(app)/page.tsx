@@ -9,6 +9,11 @@ export default function page() {
       <motion.div
         initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{
+          type: 'tween',
+          duration: 1.2,
+          ease: [0.25, 0.25, 0.25, 0.75]
+        }}
         className="flex flex-col items-center gap-5"
       >
         <div>
