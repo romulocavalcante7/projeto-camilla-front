@@ -5,7 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useScroll } from 'framer-motion';
+import { useScroll, motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 const Page = () => {
@@ -24,7 +24,14 @@ const Page = () => {
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          type: 'tween',
+          duration: 0.4,
+          ease: [0.25, 0.25, 0.25, 0.75]
+        }}
         className={cn(
           'sticky left-0 top-0 z-10 flex w-full flex-col gap-5 bg-white px-5 py-5 transition-all dark:bg-transparent',
           scrollAbove10 && 'dark:bg-[#1a101b]/80 dark:backdrop-blur-md'
@@ -55,7 +62,7 @@ const Page = () => {
             <p className="text-2xl font-bold">Tutorias</p>
           </div>
         </div>
-      </div>
+      </motion.div>
       <div className="px-5">
         <p>Tutoriais ...</p>
       </div>
