@@ -10,7 +10,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Story Plus',
-  description: 'Story Plus'
+  description: 'Story Plus',
+  manifest: '/manifest.webmanifest'
 };
 
 export default async function RootLayout({
