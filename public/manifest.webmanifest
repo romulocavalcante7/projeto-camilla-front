@@ -1,11 +1,11 @@
 {
   "theme_color": "#B743D0",
-  "background_color": "#B743D0",
+  "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
   "name": "Story Plus",
-  "short_name": "storyplus",
+  "short_name": "Story Plus",
   "icons": [
     {
       "src": "/icon-192x192.png",
