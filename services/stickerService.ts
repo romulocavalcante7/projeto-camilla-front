@@ -56,8 +56,14 @@ export interface StickerResponse {
 
 const prefix = 'v1/stickers';
 
-export const getAllStickers = async (): Promise<Sticker[]> => {
-  const response = await Api.get<Sticker[]>(`${prefix}/all`);
+export const getAllStickers = async (
+  page: number = 1,
+  pageSize: number = 10,
+  search?: string
+): Promise<StickerResponse> => {
+  const response = await Api.get<StickerResponse>(`${prefix}/all`, {
+    params: { page, pageSize, search }
+  });
   return response.data;
 };
 

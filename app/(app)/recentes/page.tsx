@@ -1,17 +1,31 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 import Image from 'next/image';
-
 import Search from '@/components/search';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { useScroll, motion } from 'framer-motion';
+import {
+  getAllStickers,
+  Sticker,
+  StickerResponse
+} from '@/services/stickerService';
+import Clipboard from '@/components/clipboard';
+import InfiniteScroll from '@/components/ui/InfiniteScroll';
 
 const RecentStickerList = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [stickers, setStickers] = useState<Sticker[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [search, setSearch] = useState<string | undefined>(
+    searchParams.get('search') || undefined
+  );
   const { scrollY } = useScroll();
   const [scrollAbove10, setScrollAbove10] = useState<boolean>(false);
 
@@ -23,6 +37,44 @@ const RecentStickerList = () => {
       unsubscribe();
     };
   }, [scrollY]);
+
+  useEffect(() => {
+    fetchStickers(page, search);
+  }, [page, search]);
+
+  const fetchStickers = async (page: number, search?: string) => {
+    setLoading(true);
+    try {
+      const data: StickerResponse = await getAllStickers(page, 10, search);
+      setStickers((prev) => {
+        const newStickers = data.stickers.filter(
+          (sticker) =>
+            !prev.some((prevSticker) => prevSticker.id === sticker.id)
+        );
+        return [...prev, ...newStickers];
+      });
+      setHasMore(page < data.totalPages);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadMore = () => {
+    if (!loading) {
+      setTimeout(() => {
+        setPage((prevPage) => prevPage + 1);
+      }, 1000);
+    }
+  };
+
+  const handleSearch = (newSearch: string) => {
+    if (!newSearch) {
+      return setSearch(newSearch);
+    }
+    setSearch(newSearch);
+    setPage(1);
+    setStickers([]);
+  };
 
   return (
     <div className="flex w-full flex-col gap-3">
@@ -58,13 +110,28 @@ const RecentStickerList = () => {
           </div>
         </div>
         <Search
-          onSearch={() => {}}
+          onSearch={handleSearch}
           placeholder="Busque uma figurinha"
-          defaultValues={{ search: '' }}
+          defaultValues={{ search }}
         />
       </motion.div>
-      <div className="px-5">
-        <p>Recentes ...</p>
+      <div className="max-h-full w-full px-5">
+        <div className="flex w-full flex-col items-center gap-3">
+          <Clipboard stickers={stickers} />
+          <InfiniteScroll
+            hasMore={hasMore}
+            isLoading={loading}
+            next={loadMore}
+            threshold={1}
+          >
+            {hasMore && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
+          </InfiniteScroll>
+          {!hasMore && stickers.length === 0 && (
+            <p className="text-xl text-gray-500">
+              Não possui figurinhas nesse subnicho
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
