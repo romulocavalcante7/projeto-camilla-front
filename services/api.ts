@@ -7,18 +7,13 @@ const Api = axios.create({
 
 Api.interceptors.request.use(
   async (config) => {
-    if (typeof window === 'undefined') {
-      const token = await getCookie('accessToken');
+    const tokenCookie = await getCookie('accessToken');
+    if (tokenCookie) {
+      const [token] = tokenCookie?.value.split('|');
       if (token) {
-        config.headers.Authorization = `Bearer ${token.value}`;
+        config.headers.Authorization = `Bearer ${token}`;
       }
-    } else {
-      const token = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('accessToken='));
-      if (token) config.headers.Authorization = `Bearer ${token.split('=')[1]}`;
     }
-
     return config;
   },
   (error) => Promise.reject(error)
@@ -37,7 +32,12 @@ Api.interceptors.response.use(
             `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/refresh-tokens`,
             { refreshToken: refreshToken?.value }
           );
-          document.cookie = `accessToken=${data.access.token}; path=/`;
+
+          const newExpiry = data.access.expires;
+          const newTokenCookie = `${data.access.token}|${newExpiry}`;
+
+          document.cookie = `accessToken=${newTokenCookie};`;
+          document.cookie = `refreshToken=${data.refresh.token};`;
           originalRequest.headers.Authorization = `Bearer ${data.access.token}`;
           return Api(originalRequest);
         }

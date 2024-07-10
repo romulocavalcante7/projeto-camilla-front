@@ -49,9 +49,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       const { tokens, user } = await loginService({ email, password });
-      await setCookie('accessToken', tokens.access.token);
+      const tokenExpiry = tokens.access.expires;
+      const authToken = `${tokens.access.token}|${tokenExpiry}`;
+      await setCookie('accessToken', authToken);
       await setCookie('refreshToken', tokens.refresh.token);
-
+      console.log('token', await getCookie('accessToken'));
       setUser(user);
       setIsAuthenticated(true);
       router.replace('/');
