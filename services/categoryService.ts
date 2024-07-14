@@ -36,6 +36,7 @@ export const getAllCategories = async (
 
 export const createCategory = async (payload: {
   name: string;
+  attachmentId: string;
 }): Promise<Category> => {
   const response = await Api.post<Category>(`${prefix}/create`, payload);
   return response.data;
@@ -50,7 +51,7 @@ export const getCategoryById = async (
 
 export const updateCategory = async (
   categoryId: string,
-  payload: { name: string }
+  payload: { name: string; attachmentId?: string }
 ): Promise<Category> => {
   const response = await Api.patch<Category>(
     `${prefix}/${categoryId}`,

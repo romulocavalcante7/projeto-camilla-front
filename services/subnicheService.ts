@@ -1,22 +1,34 @@
 import Api from './api';
+import { Category } from './categoryService';
 import { Attachment } from './types/entities';
 
 export interface Subniche {
   id: string;
   name: string;
   categoryId: string;
+  category: Category;
   createdAt: string;
   attachment: Attachment;
+}
+
+export interface SubnichesAllResponse {
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  subniches: Subniche[];
 }
 
 export interface CreateSubnichePayload {
   name: string;
   categoryId: string;
+  attachmentId?: string;
 }
 
 export interface UpdateSubnichePayload {
   name?: string;
   categoryId?: string;
+  attachmentId?: string;
 }
 
 export interface SubnicheByCategoryIdResponse {
@@ -29,8 +41,18 @@ export interface SubnicheByCategoryIdResponse {
 
 const prefix = 'v1/subniches';
 
-export const getAllSubniches = async (): Promise<Subniche[]> => {
-  const response = await Api.get<Subniche[]>(`${prefix}/all`);
+export const getAllSubniches = async (
+  page: number = 1,
+  pageSize: number = 10,
+  search?: string
+): Promise<SubnichesAllResponse> => {
+  const response = await Api.get<SubnichesAllResponse>(`${prefix}/all`, {
+    params: {
+      page,
+      pageSize,
+      search
+    }
+  });
   return response.data;
 };
 

@@ -2,7 +2,10 @@ import axios from 'axios';
 import { getCookie } from '../utils/nextUtils';
 
 const Api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 Api.interceptors.request.use(
@@ -13,6 +16,9 @@ Api.interceptors.request.use(
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
+    }
+    if (config.data instanceof FormData) {
+      config.headers['Content-Type'] = 'multipart/form-data';
     }
     return config;
   },
