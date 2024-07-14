@@ -1,5 +1,6 @@
 import BreadCrumb from '@/components/breadcrumb';
 import { SubnichoClient } from '@/components/tables/subnicho-tables/client';
+import { Suspense } from 'react';
 
 const breadcrumbItems = [{ title: 'Subnicho', link: '/dashboard/subnicho' }];
 export default function page() {
@@ -7,7 +8,9 @@ export default function page() {
     <>
       <div className="flex-1 space-y-4  p-4 pt-6 md:p-8">
         <BreadCrumb items={breadcrumbItems} />
-        <SubnichoClient />
+        <Suspense>
+          <SubnichoClient />
+        </Suspense>
       </div>
     </>
   );
