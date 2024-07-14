@@ -13,6 +13,7 @@ const CategoryList = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState(0);
   const searchParams = useSearchParams();
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [search, setSearch] = useState<string | undefined>(
@@ -22,7 +23,7 @@ const CategoryList = () => {
   const fetchCategories = async (pageNum: number, search?: string) => {
     setLoading(true);
     try {
-      const data = await getAllCategories(pageNum, 5, search);
+      const data = await getAllCategories(pageNum, 10, search);
 
       setCategories((prevCategories) => {
         const newCategories = data.categories.filter(
@@ -30,6 +31,7 @@ const CategoryList = () => {
         );
         return [...prevCategories, ...newCategories];
       });
+      setTotalPage(data.totalPages);
       setHasMore(pageNum < data.totalPages);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -43,13 +45,19 @@ const CategoryList = () => {
   }, [page, search]);
 
   const loadMore = () => {
-    if (!loading) {
-      setPage((prevPage) => prevPage + 1);
+    if (!loading && page < totalPage) {
+      setTimeout(() => {
+        setPage((prevPage) => prevPage + 1);
+      }, 1000);
     }
   };
+
   const handleSearch = (newSearch: string) => {
     if (!newSearch) {
-      return setSearch(newSearch);
+      setSearch(newSearch);
+      setPage(1);
+      setCategories([]);
+      return;
     }
     setSearch(newSearch);
     setPage(1);
@@ -100,12 +108,14 @@ const CategoryList = () => {
         ))}
       </motion.div>
       <InfiniteScroll
+        page={page}
+        totalPage={totalPage}
         hasMore={hasMore}
         isLoading={loading}
         next={loadMore}
         threshold={1}
       >
-        {loading && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
+        {hasMore && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
       </InfiniteScroll>
       {!hasMore && categories.length === 0 && (
         <p className="text-center text-xl text-gray-500">
