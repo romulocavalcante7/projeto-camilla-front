@@ -26,6 +26,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
   const [subniches, setSubniches] = useState<Subniche[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [scrollAbove10, setScrollAbove10] = useState<boolean>(false);
   const [search, setSearch] = useState<string | undefined>(
@@ -50,7 +51,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
         }));
         return [...prev, ...newSubniches];
       });
-
+      setTotalPage(data.totalPages);
       setHasMore(page < data.totalPages);
     } finally {
       setLoading(false);
@@ -71,7 +72,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
   }, [scrollY]);
 
   const loadMore = () => {
-    if (!loading) {
+    if (!loading && page < totalPage) {
       setTimeout(() => {
         setPage((prevPage) => prevPage + 1);
       }, 1000);
@@ -151,6 +152,8 @@ const SubnicheList = ({ params }: SubnicheProps) => {
           </Link>
         ))}
         <InfiniteScroll
+          page={page}
+          totalPage={totalPage}
           hasMore={hasMore}
           isLoading={loading}
           next={loadMore}

@@ -20,6 +20,7 @@ const Favorites = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [stickersFavorites, setStickersFavorites] = useState<FavoriteSticker[]>(
@@ -42,6 +43,7 @@ const Favorites = () => {
         );
         return [...prev, ...newFavorites];
       });
+      setTotalPage(data.totalPages);
       setHasMore(page < data.totalPages);
     } finally {
       setLoading(false);
@@ -62,7 +64,7 @@ const Favorites = () => {
   }, [page, search]);
 
   const loadMore = () => {
-    if (!loading) {
+    if (!loading && page < totalPage) {
       setTimeout(() => {
         setPage((prevPage) => prevPage + 1);
       }, 1000);
@@ -136,6 +138,8 @@ const Favorites = () => {
             onFavoriteRemoved={handleFavoriteRemoved}
           />
           <InfiniteScroll
+            page={page}
+            totalPage={totalPage}
             hasMore={hasMore}
             isLoading={loading}
             next={loadMore}

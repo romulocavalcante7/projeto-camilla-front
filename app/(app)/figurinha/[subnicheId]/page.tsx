@@ -29,6 +29,7 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
   const { subnicheId } = params;
 
   const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [stickers, setStickers] = useState<Sticker[]>([]);
@@ -54,6 +55,7 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
         );
         return [...prev, ...newStickers];
       });
+      setTotalPage(data.totalPages);
       setHasMore(page < data.totalPages);
     } finally {
       setLoading(false);
@@ -74,13 +76,12 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
   }, [scrollY]);
 
   const loadMore = () => {
-    if (!loading) {
+    if (!loading && page < totalPage) {
       setTimeout(() => {
         setPage((prevPage) => prevPage + 1);
       }, 1000);
     }
   };
-
   const handleSearch = (newSearch: string) => {
     if (!newSearch) {
       return setSearch(newSearch);
@@ -133,6 +134,8 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
         <div className="flex w-full flex-col items-center gap-3">
           <Clipboard stickers={stickers} />
           <InfiniteScroll
+            page={page}
+            totalPage={totalPage}
             hasMore={hasMore}
             isLoading={loading}
             next={loadMore}

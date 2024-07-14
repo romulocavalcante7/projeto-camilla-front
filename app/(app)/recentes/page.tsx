@@ -22,6 +22,7 @@ const RecentStickerList = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [stickers, setStickers] = useState<Sticker[]>([]);
   const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [search, setSearch] = useState<string | undefined>(
     searchParams.get('search') || undefined
@@ -53,6 +54,7 @@ const RecentStickerList = () => {
         );
         return [...prev, ...newStickers];
       });
+      setTotalPage(data.totalPages);
       setHasMore(page < data.totalPages);
     } finally {
       setLoading(false);
@@ -60,7 +62,7 @@ const RecentStickerList = () => {
   };
 
   const loadMore = () => {
-    if (!loading) {
+    if (!loading && page < totalPage) {
       setTimeout(() => {
         setPage((prevPage) => prevPage + 1);
       }, 1000);
@@ -119,6 +121,8 @@ const RecentStickerList = () => {
         <div className="flex w-full flex-col items-center gap-3">
           <Clipboard stickers={stickers} />
           <InfiniteScroll
+            page={page}
+            totalPage={totalPage}
             hasMore={hasMore}
             isLoading={loading}
             next={loadMore}

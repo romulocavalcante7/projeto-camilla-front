@@ -16,7 +16,7 @@ export function MobileSidebar({ className }: SidebarProps) {
   return (
     <>
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
+        <SheetTrigger className="cursor-pointer" asChild>
           <MenuIcon />
         </SheetTrigger>
         <SheetContent side="left" className="!px-0">
