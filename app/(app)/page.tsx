@@ -2,6 +2,7 @@
 import CategoryList from '@/components/categories';
 import Image from 'next/image';
 import Link from 'next/link';
+import Logo from '@/app/assets/logo.png';
 import { motion } from 'framer-motion';
 export default function page() {
   return (
@@ -19,7 +20,7 @@ export default function page() {
         <div>
           <Image
             className="w-48"
-            src="/logo.png"
+            src={Logo}
             width={200}
             height={120}
             alt="logo versão 2"

@@ -4,7 +4,7 @@ import UserAuthForm from '@/components/forms/user-auth-form';
 // import { buttonVariants } from '@/components/ui/button';
 // import { cn } from '@/lib/utils';
 import Image from 'next/image';
-
+import Logo from '@/app/assets/logo.png';
 export const metadata: Metadata = {
   title: 'Authentication',
   description: 'Authentication forms built using the components.'
@@ -55,7 +55,7 @@ export default function AuthenticationPage() {
           <div className="flex flex-col items-center gap-5 text-center">
             <Image
               className="w-48"
-              src="/logo.png"
+              src={Logo}
               width={1200}
               height={800}
               quality={100}
