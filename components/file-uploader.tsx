@@ -227,11 +227,11 @@ export function FileUploader(props: FileUploaderProps) {
                     aria-hidden="true"
                   />
                 </div>
-                <div className="space-y-px">
-                  <p className="font-medium text-muted-foreground">
+                <div className="flex flex-col items-center gap-3 space-y-px text-center">
+                  <p className="max-w-64 text-center font-medium text-muted-foreground sm:max-w-full">
                     Arraste os arquivos, ou clique para selecionar
                   </p>
-                  <p className="text-sm text-muted-foreground/70">
+                  <p className="max-w-64 text-center text-sm text-muted-foreground/70 sm:max-w-full">
                     Você pode fazer upload de
                     {maxFiles > 1
                       ? ` ${maxFiles === Infinity ? 'multiple' : maxFiles}

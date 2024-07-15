@@ -262,7 +262,11 @@ export const NichosForm = () => {
               }}
             />
           </div>
-          <Button disabled={loading} className="ml-auto" type="submit">
+          <Button
+            disabled={loading}
+            className="ml-auto w-full text-lg sm:w-fit sm:px-10 dark:text-black"
+            type="submit"
+          >
             {action}
           </Button>
         </form>

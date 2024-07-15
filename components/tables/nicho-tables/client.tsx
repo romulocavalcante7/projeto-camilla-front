@@ -45,10 +45,10 @@ export const NichoClient = () => {
           description="Gerencie os nichos"
         />
         <Button
-          className="text-xs md:text-sm"
+          className="text-lg dark:text-black"
           onClick={() => router.push(`/dashboard/nichos/new`)}
         >
-          <Plus className="mr-2 h-4 w-4" /> Criar
+          <Plus className="mr-2 h-6 w-6" /> Criar
         </Button>
       </div>
       <Separator />
