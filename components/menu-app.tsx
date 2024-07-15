@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/sheet';
 import AuthContext from '@/contexts/auth-context';
 import { cn } from '@/lib/utils';
-import { LogOut } from 'lucide-react';
+import { LogOut, User2 } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useContext } from 'react';
@@ -16,7 +16,7 @@ import { useContext } from 'react';
 export const Menu = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
 
   const handleLogout = async () => {
     logout();
@@ -40,7 +40,18 @@ export const Menu = () => {
       <SheetContent>
         <SheetHeader>
           <SheetTitle className="text-2xl">Story Plus</SheetTitle>
-          <div className="flex w-full pt-5">
+          <div className="flex w-full flex-col gap-5 pt-5">
+            {user?.role === 'ADMIN' && (
+              <Button
+                onClick={() => router.push('/dashboard')}
+                className="w-fit gap-5 text-xl"
+                variant="outline"
+              >
+                <User2 />
+                Administrador
+              </Button>
+            )}
+
             <Button
               onClick={handleLogout}
               className="w-fit gap-5 text-xl"

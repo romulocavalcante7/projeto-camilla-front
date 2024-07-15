@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const authToken = `${tokens.access.token}|${tokenExpiry}`;
       await setCookie('accessToken', authToken);
       await setCookie('refreshToken', tokens.refresh.token);
+      await setCookie('userData', JSON.stringify(user));
       setUser(user);
       setIsAuthenticated(true);
       router.replace('/');
@@ -69,7 +70,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(false);
     }
   };
-
   const logout = async () => {
     setIsLoading(true);
     const refreshToken = await getCookie('refreshToken');
@@ -77,6 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       await logoutService({ refreshToken: refreshToken?.value || '' });
       deleteCookie('accessToken');
       deleteCookie('refreshToken');
+      deleteCookie('userData');
       setUser(null);
       setIsAuthenticated(false);
     } finally {
@@ -88,8 +89,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       const accessToken = await getCookie('accessToken');
+      const userData = await getCookie('userData');
       if (accessToken) {
         setIsAuthenticated(true);
+        if (userData) {
+          const parsedUserData = JSON.parse(userData.value);
+          setUser(parsedUserData);
+        }
       }
     } finally {
       setIsLoading(false);
