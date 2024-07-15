@@ -24,7 +24,6 @@ export const SubnichoClient = () => {
     setLoading(true);
     try {
       const data = await getAllSubniches(pageNum, 100, search);
-      console.log('data', data);
       setSubniches(data.subniches);
       setHasMore(pageNum < data.totalPages);
     } catch (error) {

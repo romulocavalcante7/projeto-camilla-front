@@ -24,7 +24,6 @@ export const NichoClient = () => {
     setLoading(true);
     try {
       const data = await getAllCategories(pageNum, 100, search);
-      console.log('data', data);
       setCategories(data.categories);
       setHasMore(pageNum < data.totalPages);
     } catch (error) {

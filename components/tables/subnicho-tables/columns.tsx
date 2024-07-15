@@ -4,6 +4,7 @@ import { CellAction } from './cell-action';
 // import { Checkbox } from '@/components/ui/checkbox';
 import { Subniche } from '@/services/subnicheService';
 import { format } from 'date-fns';
+import Image from 'next/image';
 
 export const columns: ColumnDef<Subniche>[] = [
   // {
@@ -25,6 +26,22 @@ export const columns: ColumnDef<Subniche>[] = [
   //   enableSorting: false,
   //   enableHiding: false
   // },
+  {
+    accessorKey: 'attachment',
+    header: 'Imagem',
+    cell: ({ row }) =>
+      row.original?.attachment?.url ? (
+        <Image
+          className="aspect-square h-14 w-32 rounded-lg object-cover"
+          src={row.original.attachment.url}
+          width={300}
+          height={200}
+          alt={row.original.attachment.filename}
+        />
+      ) : (
+        <div className="aspect-square h-14 w-32 rounded-lg bg-gray-300 object-cover" />
+      )
+  },
   {
     accessorKey: 'name',
     header: 'Nome'

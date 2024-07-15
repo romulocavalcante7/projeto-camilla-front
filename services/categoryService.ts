@@ -1,4 +1,5 @@
 import Api from './api';
+import { Subniche } from './subnicheService';
 import { Attachment } from './types/entities';
 
 export interface Category {
@@ -7,6 +8,7 @@ export interface Category {
   createdAt: string;
   updatedAt: string;
   attachment: Attachment;
+  subniches: Subniche[];
 }
 
 export interface CategoryAllResponse {

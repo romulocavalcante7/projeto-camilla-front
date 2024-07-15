@@ -27,12 +27,15 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onConfirm = async () => {
     try {
       setLoading(true);
-      await deleteFile(data.attachment.id);
+      if (data?.attachment?.id) {
+        await deleteFile(data.attachment.id);
+      }
       await deleteCategory(data.id);
       toast.success('Categoria deletada.');
       router.push(`/dashboard/nichos`);
       window.location.reload();
     } catch (error: any) {
+      console.log('error', error);
       toast.error(
         'Certifique-se de remover todos os produtos que usam esta categoria primeiro.'
       );

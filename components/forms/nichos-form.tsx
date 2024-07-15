@@ -136,7 +136,9 @@ export const NichosForm = () => {
     try {
       setLoading(true);
       if (category) {
-        await deleteFile(category.attachment.id);
+        if (category?.attachment?.id) {
+          await deleteFile(category.attachment.id);
+        }
         await deleteCategory(category.id);
       }
       router.refresh();
