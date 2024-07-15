@@ -29,7 +29,7 @@ export default function UserAuthForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const defaultValues = {
-    email: 'johndoe@example.com',
+    email: '',
     password: ''
   };
   const form = useForm<UserFormValue>({
@@ -67,7 +67,7 @@ export default function UserAuthForm() {
                       startIcon={User}
                       className="rounded-lg border border-neutral-200 bg-zinc-100 py-6 backdrop-blur-[12.16px] disabled:cursor-not-allowed disabled:opacity-50"
                       type="email"
-                      placeholder="Coloque seu email..."
+                      placeholder="Coloque seu email"
                       disabled={loading}
                       {...field}
                     />
@@ -89,7 +89,7 @@ export default function UserAuthForm() {
                       startIcon={Lock}
                       className="rounded-lg border border-neutral-200 bg-zinc-100 py-6 backdrop-blur-[12.16px] disabled:cursor-not-allowed disabled:opacity-50"
                       type="password"
-                      placeholder="Coloque sua senha..."
+                      placeholder="Coloque sua senha"
                       disabled={loading}
                       {...field}
                     />
