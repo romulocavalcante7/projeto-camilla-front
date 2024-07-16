@@ -11,7 +11,6 @@ import { ArrowLeft, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Clipboard from '@/components/clipboard';
 import InfiniteScroll from '@/components/ui/InfiniteScroll';
-import Search from '@/components/search';
 import Link from 'next/link';
 import { useScroll, motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -35,18 +34,14 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
   const [stickers, setStickers] = useState<Sticker[]>([]);
   const { scrollY } = useScroll();
   const [scrollAbove10, setScrollAbove10] = useState<boolean>(false);
-  const [search, setSearch] = useState<string | undefined>(
-    searchParams.get('search') || undefined
-  );
 
-  const fetchStickers = async (page: number, search?: string) => {
+  const fetchStickers = async (page: number) => {
     setLoading(true);
     try {
       const data: StickerResponse = await getStickersBySubnicheId(
         subnicheId,
         page,
-        10,
-        search
+        10
       );
       setStickers((prev) => {
         const newStickers = data.stickers.filter(
@@ -63,8 +58,8 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
   };
 
   useEffect(() => {
-    fetchStickers(page, search);
-  }, [page, search]);
+    fetchStickers(page);
+  }, [page]);
 
   useEffect(() => {
     const unsubscribe = scrollY.onChange((latest) => {
@@ -81,14 +76,6 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
         setPage((prevPage) => prevPage + 1);
       }, 1000);
     }
-  };
-  const handleSearch = (newSearch: string) => {
-    if (!newSearch) {
-      return setSearch(newSearch);
-    }
-    setSearch(newSearch);
-    setPage(1);
-    setStickers([]);
   };
 
   return (
@@ -124,11 +111,6 @@ const FavoriteStickerList = ({ params }: SubnicheProps) => {
             <p className="text-2xl font-bold">{name}</p>
           </div>
         </div>
-        <Search
-          onSearch={handleSearch}
-          placeholder="Busque uma figurinha"
-          defaultValues={{ search }}
-        />
       </motion.div>
       <div className="max-h-full w-full overflow-y-auto px-5">
         <div className="flex w-full flex-col items-center gap-3">

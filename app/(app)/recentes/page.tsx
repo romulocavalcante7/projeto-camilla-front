@@ -1,9 +1,8 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import Image from 'next/image';
-import Search from '@/components/search';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
@@ -18,15 +17,11 @@ import InfiniteScroll from '@/components/ui/InfiniteScroll';
 
 const RecentStickerList = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
   const [stickers, setStickers] = useState<Sticker[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [search, setSearch] = useState<string | undefined>(
-    searchParams.get('search') || undefined
-  );
   const { scrollY } = useScroll();
   const [scrollAbove10, setScrollAbove10] = useState<boolean>(false);
 
@@ -40,8 +35,8 @@ const RecentStickerList = () => {
   }, [scrollY]);
 
   useEffect(() => {
-    fetchStickers(page, search);
-  }, [page, search]);
+    fetchStickers(page);
+  }, [page]);
 
   const fetchStickers = async (page: number, search?: string) => {
     setLoading(true);
@@ -68,16 +63,6 @@ const RecentStickerList = () => {
       }, 1000);
     }
   };
-
-  const handleSearch = (newSearch: string) => {
-    if (!newSearch) {
-      return setSearch(newSearch);
-    }
-    setSearch(newSearch);
-    setPage(1);
-    setStickers([]);
-  };
-
   return (
     <div className="flex w-full flex-col gap-3">
       <motion.div
@@ -111,11 +96,6 @@ const RecentStickerList = () => {
             <p className="text-2xl font-bold">Recentes</p>
           </div>
         </div>
-        <Search
-          onSearch={handleSearch}
-          placeholder="Busque uma figurinha"
-          defaultValues={{ search }}
-        />
       </motion.div>
       <div className="max-h-full w-full px-5">
         <div className="flex w-full flex-col items-center gap-3">
