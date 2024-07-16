@@ -32,7 +32,7 @@ export const columns: ColumnDef<Category>[] = [
     cell: ({ row }) =>
       row.original?.attachment?.url ? (
         <Image
-          className="aspect-square h-14 w-32 rounded-lg object-cover"
+          className="aspect-square h-14 w-32 rounded-lg object-cover object-left-bottom"
           src={row.original.attachment.url}
           width={300}
           height={200}
