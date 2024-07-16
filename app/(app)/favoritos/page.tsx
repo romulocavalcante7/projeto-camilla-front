@@ -6,19 +6,17 @@ import {
   getAllFavoriteStickers,
   FavoriteSticker
 } from '@/services/favoriteSticker';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import InfiniteScroll from '@/components/ui/InfiniteScroll';
 import Clipboard from '@/components/clipboard';
 import Link from 'next/link';
 import { useScroll } from 'framer-motion';
-import Search from '@/components/search';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
 const Favorites = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,9 +26,6 @@ const Favorites = () => {
   );
   const { scrollY } = useScroll();
   const [scrollAbove10, setScrollAbove10] = useState<boolean>(false);
-  const [search, setSearch] = useState<string | undefined>(
-    searchParams.get('search') || undefined
-  );
 
   const fetchFavorites = async (page: number, search?: string) => {
     setLoading(true);
@@ -60,8 +55,8 @@ const Favorites = () => {
   }, [scrollY]);
 
   useEffect(() => {
-    fetchFavorites(page, search);
-  }, [page, search]);
+    fetchFavorites(page);
+  }, [page]);
 
   const loadMore = () => {
     if (!loading && page < totalPage) {
@@ -70,16 +65,6 @@ const Favorites = () => {
       }, 1000);
     }
   };
-
-  const handleSearch = (newSearch: string) => {
-    if (!newSearch) {
-      return setSearch(newSearch);
-    }
-    setSearch(newSearch);
-    setPage(1);
-    setStickersFavorites([]);
-  };
-
   const handleFavoriteRemoved = (stickerId: string) => {
     setStickersFavorites((prev) =>
       prev.filter((favorite) => favorite.sticker.id !== stickerId)
@@ -119,11 +104,6 @@ const Favorites = () => {
             <p className="text-2xl font-bold">Favoritos</p>
           </div>
         </div>
-        <Search
-          onSearch={handleSearch}
-          placeholder="Busque uma figurinha"
-          defaultValues={{ search }}
-        />
       </motion.div>
       <motion.div
         initial={'hidden'}
