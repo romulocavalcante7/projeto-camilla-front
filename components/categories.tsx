@@ -74,7 +74,7 @@ const CategoryList = () => {
         <Search
           className="w-full"
           onSearch={handleSearch}
-          placeholder="Busque uma categoria"
+          placeholder="Busque um nicho"
           defaultValues={{ search }}
         />
       </motion.div>
@@ -94,7 +94,7 @@ const CategoryList = () => {
             <div className="md:bg-fill relative flex h-52 cursor-pointer items-center justify-center rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white sm:h-64">
               {category?.attachment?.url && (
                 <Image
-                  className="absolute left-0 top-0 h-full w-full rounded-2xl object-cover object-left"
+                  className="absolute left-0 top-0 h-full w-full rounded-2xl object-cover object-left-bottom"
                   src={category?.attachment?.url}
                   width={1200}
                   height={800}

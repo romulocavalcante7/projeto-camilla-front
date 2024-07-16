@@ -6,7 +6,7 @@ export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <div className="fixed bottom-5 left-1/2 mx-auto flex w-full max-w-md -translate-x-1/2 transform items-center justify-between gap-0 rounded-[18px] border border-stone-300/90 bg-white px-5 py-3 backdrop-blur-[14px] dark:border-stone-300/20 dark:bg-neutral-900/70">
+    <div className="fixed bottom-5 left-1/2 mx-auto flex w-full max-w-[360px] -translate-x-1/2 transform items-center justify-between gap-0 rounded-[18px] border border-stone-300/90 bg-white px-5 py-3 backdrop-blur-[14px] sm:max-w-md dark:border-stone-300/20 dark:bg-neutral-900/70">
       <Link href="/" passHref>
         {/* <Image
           className={`cursor-pointer ${

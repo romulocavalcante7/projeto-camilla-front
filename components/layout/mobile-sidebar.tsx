@@ -1,20 +1,14 @@
 'use client';
+import { useState } from 'react';
 import { DashboardNav } from '@/components/dashboard-nav';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { navItems } from '@/constants/data';
 import { MenuIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import Logo from '@/public/logo-v2.png';
 
-// import { Playlist } from "../data/playlists";
-
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-  // playlists: Playlist[];
-}
-
-export function MobileSidebar({ className }: SidebarProps) {
+export function MobileSidebar() {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -23,14 +17,15 @@ export function MobileSidebar({ className }: SidebarProps) {
           <MenuIcon />
         </SheetTrigger>
         <SheetContent side="left" className="!px-0">
-          <div className="space-y-4 py-4">
+          <div className="">
             <div className="px-3 py-2">
-              <Link className="" href="/">
+              <Link className="mb-3 flex" href="/">
                 <Image
-                  className="w-32 px-3"
+                  className="w-48 px-3"
                   src={Logo}
                   width={800}
                   height={600}
+                  quality={100}
                   alt="logo"
                 />
               </Link>

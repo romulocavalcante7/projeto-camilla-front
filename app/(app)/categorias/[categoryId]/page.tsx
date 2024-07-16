@@ -89,7 +89,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-2">
+    <div className="flex w-full flex-col items-center justify-center gap-2">
       <motion.div
         initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
@@ -127,7 +127,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
           defaultValues={{ search }}
         />
       </motion.div>
-      <ul className="flex h-full w-full flex-col items-center justify-center gap-5 overflow-y-auto px-5">
+      <ul className="grid h-full w-full grid-cols-1 items-center justify-items-center gap-10 overflow-y-auto px-5 lg:grid-cols-2">
         {subniches.map((subniche) => (
           <Link
             className="w-full"

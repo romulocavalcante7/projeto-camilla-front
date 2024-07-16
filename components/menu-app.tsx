@@ -12,6 +12,7 @@ import { LogOut, User2 } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useContext } from 'react';
+import { Avatar } from './ui/avatar';
 
 export const Menu = () => {
   const router = useRouter();
@@ -41,6 +42,15 @@ export const Menu = () => {
         <SheetHeader>
           <SheetTitle className="text-2xl">Story Plus</SheetTitle>
           <div className="flex w-full flex-col gap-5 pt-5">
+            <div className="flex items-center gap-3">
+              <Avatar className="bg-gray-300" />
+              <div className="flex flex-col items-start">
+                <p className="font-semibold">{user?.name}</p>
+                <p className="text-sm">
+                  {user?.role === 'ADMIN' ? 'Administrador' : 'Usuário'}
+                </p>
+              </div>
+            </div>
             {user?.role === 'ADMIN' && (
               <Button
                 onClick={() => router.push('/dashboard')}
