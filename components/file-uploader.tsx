@@ -23,7 +23,7 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
    * @example value={files}
    */
   value?: File[];
-
+  sticker: boolean;
   /**
    * Function to be called when the value changes.
    * @type React.Dispatch<React.SetStateAction<File[]>>
@@ -103,6 +103,7 @@ export function FileUploader(props: FileUploaderProps) {
     maxFiles = 1,
     multiple = false,
     disabled = false,
+    sticker = false,
     className,
     ...dropzoneProps
   } = props;
@@ -246,16 +247,29 @@ export function FileUploader(props: FileUploaderProps) {
       </Dropzone>
       {files?.length ? (
         <ScrollArea className="h-fit w-full">
-          <div className="space-y-4">
-            {files?.map((file, index) => (
-              <FileCard
-                key={index}
-                file={file}
-                onRemove={() => onRemove(index)}
-                progress={progresses?.[file.name]}
-              />
-            ))}
-          </div>
+          {sticker ? (
+            <div className="flex flex-wrap gap-10">
+              {files?.map((file, index) => (
+                <FileCardSticker
+                  key={index}
+                  file={file}
+                  onRemove={() => onRemove(index)}
+                  progress={progresses?.[file.name]}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {files?.map((file, index) => (
+                <FileCard
+                  key={index}
+                  file={file}
+                  onRemove={() => onRemove(index)}
+                  progress={progresses?.[file.name]}
+                />
+              ))}
+            </div>
+          )}
         </ScrollArea>
       ) : null}
     </div>
@@ -300,6 +314,48 @@ function FileCard({ file, progress, onRemove }: FileCardProps) {
               onClick={onRemove}
             >
               <Cross2Icon className="size-4 " aria-hidden="true" />
+              <span className="sr-only">Remove file</span>
+            </Button>
+          </div>
+          {progress ? <Progress value={progress} /> : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FileCardSticker({ file, progress, onRemove }: FileCardProps) {
+  return (
+    <div className="relative flex flex-col">
+      <div className="flex w-fit flex-1 flex-col gap-5">
+        {isFileWithPreview(file) ? (
+          <Image
+            src={file.preview}
+            alt={file.name}
+            width={300}
+            height={300}
+            loading="lazy"
+            className="h-40 w-40 shrink-0 rounded-md bg-[#3F3F3F] bg-cover object-cover"
+          />
+        ) : null}
+        <div className="flex w-full justify-between gap-2">
+          <div className="space-y-px">
+            <p className="line-clamp-1 text-sm font-medium text-foreground/80">
+              {file.name}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {formatBytes(file.size)}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 bg-gray-200 hover:bg-gray-300"
+              onClick={onRemove}
+            >
+              <Cross2Icon className="size-4" aria-hidden="true" />
               <span className="sr-only">Remove file</span>
             </Button>
           </div>

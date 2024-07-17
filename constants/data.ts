@@ -127,24 +127,12 @@ export const navItems: NavItem[] = [
     title: 'Subnichos',
     href: '/dashboard/subnicho',
     icon: 'subnichos',
-    label: 'subnichos'
+    label: 'Subnichos'
+  },
+  {
+    title: 'Figurinhas',
+    href: '/dashboard/figurinha',
+    icon: 'figurinhas',
+    label: 'Figurinhas'
   }
-  // {
-  //   title: 'Employee',
-  //   href: '/dashboard/employee',
-  //   icon: 'employee',
-  //   label: 'employee'
-  // },
-  // {
-  //   title: 'Profile',
-  //   href: '/dashboard/profile',
-  //   icon: 'profile',
-  //   label: 'profile'
-  // },
-  // {
-  //   title: 'Login',
-  //   href: '/',
-  //   icon: 'login',
-  //   label: 'login'
-  // }
 ];

@@ -9,15 +9,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { deleteSubniche } from '@/services/subnicheService';
 import { deleteFile } from '@/services/uploadService';
 import { Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Subniche } from '@/services/subnicheService';
+import { Sticker } from '@/services/stickerService';
 
 interface CellActionProps {
-  data: Subniche;
+  data: Sticker;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -31,14 +30,13 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       if (data?.attachment?.id) {
         await deleteFile(data.attachment.id);
       }
-      await deleteSubniche(data.id);
-      toast.success('Subnicho deletado.');
-      router.push(`/dashboard/subnicho`);
+      toast.success('Figurinha deletada.');
+      router.push(`/dashboard/figurinha`);
       window.location.reload();
     } catch (error: any) {
       console.log('error', error);
       toast.error(
-        'Certifique-se de remover todos os produtos que usam este subnicho primeiro.'
+        'Certifique-se de remover todos os produtos que usam esta figurinha primeiro.'
       );
     } finally {
       setLoading(false);
@@ -66,7 +64,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => router.push(`/dashboard/subnicho/${data.id}`)}
+            onClick={() => router.push(`/dashboard/figurinha/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4 cursor-pointer" /> Editar
           </DropdownMenuItem>
