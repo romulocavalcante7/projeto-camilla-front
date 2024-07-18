@@ -70,10 +70,12 @@ const prefix = 'v1/stickers';
 export const getAllStickers = async (
   page: number = 1,
   pageSize: number = 10,
-  search?: string
+  search?: string,
+  sortField?: string,
+  sortOrder?: string
 ): Promise<StickerResponse> => {
   const response = await Api.get<StickerResponse>(`${prefix}/all`, {
-    params: { page, pageSize, search }
+    params: { page, pageSize, search, sortField, sortOrder }
   });
   return response.data;
 };

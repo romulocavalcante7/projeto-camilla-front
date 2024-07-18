@@ -13,6 +13,16 @@ import { getAllStickers, Sticker } from '@/services/stickerService';
 
 const breadcrumbItems = [{ title: 'Figurinhas', link: '/dashboard/figurinha' }];
 
+const createQueryString = (
+  params: Record<string, string | number | undefined>
+) => {
+  const searchParams = new URLSearchParams(window.location.search);
+  Object.keys(params).forEach((key) => {
+    searchParams.set(key, String(params[key]));
+  });
+  return searchParams.toString();
+};
+
 export const StickerClient = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -24,14 +34,32 @@ export const StickerClient = () => {
   const [search, setSearch] = useState<string | undefined>(
     searchParams.get('search') || undefined
   );
+  const [sortField, setSortField] = useState<string>(
+    searchParams.get('sortField') || 'createdAt'
+  );
+  const [sortOrder, setSortOrder] = useState<string>(
+    searchParams.get('sortOrder') || 'desc'
+  );
   const [totalStickers, setTotalStickers] = useState<number>(0);
   const [pageCount, setPageCount] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
 
-  const fetchStickers = async (pageNum: number, search?: string) => {
+  const fetchStickers = async (
+    pageNum: number,
+    pageSize: number,
+    search?: string,
+    sortField?: string,
+    sortOrder?: string
+  ) => {
     setLoading(true);
     try {
-      const data = await getAllStickers(pageNum, pageSize, search);
+      const data = await getAllStickers(
+        pageNum,
+        pageSize,
+        search,
+        sortField,
+        sortOrder
+      );
       setStickers(data.stickers);
       setTotalStickers(data.total);
       setPageCount(data.totalPages);
@@ -43,20 +71,42 @@ export const StickerClient = () => {
   };
 
   useEffect(() => {
-    fetchStickers(page, search);
-  }, [page, search, pageSize]);
+    fetchStickers(page, pageSize, search, sortField, sortOrder);
+  }, [page, search, pageSize, sortField, sortOrder]);
 
   useEffect(() => {
     setPage(Number(searchParams.get('page')) || 1);
     setSearch(searchParams.get('search') || undefined);
+    setSortField(searchParams.get('sortField') || 'createdAt');
+    setSortOrder(searchParams.get('sortOrder') || 'desc');
   }, [searchParams]);
 
   const handlePageSizeChange = (size: number) => {
     setPageSize(size);
+    router.push(
+      `${window.location.pathname}?${createQueryString({
+        page: 1,
+        pageSize: size,
+        search,
+        sortField,
+        sortOrder
+      })}`,
+      { scroll: false }
+    );
   };
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
+    router.push(
+      `${window.location.pathname}?${createQueryString({
+        page: 1,
+        pageSize,
+        search: value,
+        sortField,
+        sortOrder
+      })}`,
+      { scroll: false }
+    );
   };
 
   return (

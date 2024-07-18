@@ -5,6 +5,7 @@ import { CellAction } from './cell-action';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import { Sticker } from '@/services/stickerService';
+import { DataTableColumnHeader } from '../data-header';
 
 export const columns: ColumnDef<Sticker>[] = [
   // {
@@ -46,21 +47,29 @@ export const columns: ColumnDef<Sticker>[] = [
   },
   {
     accessorKey: 'category',
-    header: 'Nicho',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Nicho" />
+    ),
     cell: ({ row }) => {
       return <p>{row.original.subniche.category.name}</p>;
     }
   },
   {
     accessorKey: 'subniche',
-    header: 'Subnicho',
+    // header: 'Subnicho',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Subnicho" />
+    ),
     cell: ({ row }) => {
       return <p>{row.original.subniche.name}</p>;
     }
   },
   {
     accessorKey: 'createdAt',
-    header: 'Data de criação',
+    // header: 'Data de criação',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Data de criação" />
+    ),
     cell: ({ row }) => {
       return (
         <p>{format(new Date(row.original.createdAt), 'dd/MM/yyyy HH:mm:ss')}</p>
