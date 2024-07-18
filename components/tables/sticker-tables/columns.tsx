@@ -48,7 +48,7 @@ export const columns: ColumnDef<Sticker>[] = [
   {
     accessorKey: 'category',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Nicho" />
+      <DataTableColumnHeader column={column} order="A" title="Nicho" />
     ),
     cell: ({ row }) => {
       return <p>{row.original.subniche.category.name}</p>;
@@ -58,7 +58,7 @@ export const columns: ColumnDef<Sticker>[] = [
     accessorKey: 'subniche',
     // header: 'Subnicho',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Subnicho" />
+      <DataTableColumnHeader column={column} order="A" title="Subnicho" />
     ),
     cell: ({ row }) => {
       return <p>{row.original.subniche.name}</p>;

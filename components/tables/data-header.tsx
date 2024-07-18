@@ -86,6 +86,7 @@ export function DataTableColumnHeader<TData, TValue>({
           {column.getCanSort() && (
             <>
               <DropdownMenuItem
+                className="cursor-pointer"
                 aria-label="Sort ascending"
                 onClick={() => handleSort('asc')}
               >
@@ -96,6 +97,7 @@ export function DataTableColumnHeader<TData, TValue>({
                 {order === 'A' ? 'Abc' : 'Antigo'}
               </DropdownMenuItem>
               <DropdownMenuItem
+                className="cursor-pointer"
                 aria-label="Sort descending"
                 onClick={() => handleSort('desc')}
               >
