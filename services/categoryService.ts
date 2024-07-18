@@ -24,13 +24,17 @@ const prefix = 'v1/categories';
 export const getAllCategories = async (
   page: number = 1,
   pageSize: number = 10,
-  search?: string
+  search?: string,
+  sortField?: string,
+  sortOrder?: string
 ): Promise<CategoryAllResponse> => {
   const response = await Api.get<CategoryAllResponse>(`${prefix}/all`, {
     params: {
       page,
       pageSize,
-      search
+      search,
+      sortField,
+      sortOrder
     }
   });
   return response.data;

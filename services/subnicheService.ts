@@ -44,13 +44,17 @@ const prefix = 'v1/subniches';
 export const getAllSubniches = async (
   page: number = 1,
   pageSize: number = 10,
-  search?: string
+  search?: string,
+  sortField?: string,
+  sortOrder?: string
 ): Promise<SubnichesAllResponse> => {
   const response = await Api.get<SubnichesAllResponse>(`${prefix}/all`, {
     params: {
       page,
       pageSize,
-      search
+      search,
+      sortField,
+      sortOrder
     }
   });
   return response.data;

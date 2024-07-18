@@ -8,7 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { StickerTable } from './sticker-table';
+import { DataTableComponent } from '../data-table';
 import { getAllStickers, Sticker } from '@/services/stickerService';
 
 const breadcrumbItems = [{ title: 'Figurinhas', link: '/dashboard/figurinha' }];
@@ -125,10 +125,11 @@ export const StickerClient = () => {
         </Button>
       </div>
       <Separator />
-      <StickerTable
+      <DataTableComponent
         columns={columns}
         data={stickers}
         searchKey="subniche"
+        placeholderInput="Pesquise por nicho ou subnicho"
         pageCount={pageCount}
         pageSize={pageSize}
         page={page}

@@ -19,6 +19,7 @@ interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>;
   title: string;
+  order?: string;
 }
 
 const createQueryString = (params: Record<string, string | number>) => {
@@ -32,7 +33,8 @@ const createQueryString = (params: Record<string, string | number>) => {
 export function DataTableColumnHeader<TData, TValue>({
   column,
   title,
-  className
+  className,
+  order
 }: DataTableColumnHeaderProps<TData, TValue>) {
   const router = useRouter();
   const pathname = usePathname();
@@ -70,7 +72,7 @@ export function DataTableColumnHeader<TData, TValue>({
             size="sm"
             className="-ml-3 h-8 data-[state=open]:bg-accent"
           >
-            <span>{title}</span>
+            <span className="text-sm">{title}</span>
             {column.getCanSort() && column.getIsSorted() === 'desc' ? (
               <ArrowDownIcon className="ml-2 size-4" aria-hidden="true" />
             ) : column.getIsSorted() === 'asc' ? (
@@ -91,7 +93,7 @@ export function DataTableColumnHeader<TData, TValue>({
                   className="mr-2 size-3.5 text-muted-foreground/70"
                   aria-hidden="true"
                 />
-                Antigo
+                {order === 'A' ? 'Abc' : 'Antigo'}
               </DropdownMenuItem>
               <DropdownMenuItem
                 aria-label="Sort descending"
@@ -101,7 +103,7 @@ export function DataTableColumnHeader<TData, TValue>({
                   className="mr-2 size-3.5 text-muted-foreground/70"
                   aria-hidden="true"
                 />
-                Recente
+                {order === 'A' ? 'Zxy' : 'Recente'}
               </DropdownMenuItem>
             </>
           )}

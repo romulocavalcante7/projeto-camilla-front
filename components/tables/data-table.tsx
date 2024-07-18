@@ -37,12 +37,12 @@ import {
   useRouter
 } from 'next/navigation';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Sticker } from '@/services/stickerService';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey: string;
+  placeholderInput: string;
   loading: boolean;
   onPageSizeChange: (size: number) => void;
   onSearchChange: (value: string) => void;
@@ -53,10 +53,11 @@ interface DataTableProps<TData, TValue> {
   searchParams?: ReadonlyURLSearchParams;
 }
 
-export function StickerTable<TData, TValue>({
+export function DataTableComponent<TData, TValue>({
   columns,
   data,
   searchKey,
+  placeholderInput,
   loading,
   pageCount,
   pageSize,
@@ -64,7 +65,7 @@ export function StickerTable<TData, TValue>({
   onPageSizeChange,
   pageSizeOptions = [5, 10, 20, 30, 50],
   searchParams
-}: DataTableProps<Sticker, TValue>) {
+}: DataTableProps<TData, TValue>) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -152,7 +153,7 @@ export function StickerTable<TData, TValue>({
   return (
     <>
       <Input
-        placeholder={`Pesquise por nicho ou subnicho`}
+        placeholder={placeholderInput}
         value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ''}
         onChange={(event) =>
           table.getColumn(searchKey)?.setFilterValue(event.target.value)

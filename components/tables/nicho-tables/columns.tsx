@@ -5,6 +5,7 @@ import { CellAction } from './cell-action';
 import { Category } from '@/services/categoryService';
 import { format } from 'date-fns';
 import Image from 'next/image';
+import { DataTableColumnHeader } from '../data-header';
 
 export const columns: ColumnDef<Category>[] = [
   // {
@@ -44,7 +45,9 @@ export const columns: ColumnDef<Category>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Nome'
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} order="A" title="Nome" />
+    )
   },
   {
     accessorKey: 'subniches',
@@ -55,7 +58,9 @@ export const columns: ColumnDef<Category>[] = [
   },
   {
     accessorKey: 'createdAt',
-    header: 'Data de criação',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Data de criação" />
+    ),
     cell: ({ row }) => {
       return (
         <p>{format(new Date(row.original.createdAt), 'dd/MM/yyyy HH:mm:ss')}</p>
