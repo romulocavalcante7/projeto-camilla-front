@@ -1,8 +1,7 @@
 import {
   ArrowDownIcon,
   ArrowUpIcon,
-  CaretSortIcon,
-  EyeNoneIcon
+  CaretSortIcon
 } from '@radix-ui/react-icons';
 import { type Column } from '@tanstack/react-table';
 import { useRouter, usePathname } from 'next/navigation';
@@ -13,7 +12,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
@@ -106,21 +104,6 @@ export function DataTableColumnHeader<TData, TValue>({
                 Recente
               </DropdownMenuItem>
             </>
-          )}
-          {column.getCanSort() && column.getCanHide() && (
-            <DropdownMenuSeparator />
-          )}
-          {column.getCanHide() && (
-            <DropdownMenuItem
-              aria-label="Hide column"
-              onClick={() => column.toggleVisibility(false)}
-            >
-              <EyeNoneIcon
-                className="mr-2 size-3.5 text-muted-foreground/70"
-                aria-hidden="true"
-              />
-              Hide
-            </DropdownMenuItem>
           )}
         </DropdownMenuContent>
       </DropdownMenu>
