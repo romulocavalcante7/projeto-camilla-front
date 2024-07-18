@@ -1,4 +1,5 @@
 import Api from './api';
+import { Category } from './categoryService';
 import { Attachment } from './types/entities';
 
 export interface Sticker {
@@ -7,6 +8,16 @@ export interface Sticker {
   name: string;
   attachmentId: string;
   categoryId: string;
+  category: Category;
+  subniche: {
+    id: string;
+    name: string;
+    categoryId: string;
+    createdAt: string;
+    updatedAt: string;
+    attachmentId: string;
+    category: Category;
+  };
   subnicheId: string | null;
   userId: string | null;
   createdAt: string;

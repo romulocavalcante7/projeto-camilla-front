@@ -138,12 +138,13 @@ export const StickerForm = () => {
       );
 
       if (stickers) {
-        const updateData = {
-          subnicheId: data.subniche,
-          categoryId: subniche?.categoryId!,
-          attachmentIds
-        };
-        await updateSticker(stickers.id, updateData);
+        for (let attachmentId of attachmentIds) {
+          await updateSticker(stickers.id, {
+            subnicheId: data.subniche,
+            categoryId: subniche?.categoryId!,
+            attachmentId
+          });
+        }
       } else {
         for (let attachmentId of attachmentIds) {
           await createSticker({

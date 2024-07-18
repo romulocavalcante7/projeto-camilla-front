@@ -45,7 +45,7 @@ export const SubnichoClient = () => {
           description="Gerencie os subnichos"
         />
         <Button
-          className="dark:text-black"
+          className="text-lg dark:text-black"
           onClick={() => router.push(`/dashboard/subnicho/new`)}
         >
           <Plus className="mr-2 h-6 w-6" /> Criar

@@ -44,17 +44,20 @@ export const columns: ColumnDef<Sticker>[] = [
         <div className="aspect-square h-14 w-32 rounded-lg bg-gray-300 object-cover" />
       )
   },
-  // {
-  //   accessorKey: 'name',
-  //   header: 'Nome'
-  // },
-  // {
-  //   accessorKey: 'category',
-  //   header: 'Nicho',
-  //   cell: ({ row }) => {
-  //     return <p>{row.original.category.name}</p>;
-  //   }
-  // },
+  {
+    accessorKey: 'category',
+    header: 'Nicho',
+    cell: ({ row }) => {
+      return <p>{row.original.subniche.category.name}</p>;
+    }
+  },
+  {
+    accessorKey: 'subniche',
+    header: 'Subnicho',
+    cell: ({ row }) => {
+      return <p>{row.original.subniche.name}</p>;
+    }
+  },
   {
     accessorKey: 'createdAt',
     header: 'Data de criação',
