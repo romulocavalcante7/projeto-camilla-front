@@ -85,6 +85,7 @@ export const StickerClient = () => {
         loading={loading}
         onPageSizeChange={handlePageSizeChange}
         onSearchChange={handleSearchChange}
+        searchParams={searchParams}
       />
     </div>
   );

@@ -31,7 +31,11 @@ import {
   DoubleArrowRightIcon
 } from '@radix-ui/react-icons';
 import { ChevronLeftIcon, ChevronRightIcon, Loader2 } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import {
+  ReadonlyURLSearchParams,
+  usePathname,
+  useRouter
+} from 'next/navigation';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Sticker } from '@/services/stickerService';
 
@@ -46,9 +50,7 @@ interface DataTableProps<TData, TValue> {
   pageCount: number;
   pageSize: number;
   page: number;
-  searchParams?: {
-    [key: string]: string | string[] | undefined;
-  };
+  searchParams?: ReadonlyURLSearchParams;
 }
 
 export function StickerTable<TData, TValue>({
