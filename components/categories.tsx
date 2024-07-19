@@ -23,7 +23,14 @@ const CategoryList = () => {
   const fetchCategories = async (pageNum: number, search?: string) => {
     setLoading(true);
     try {
-      const data = await getAllCategories(pageNum, 10, search);
+      const data = await getAllCategories(
+        pageNum,
+        10,
+        search,
+        undefined,
+        undefined,
+        'true'
+      );
 
       setCategories((prevCategories) => {
         const newCategories = data.categories.filter(

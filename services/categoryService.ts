@@ -8,6 +8,8 @@ export interface Category {
   createdAt: string;
   updatedAt: string;
   attachment: Attachment;
+  isImportant: boolean;
+  displayOrder: number;
   subniches: Subniche[];
 }
 
@@ -26,7 +28,8 @@ export const getAllCategories = async (
   pageSize: number = 10,
   search?: string,
   sortField?: string,
-  sortOrder?: string
+  sortOrder?: string,
+  importantFirst?: string
 ): Promise<CategoryAllResponse> => {
   const response = await Api.get<CategoryAllResponse>(`${prefix}/all`, {
     params: {
@@ -34,7 +37,8 @@ export const getAllCategories = async (
       pageSize,
       search,
       sortField,
-      sortOrder
+      sortOrder,
+      importantFirst
     }
   });
   return response.data;
@@ -43,6 +47,26 @@ export const getAllCategories = async (
 export const getTotalCategories = async () => {
   const response = await Api.get<{ total: number }>(`${prefix}/total`);
   return response.data;
+};
+export const getAllImportantCategories = async () => {
+  const response = await Api.get(`${prefix}/important`);
+  return response.data;
+};
+
+export const markImportantCategory = async (id: string) => {
+  return await Api.post(`${prefix}/markImportant`, { id });
+};
+
+export const setCategoryDisplayOrder = async (
+  id: string,
+  displayOrder: number
+) => {
+  const response = await Api.post(`${prefix}/setOrder`, { id, displayOrder });
+  return response.data;
+};
+
+export const removeCategoryImportant = async (id: string) => {
+  return await Api.post(`${prefix}/removeImportant`, { id });
 };
 
 export const createCategory = async (payload: {

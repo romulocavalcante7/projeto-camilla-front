@@ -23,7 +23,7 @@ interface FileUploaderProps extends React.HTMLAttributes<HTMLDivElement> {
    * @example value={files}
    */
   value?: File[];
-  sticker: boolean;
+  sticker?: boolean;
   /**
    * Function to be called when the value changes.
    * @type React.Dispatch<React.SetStateAction<File[]>>

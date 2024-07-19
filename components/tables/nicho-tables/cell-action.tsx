@@ -9,9 +9,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Category, deleteCategory } from '@/services/categoryService';
+import {
+  Category,
+  deleteCategory,
+  markImportantCategory,
+  removeCategoryImportant
+} from '@/services/categoryService';
 import { deleteFile } from '@/services/uploadService';
-import { Edit, MoreHorizontal, Trash } from 'lucide-react';
+import { Edit, MoreHorizontal, Star, StarOff, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -45,6 +50,31 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     }
   };
 
+  const markImportant = async () => {
+    try {
+      setLoading(true);
+      await markImportantCategory(data.id);
+      toast.success('Adicionado.');
+      window.location.reload();
+    } catch (error: any) {
+      console.log('error', error);
+      toast.error('Ocorreu algum erro');
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
+
+  const handleRemoveImportant = async () => {
+    try {
+      await removeCategoryImportant(data.id);
+      toast.success('Removido');
+      window.location.reload();
+    } catch (error) {
+      console.error('Erro ao remover status importante da categoria:', error);
+    }
+  };
+
   return (
     <>
       <AlertModal
@@ -63,6 +93,22 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Acões</DropdownMenuLabel>
 
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => {
+              data.isImportant ? handleRemoveImportant() : markImportant();
+            }}
+          >
+            {!data.isImportant ? (
+              <>
+                <Star className="mr-2 h-4 w-4 cursor-pointer" /> Marcar
+              </>
+            ) : (
+              <>
+                <StarOff className="mr-2 h-4 w-4 cursor-pointer" /> Remover
+              </>
+            )}
+          </DropdownMenuItem>
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => router.push(`/dashboard/nichos/${data.id}`)}
