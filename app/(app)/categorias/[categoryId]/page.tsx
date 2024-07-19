@@ -40,7 +40,8 @@ const SubnicheList = ({ params }: SubnicheProps) => {
         categoryId as string,
         page,
         10,
-        search
+        search,
+        'true'
       );
       //@ts-ignore
       setSubniches((prev) => {

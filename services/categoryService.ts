@@ -48,6 +48,7 @@ export const getTotalCategories = async () => {
   const response = await Api.get<{ total: number }>(`${prefix}/total`);
   return response.data;
 };
+
 export const getAllImportantCategories = async () => {
   const response = await Api.get(`${prefix}/important`);
   return response.data;

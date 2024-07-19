@@ -9,6 +9,8 @@ export interface Subniche {
   category: Category;
   createdAt: string;
   attachment: Attachment;
+  isImportant: boolean;
+  displayOrder: number;
 }
 
 export interface SubnichesAllResponse {
@@ -79,6 +81,32 @@ export const getSubnicheById = async (
   return response.data;
 };
 
+export const getAllImportantSubniches = async () => {
+  const response = await Api.get(`${prefix}/important`);
+  return response.data;
+};
+
+export const getImportantSubnichesByCategoryId = async (categoryId: string) => {
+  const response = await Api.get(`${prefix}/${categoryId}/important`);
+  return response.data;
+};
+
+export const markImportantSubniche = async (id: string) => {
+  return await Api.post(`${prefix}/markImportant`, { id });
+};
+
+export const setSubnicheDisplayOrder = async (
+  id: string,
+  displayOrder: number
+) => {
+  const response = await Api.post(`${prefix}/setOrder`, { id, displayOrder });
+  return response.data;
+};
+
+export const removeSubnicheImportant = async (id: string) => {
+  return await Api.post(`${prefix}/removeImportant`, { id });
+};
+
 export const updateSubniche = async (
   subnicheId: string,
   payload: UpdateSubnichePayload
@@ -98,7 +126,8 @@ export const getSubnichesByCategoryId = async (
   categoryId: string,
   page: number = 1,
   pageSize: number = 10,
-  search?: string
+  search?: string,
+  importantFirst?: string
 ): Promise<SubnicheByCategoryIdResponse> => {
   const response = await Api.get<SubnicheByCategoryIdResponse>(
     `${prefix}/category/${categoryId}`,
@@ -106,7 +135,8 @@ export const getSubnichesByCategoryId = async (
       params: {
         page,
         pageSize,
-        search
+        search,
+        importantFirst
       }
     }
   );

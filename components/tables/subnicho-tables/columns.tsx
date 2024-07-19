@@ -6,6 +6,7 @@ import { Subniche } from '@/services/subnicheService';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import { DataTableColumnHeader } from '../data-header';
+import { Star, StarOff } from 'lucide-react';
 
 export const columns: ColumnDef<Subniche>[] = [
   // {
@@ -27,6 +28,16 @@ export const columns: ColumnDef<Subniche>[] = [
   //   enableSorting: false,
   //   enableHiding: false
   // },
+  {
+    accessorKey: 'isImportant',
+    header: '',
+    cell: ({ row }) =>
+      row.original.isImportant ? (
+        <Star fill="yellow" stroke="#e2d40ed1" size={20} />
+      ) : (
+        <StarOff size={20} />
+      )
+  },
   {
     accessorKey: 'attachment',
     header: 'Imagem',

@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
-import { Plus } from 'lucide-react';
+import { Plus, Star } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { columns } from './columns';
 import { useEffect, useState } from 'react';
@@ -113,12 +113,21 @@ export const SubnichoClient = () => {
           title={`Subnichos (${totalSubniches})`}
           description="Gerencie os subnichos"
         />
-        <Button
-          className="text-lg dark:text-black"
-          onClick={() => router.push(`/dashboard/subnicho/new`)}
-        >
-          <Plus className="mr-2 h-4 w-4" /> Criar
-        </Button>
+        <div className="flex flex-wrap items-center gap-5">
+          <Button
+            className="items-center gap-5 text-lg dark:text-black"
+            onClick={() => router.push(`/dashboard/subnicho/important`)}
+          >
+            <Star fill="yellow" stroke="#e2d40ed1" size={20} />
+            Mais Usados
+          </Button>
+          <Button
+            className="text-lg dark:text-black"
+            onClick={() => router.push(`/dashboard/subnicho/new`)}
+          >
+            <Plus className="mr-2 h-4 w-4" /> Criar
+          </Button>
+        </div>
       </div>
       <Separator />
       <DataTableComponent

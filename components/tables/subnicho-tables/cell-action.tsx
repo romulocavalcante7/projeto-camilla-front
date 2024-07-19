@@ -9,9 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { deleteSubniche } from '@/services/subnicheService';
+import {
+  deleteSubniche,
+  markImportantSubniche,
+  removeSubnicheImportant
+} from '@/services/subnicheService';
 import { deleteFile } from '@/services/uploadService';
-import { Edit, MoreHorizontal, Trash } from 'lucide-react';
+import { Edit, MoreHorizontal, Star, StarOff, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Subniche } from '@/services/subnicheService';
@@ -36,13 +40,38 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       router.push(`/dashboard/subnicho`);
       window.location.reload();
     } catch (error: any) {
-      console.log('error', error);
+      console.error('error', error);
       toast.error(
         'Certifique-se de remover todos os produtos que usam este subnicho primeiro.'
       );
     } finally {
       setLoading(false);
       setOpen(false);
+    }
+  };
+
+  const markImportant = async () => {
+    try {
+      setLoading(true);
+      await markImportantSubniche(data.id);
+      toast.success('Adicionado.');
+      window.location.reload();
+    } catch (error: any) {
+      console.error('error', error);
+      toast.error('Ocorreu algum erro');
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
+
+  const handleRemoveImportant = async () => {
+    try {
+      await removeSubnicheImportant(data.id);
+      toast.success('Removido');
+      window.location.reload();
+    } catch (error) {
+      console.error('Erro ao remover status importante do subnicho:', error);
     }
   };
 
@@ -63,7 +92,22 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Acões</DropdownMenuLabel>
-
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => {
+              data.isImportant ? handleRemoveImportant() : markImportant();
+            }}
+          >
+            {!data.isImportant ? (
+              <>
+                <Star className="mr-2 h-4 w-4 cursor-pointer" /> Marcar
+              </>
+            ) : (
+              <>
+                <StarOff className="mr-2 h-4 w-4 cursor-pointer" /> Remover
+              </>
+            )}
+          </DropdownMenuItem>
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => router.push(`/dashboard/subnicho/${data.id}`)}
