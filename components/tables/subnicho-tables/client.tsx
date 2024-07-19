@@ -108,7 +108,7 @@ export const SubnichoClient = () => {
 
   return (
     <div className="flex-1 space-y-4 overflow-auto">
-      <div className="flex items-start justify-between">
+      <div className="flex flex-wrap items-start justify-between gap-5 sm:gap-0">
         <Heading
           title={`Subnichos (${totalSubniches})`}
           description="Gerencie os subnichos"

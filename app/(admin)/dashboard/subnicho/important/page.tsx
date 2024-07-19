@@ -149,7 +149,7 @@ export default function Page() {
               );
             }}
           />
-          <Button type="submit" disabled={loading}>
+          <Button className="dark:text-black" type="submit" disabled={loading}>
             {loading ? 'Carregando...' : 'Buscar'}
           </Button>
         </form>
@@ -177,7 +177,7 @@ export default function Page() {
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className="flex flex-wrap items-center justify-between gap-5 rounded-lg bg-gray-200 p-4"
+                            className="flex flex-wrap items-center justify-between gap-5 rounded-lg bg-gray-200 p-4 dark:bg-[#202020b2]"
                           >
                             <div className="flex flex-col flex-wrap gap-2 sm:flex-row sm:items-center sm:gap-10">
                               {subniche.attachment && (
