@@ -107,7 +107,7 @@ export const NichoClient = () => {
   };
 
   return (
-    <div className="flex-1 space-y-4 overflow-auto p-4 pt-6 md:p-8">
+    <div className="flex-1 space-y-4 overflow-auto">
       <div className="flex flex-wrap items-start justify-between gap-5 sm:gap-0">
         <Heading
           title={`Nichos (${totalCategories})`}

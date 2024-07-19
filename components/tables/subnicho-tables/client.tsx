@@ -107,7 +107,7 @@ export const SubnichoClient = () => {
   };
 
   return (
-    <div className="flex-1 space-y-4 overflow-auto p-4 pt-6 md:p-8">
+    <div className="flex-1 space-y-4 overflow-auto">
       <div className="flex items-start justify-between">
         <Heading
           title={`Subnichos (${totalSubniches})`}
