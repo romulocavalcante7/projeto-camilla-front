@@ -80,6 +80,11 @@ export const getAllStickers = async (
   return response.data;
 };
 
+export const getTotalStickers = async () => {
+  const response = await Api.get<{ total: number }>(`${prefix}/total`);
+  return response.data;
+};
+
 export const createSticker = async (
   payload: CreateStickerPayload
 ): Promise<Sticker> => {

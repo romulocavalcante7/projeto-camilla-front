@@ -60,6 +60,11 @@ export const getAllSubniches = async (
   return response.data;
 };
 
+export const getTotalSubniches = async () => {
+  const response = await Api.get<{ total: number }>(`${prefix}/total`);
+  return response.data;
+};
+
 export const createSubniche = async (
   payload: CreateSubnichePayload
 ): Promise<Subniche> => {

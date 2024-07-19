@@ -40,6 +40,11 @@ export const getAllCategories = async (
   return response.data;
 };
 
+export const getTotalCategories = async () => {
+  const response = await Api.get<{ total: number }>(`${prefix}/total`);
+  return response.data;
+};
+
 export const createCategory = async (payload: {
   name: string;
   attachmentId: string;
