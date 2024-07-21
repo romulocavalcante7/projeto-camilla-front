@@ -77,7 +77,9 @@ export function Navbar() {
         height={30}
         alt="icone reels"
       />
-      <div className="h-8 w-8 cursor-pointer rounded-full bg-slate-300" />
+      <Link href="/perfil" passHref>
+        <div className="h-8 w-8 cursor-pointer rounded-full bg-slate-300" />
+      </Link>
     </div>
   );
 }

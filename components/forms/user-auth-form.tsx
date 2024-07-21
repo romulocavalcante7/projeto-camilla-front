@@ -16,6 +16,7 @@ import { useForm } from 'react-hook-form';
 import { Lock, User } from 'lucide-react';
 import * as z from 'zod';
 import AuthContext from '@/contexts/auth-context';
+import Link from 'next/link';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Insira um email válido' }),
@@ -100,9 +101,12 @@ export default function UserAuthForm() {
                 </FormItem>
               )}
             />
-            <p className="cursor-pointer self-end text-sm font-semibold text-[#AA47B3]">
+            <Link
+              href="/login/esquecer-senha"
+              className="cursor-pointer self-end text-sm font-semibold text-[#AA47B3]"
+            >
               Esqueceu a senha?
-            </p>
+            </Link>
           </div>
 
           {error && <div className="text-red-500">{error}</div>}
