@@ -109,7 +109,9 @@ export default function UserAuthForm() {
             </Link>
           </div>
 
-          {error && <div className="text-red-500">{error}</div>}
+          {error && (
+            <div className="text-red-500 dark:text-red-400">{error}</div>
+          )}
 
           <Button
             disabled={loading}

@@ -94,7 +94,9 @@ const ResetPassword = () => {
                 {...register('newPassword')}
               />
               {errors.newPassword && (
-                <p className="text-red-500">{errors.newPassword.message}</p>
+                <p className="text-red-500 dark:text-red-400">
+                  {errors.newPassword.message}
+                </p>
               )}
             </div>
             <div className="space-y-2">
@@ -106,7 +108,9 @@ const ResetPassword = () => {
                 {...register('confirmPassword')}
               />
               {errors.confirmPassword && (
-                <p className="text-red-500">{errors.confirmPassword.message}</p>
+                <p className="text-red-500 dark:text-red-400">
+                  {errors.confirmPassword.message}
+                </p>
               )}
             </div>
             <Button type="submit" className="w-full dark:text-black">

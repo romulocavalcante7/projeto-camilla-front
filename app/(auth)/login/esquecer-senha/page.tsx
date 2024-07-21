@@ -122,7 +122,9 @@ const Password = () => {
                   {...register('email')}
                 />
                 {errors.email && (
-                  <p className="text-red-500">{errors.email.message}</p>
+                  <p className="text-red-500 dark:text-red-400">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
               <Button
