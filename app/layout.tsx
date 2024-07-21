@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import NextTopLoader from 'nextjs-toploader';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,7 +26,7 @@ export default async function RootLayout({
         <NextTopLoader showSpinner color="#B743D0" />
         <Providers>
           <Toaster />
-          {children}
+          <Suspense>{children}</Suspense>
         </Providers>
       </body>
     </html>
