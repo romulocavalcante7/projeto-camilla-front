@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Avatar } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useContext } from 'react';
 import AuthContext from '@/contexts/auth-context';
 
@@ -41,14 +41,17 @@ const Perfil = () => {
             <ArrowLeft
               className="cursor-pointer"
               size={30}
-              onClick={() => router.back()}
+              onClick={() => router.push('/')}
             />
           </div>
         </div>
       </motion.div>
       <div className="flex flex-col items-center justify-center gap-10 px-5">
         <div className="flex flex-col items-center gap-4">
-          <Avatar className="h-24 w-24 bg-gray-300" />
+          <Avatar className="h-28 w-28">
+            <AvatarImage src={user?.avatar?.url} className="object-cover" />
+            <AvatarFallback className="bg-gray-400" />
+          </Avatar>
           <p className="text-xl font-semibold">{user?.name}</p>
         </div>
         <div className="mx-auto flex w-full max-w-lg flex-col gap-5 rounded-lg bg-[#89898938] p-5">
@@ -59,10 +62,13 @@ const Perfil = () => {
             <p>Trocar de senha</p>
             <ChevronRight />
           </Link>
-          <div className="flex w-full  flex-1 cursor-pointer items-center justify-between">
+          <Link
+            href="/perfil/avatar"
+            className="flex w-full  flex-1 cursor-pointer items-center justify-between"
+          >
             <p>Alterar foto de perfil</p>
             <ChevronRight />
-          </div>
+          </Link>
         </div>
       </div>
     </div>

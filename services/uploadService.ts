@@ -7,6 +7,7 @@ export interface UploadFilePayload {
 
 export interface UploadMultipleFilesPayload {
   files: File[];
+  userId?: string;
 }
 
 export interface UploadResponse {
@@ -51,7 +52,9 @@ export const uploadMultipleFiles = async (
   payload.files.forEach((file) => {
     formData.append('files', file);
   });
-
+  if (payload.userId) {
+    formData.append('userId', payload.userId);
+  }
   const response = await Api.post<MultiUploadResponse>(
     `${prefix}/multi-upload`,
     formData,

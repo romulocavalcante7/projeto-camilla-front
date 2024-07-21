@@ -1,9 +1,12 @@
+import AuthContext from '@/contexts/auth-context';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useContext } from 'react';
 
 export function Navbar() {
   const pathname = usePathname();
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="fixed bottom-5 left-1/2 mx-auto flex w-full max-w-[360px] -translate-x-1/2 transform items-center justify-between gap-0 rounded-[18px] border border-stone-300/90 bg-white px-5 py-3 backdrop-blur-[14px] sm:max-w-md dark:border-stone-300/20 dark:bg-neutral-900/70">
@@ -78,7 +81,17 @@ export function Navbar() {
         alt="icone reels"
       />
       <Link href="/perfil" passHref>
-        <div className="h-8 w-8 cursor-pointer rounded-full bg-slate-300" />
+        {user?.avatar?.url ? (
+          <Image
+            className="h-8 w-8 rounded-full object-cover"
+            src={user?.avatar?.url}
+            width={800}
+            height={600}
+            alt="avatar"
+          />
+        ) : (
+          <div className="h-8 w-8 cursor-pointer rounded-full bg-slate-300" />
+        )}
       </Link>
     </div>
   );

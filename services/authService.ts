@@ -1,4 +1,5 @@
 import Api from './api';
+import { Attachment } from './types/entities';
 
 const prefix = 'v1/auth';
 
@@ -34,6 +35,7 @@ export interface User {
   updatedAt: string;
   isEmailVerified: boolean;
   firstAccess: boolean;
+  avatar: Attachment;
 }
 
 export interface AuthTokens {
@@ -49,7 +51,6 @@ export interface AuthTokens {
 
 export interface LoginResponse {
   user: User;
-  tokens: AuthTokens;
 }
 // export const register = async (payload: RegisterPayload): Promise<User> => {
 //   const response = await Api.post<User>(`${prefix}/register`, payload);

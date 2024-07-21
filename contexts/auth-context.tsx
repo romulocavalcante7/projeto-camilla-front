@@ -17,6 +17,7 @@ import {
 } from '@/services/authService';
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
+import { getUser } from '@/services/userService';
 
 interface AuthContextType {
   user: User | null;
@@ -24,6 +25,7 @@ interface AuthContextType {
   logout: () => void;
   setUser: Dispatch<SetStateAction<User | null>>;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+  getSession: () => void;
   isAuthenticated: boolean;
   isLoading: boolean;
 }
@@ -33,6 +35,7 @@ const AuthContext = createContext<AuthContextType>({
   login: async () => {},
   logout: () => {},
   setUser: () => {},
+  getSession: () => {},
   setIsAuthenticated: () => {},
   isAuthenticated: false,
   isLoading: true
@@ -44,6 +47,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { toast } = useToast();
   const router = useRouter();
+
+  const fetchUser = async (id: string) => {
+    const user = await getUser(id);
+    return user;
+  };
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
@@ -58,18 +66,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsAuthenticated(true);
       router.replace('/');
     } catch (error) {
-      const messageError = error.response.data.message;
+      const messageError = error?.response?.data?.message;
       toast({
         position: 'top-center',
         title: 'Ops! Ocorreu algum erro',
         variant: 'destructive',
         description: messageError
       });
-      console.log('error', error);
     } finally {
       setIsLoading(false);
     }
   };
+
   const logout = async () => {
     setIsLoading(true);
     const refreshToken = await getCookie('refreshToken');
@@ -94,7 +102,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(true);
         if (userData) {
           const parsedUserData = JSON.parse(userData.value);
-          setUser(parsedUserData);
+          const user = await fetchUser(parsedUserData.id);
+          setUser(user);
         }
       }
     } finally {
@@ -113,6 +122,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         login,
         logout,
         setUser,
+        getSession,
         isAuthenticated,
         setIsAuthenticated,
         isLoading
