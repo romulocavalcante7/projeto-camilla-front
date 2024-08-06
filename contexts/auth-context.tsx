@@ -9,6 +9,16 @@ import {
   Dispatch,
   SetStateAction
 } from 'react';
+import {
+  Credenza,
+  CredenzaBody,
+  CredenzaClose,
+  CredenzaContent,
+  CredenzaFooter,
+  CredenzaHeader,
+  CredenzaTitle
+} from '@/components/ui/credenza';
+import { Button } from '@/components/ui/button';
 import { getCookie, setCookie, deleteCookie } from '@/utils/nextUtils';
 import {
   login as loginService,
@@ -18,6 +28,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { getUser } from '@/services/userService';
+import { PaymentStatusEnum } from '@/services/types/entities';
 
 interface AuthContextType {
   user: User | null;
@@ -43,6 +54,7 @@ const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [openModal, setOpenModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { toast } = useToast();
@@ -57,6 +69,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       const { tokens, user } = await loginService({ email, password });
+
+      if (user.orderStatus === PaymentStatusEnum.Refunded) {
+        return setOpenModal(true);
+      }
       const tokenExpiry = tokens.access.expires;
       const authToken = `${tokens.access.token}|${tokenExpiry}`;
       await setCookie('accessToken', authToken);
@@ -129,6 +145,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
+      <Credenza onOpenChange={setOpenModal} open={openModal}>
+        <CredenzaContent>
+          <CredenzaHeader>
+            <CredenzaTitle className="text-center text-2xl">
+              Acesso negado
+            </CredenzaTitle>
+            <CredenzaBody className="mb-5 text-center text-lg">
+              Você não possui acesso a plataforma!
+            </CredenzaBody>
+          </CredenzaHeader>
+          <CredenzaFooter className="sm:w-full sm:justify-center">
+            <CredenzaClose asChild>
+              <Button className="w-full">Fechar</Button>
+            </CredenzaClose>
+          </CredenzaFooter>
+        </CredenzaContent>
+      </Credenza>
     </AuthContext.Provider>
   );
 };

@@ -89,6 +89,7 @@ const ResetPassword = () => {
               <Label htmlFor="newPassword">Nova Senha</Label>
               <Input
                 id="newPassword"
+                className="rounded-lg border border-neutral-200 bg-zinc-100 py-6 backdrop-blur-[12.16px] disabled:cursor-not-allowed disabled:opacity-50"
                 type="password"
                 placeholder="Nova Senha"
                 {...register('newPassword')}
@@ -103,6 +104,7 @@ const ResetPassword = () => {
               <Label htmlFor="confirmPassword">Confirmar Senha</Label>
               <Input
                 id="confirmPassword"
+                className="rounded-lg border border-neutral-200 bg-zinc-100 py-6 backdrop-blur-[12.16px] disabled:cursor-not-allowed disabled:opacity-50"
                 type="password"
                 placeholder="Confirmar Senha"
                 {...register('confirmPassword')}

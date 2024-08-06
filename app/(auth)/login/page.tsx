@@ -6,8 +6,8 @@ import UserAuthForm from '@/components/forms/user-auth-form';
 import Image from 'next/image';
 import Logo from '@/app/assets/logo.png';
 export const metadata: Metadata = {
-  title: 'Authentication',
-  description: 'Authentication forms built using the components.'
+  title: 'Login',
+  description: 'Faça seu login em nossa plataforma'
 };
 
 export default function AuthenticationPage() {

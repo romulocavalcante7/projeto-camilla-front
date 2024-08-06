@@ -8,3 +8,11 @@ export interface Attachment {
   updatedAt: string;
   userId: string;
 }
+
+export enum PaymentStatusEnum {
+  Paid = 'paid',
+  WaitingPayment = 'waiting_payment',
+  Refused = 'refused',
+  Refunded = 'refunded',
+  Chargeback = 'chargedback'
+}

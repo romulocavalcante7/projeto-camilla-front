@@ -1,5 +1,6 @@
 import Api from './api';
 import { Attachment } from './types/entities';
+import { Subscription } from './userService';
 
 const prefix = 'v1/auth';
 
@@ -36,6 +37,8 @@ export interface User {
   isEmailVerified: boolean;
   firstAccess: boolean;
   avatar: Attachment;
+  subscription?: Subscription;
+  orderStatus?: string;
 }
 
 export interface AuthTokens {

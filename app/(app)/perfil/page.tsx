@@ -7,12 +7,38 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AuthContext from '@/contexts/auth-context';
+import { Badge } from '@/components/ui/badge';
+import { getUserPaymentStatus, PaymentStatus } from '@/services/paymentService';
+import { PaymentStatusEnum } from '@/services/types/entities';
 
 const Perfil = () => {
   const router = useRouter();
   const { user } = useContext(AuthContext);
+
+  const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | null>(
+    null
+  );
+
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (user?.id && user.subscription?.status) {
+      fetchPaymentStatus(user.id);
+    }
+  }, [user?.id, user?.subscription?.status]);
+
+  const fetchPaymentStatus = async (id: string) => {
+    try {
+      const data = await getUserPaymentStatus(id);
+      setPaymentStatus(data[0]);
+    } catch (err) {
+      console.log('Failed to fetch payment status');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -53,7 +79,30 @@ const Perfil = () => {
             <AvatarFallback className="bg-gray-400" />
           </Avatar>
           <p className="text-xl font-semibold">{user?.name}</p>
+          <div className="flex items-center gap-5">
+            {paymentStatus && user?.orderStatus === PaymentStatusEnum.Paid && (
+              <>
+                <Badge className="py-1" variant="default">
+                  Status: {paymentStatus.status && 'Ativo'}
+                </Badge>
+                <Badge className="py-1" variant="outline">
+                  Plano: {paymentStatus.planType && 'Mensal'}
+                </Badge>
+              </>
+            )}
+            {!paymentStatus && (
+              <>
+                <Badge className="py-1" variant="default">
+                  Status: Ativo
+                </Badge>
+                <Badge className="py-1" variant="outline">
+                  Plano: Unico
+                </Badge>
+              </>
+            )}
+          </div>
         </div>
+
         <div className="mx-auto flex w-full max-w-lg flex-col gap-5 rounded-lg bg-[#89898938] p-5">
           <Link
             href="/perfil/esquecer-senha"
