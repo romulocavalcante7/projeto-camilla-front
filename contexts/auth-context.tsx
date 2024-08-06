@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { tokens, user } = await loginService({ email, password });
 
-      if (user.orderStatus === PaymentStatusEnum.Refunded) {
+      if (user.orderStatus !== PaymentStatusEnum.Paid) {
         return setOpenModal(true);
       }
       const tokenExpiry = tokens.access.expires;
