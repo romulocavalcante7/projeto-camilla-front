@@ -86,17 +86,8 @@ const Perfil = () => {
                   Status: {paymentStatus.status && 'Ativo'}
                 </Badge>
                 <Badge className="py-1" variant="outline">
-                  Plano: {paymentStatus.planType && 'Mensal'}
-                </Badge>
-              </>
-            )}
-            {!paymentStatus && (
-              <>
-                <Badge className="py-1" variant="default">
-                  Status: Ativo
-                </Badge>
-                <Badge className="py-1" variant="outline">
-                  Plano: Unico
+                  Plano:{' '}
+                  {paymentStatus.planType === 'monthly' ? 'Mensal' : 'Anual'}
                 </Badge>
               </>
             )}
