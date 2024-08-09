@@ -26,6 +26,11 @@ export interface ResetPasswordPayload {
   password: string;
 }
 
+export interface Subscription {
+  status: string;
+  frequency: string;
+  nextPayment: string;
+}
 export interface User {
   id: string;
   email: string;
@@ -36,6 +41,8 @@ export interface User {
   isEmailVerified: boolean;
   firstAccess: boolean;
   avatar: Attachment;
+  subscription?: Subscription;
+  orderStatus?: string;
 }
 
 export interface AuthTokens {

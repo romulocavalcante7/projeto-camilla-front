@@ -11,7 +11,9 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Story Plus',
-  description: 'Story Plus',
+  description: 'Story Plus sua plataforma de figurinhas!',
+  keywords: ['Valquiria Brito', 'Story', 'Story Plus', 'Figurinhas'],
+  creator: 'Valquiria Brito',
   manifest: '/manifest.webmanifest'
 };
 

@@ -75,6 +75,11 @@
   }
 }
 
+.react-colorful {
+  width: 100% !important;
+  height: 100px !important;
+}
+
 @layer utilities {
   .min-h-screen {
     min-height: 100vh; /* Fallback */

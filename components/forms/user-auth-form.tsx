@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Lock, User } from 'lucide-react';
+import { Loader2, Lock, User } from 'lucide-react';
 import * as z from 'zod';
 import AuthContext from '@/contexts/auth-context';
 import Link from 'next/link';
@@ -118,7 +118,11 @@ export default function UserAuthForm() {
             className="ml-auto w-full rounded-lg bg-gradient-to-r from-purple-600 to-red-500 py-6 text-lg font-semibold uppercase"
             type="submit"
           >
-            Entrar
+            {loading ? (
+              <Loader2 className="my-4 h-4 w-4 animate-spin" />
+            ) : (
+              'Entrar'
+            )}
           </Button>
         </form>
       </Form>

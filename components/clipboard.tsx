@@ -1,7 +1,7 @@
 'use client';
 
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { CopyIcon } from 'lucide-react';
+import { CopyIcon, Settings } from 'lucide-react';
 import Image from 'next/image';
 import { Sticker } from '@/services/stickerService';
 import { ToastContainer, toast } from 'react-toastify';
@@ -23,6 +23,7 @@ import {
 import { Button } from './ui/button';
 import { fadeIn } from '@/lib/variants';
 import { motion } from 'framer-motion';
+import { EditSticker } from './editSticker';
 
 interface StickerProps {
   stickers: Sticker[];
@@ -94,6 +95,9 @@ const Clipboard = ({
     [key: string]: boolean;
   }>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+  const [selectedStickerEdit, setSelectedStickerEdit] =
+    useState<Sticker | null>(null);
   const [stickerToRemove, setStickerToRemove] = useState<string | null>(null);
 
   useEffect(() => {
@@ -260,6 +264,21 @@ const Clipboard = ({
               alt={sticker.name}
             />
           </div>
+          <div
+            onClick={() => {
+              setSelectedStickerEdit(sticker);
+              setIsModalEditOpen(true);
+            }}
+            className="absolute left-4 top-4 cursor-pointer transition-all"
+          >
+            <Image
+              className="h-5 w-5 sm:h-6 sm:w-6"
+              src="/icons/roda-de-cores.png"
+              width={25}
+              height={25}
+              alt="color picker icone"
+            />
+          </div>
 
           <div className="absolute right-4 top-4 cursor-pointer transition-all">
             {isFavorite ? (
@@ -312,6 +331,12 @@ const Clipboard = ({
         isOpen={isModalOpen}
         onConfirm={handleRemoveFavoriteSticker}
         setIsModalOpen={setIsModalOpen}
+      />
+      <EditSticker
+        isOpen={isModalEditOpen}
+        selectedStickerEdit={selectedStickerEdit}
+        onConfirm={handleRemoveFavoriteSticker}
+        setIsModalOpen={setIsModalEditOpen}
       />
       <ToastContainer />
     </div>
