@@ -28,11 +28,6 @@ yarn-error.log*
 .env*.local
 .env
 
-sw.js
-sw.js.map
-workbox-7144475a.js
-workbox-7144475a.js.map
-
 # vercel
 .vercel
 
