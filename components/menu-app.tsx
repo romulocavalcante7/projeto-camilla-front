@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useContext } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import ThemeToggle from './layout/ThemeToggle/theme-toggle';
 
 export const Menu = () => {
   const router = useRouter();
@@ -75,6 +76,9 @@ export const Menu = () => {
             </Button>
           </div>
         </SheetHeader>
+        <div className="absolute bottom-5 right-5">
+          <ThemeToggle />
+        </div>
       </SheetContent>
     </Sheet>
   );

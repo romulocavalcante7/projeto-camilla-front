@@ -87,7 +87,7 @@ export default function page() {
             </div>
             <p className="font-semibold">Tutoriais</p>
           </Link>
-          <Link href="/fonts" className="flex flex-col items-center gap-1">
+          {/* <Link href="/fonts" className="flex flex-col items-center gap-1">
             <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-purple-500 p-1">
               <div className="h-full w-full rounded-full bg-white p-[4px]">
                 <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-300">
@@ -101,7 +101,7 @@ export default function page() {
               </div>
             </div>
             <p className="font-semibold">Fontes</p>
-          </Link>
+          </Link> */}
         </div>
       </motion.div>
       <CategoryList />
