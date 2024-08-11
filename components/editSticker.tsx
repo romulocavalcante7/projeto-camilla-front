@@ -8,16 +8,13 @@ import {
   useState
 } from 'react';
 import { toast } from 'react-toastify';
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle
-} from '@/components/ui/drawer';
+import { Drawer } from 'rsuite';
 import { Slider } from './ui/slider';
 import { ClipboardPaste, CopyIcon, Loader2 } from 'lucide-react';
 import { HexColorPicker } from 'react-colorful';
 import { ClipboardContext } from '@/contexts/ClipboardContext';
+import { useTheme } from 'next-themes';
+import { Cross2Icon } from '@radix-ui/react-icons';
 
 const snapshotCreator = (canvasElement: HTMLCanvasElement) => {
   return new Promise<Blob>((resolve, reject) => {
@@ -70,6 +67,8 @@ export const EditSticker: React.FC<EditStickerProps> = ({
   selectedStickerEdit,
   setIsModalOpen
 }) => {
+  const { theme } = useTheme();
+  console.log('theme', theme);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { clipboardHexColor, setClipboardHexColor } =
     useContext(ClipboardContext);
@@ -339,153 +338,100 @@ export const EditSticker: React.FC<EditStickerProps> = ({
   };
 
   return (
-    <Drawer onOpenChange={setIsModalOpen} open={isOpen}>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle className="text-center text-2xl">Editar</DrawerTitle>
-        </DrawerHeader>
-        <div className="mb-5 flex max-h-[800px] flex-col items-center justify-center gap-5 overflow-y-auto text-center text-lg sm:flex-row sm:gap-16">
-          <div className="relative">
-            {!loadingImage && image ? (
-              <>
-                <div className="overflow-hidden rounded-2xl bg-[#3F3F3F]">
-                  <canvas ref={canvasRef} width={100} height={100} />
-                </div>
-                <div
-                  className="absolute bottom-0 left-1/2 flex w-fit -translate-x-1/2 transform cursor-pointer items-center gap-2 rounded-lg px-4 py-4"
-                  onClick={() => handleCopyImage()}
-                >
-                  <CopyIcon className="h-8 w-16 text-white sm:h-10" />
-                  <span className="text-xl font-normal text-white sm:text-2xl">
-                    Copiar
-                  </span>
-                </div>
-              </>
-            ) : (
-              <Loader2 className="my-4 h-8 w-8 animate-spin" />
-            )}
-          </div>
-          <div className="mb-8 flex w-full flex-col items-center justify-center gap-5 sm:w-fit">
-            <div className="flex w-full max-w-[280px] flex-col items-center gap-3">
-              <label className="text-2xl font-semibold">Opacidade</label>
-              <Slider
-                value={[imageOpacity]}
-                onValueChange={(value) => {
-                  setImageOpacity(Number(value[0]));
-                }}
-                max={1}
-                step={0.01}
-              />
-            </div>
-            {/* <div className="flex w-full max-w-[280px] flex-col items-center gap-3">
-              <label className="text-2xl font-semibold">Hue Rotation</label>
-              <Slider
-                value={[hueRotation]}
-                onValueChange={(value) => {
-                  setHueRotation(Number(value[0]));
-                }}
-                max={360}
-                step={1}
-              />
-            </div>
-            <div className="flex w-full max-w-[280px] flex-col items-center gap-3">
-              <label className="text-2xl font-semibold">Cor da Sombra</label>
-              <input
-                type="color"
-                value={shadowColor}
-                onChange={(e) => setShadowColor(e.target.value)}
-              />
-            </div>
-            <div className="flex w-full max-w-[280px] flex-col items-center gap-3">
-              <label className="text-2xl font-semibold">Blur da Sombra</label>
-              <Slider
-                value={[shadowBlur]}
-                onValueChange={(value) => setShadowBlur(Number(value[0]))}
-                max={50}
-                step={1}
-              />
-            </div>
-            <div className="flex w-full max-w-[280px] flex-col items-center gap-3">
-              <label className="text-2xl font-semibold">
-                Offset X da Sombra
-              </label>
-              <Slider
-                value={[shadowOffsetX]}
-                onValueChange={(value) => setShadowOffsetX(Number(value[0]))}
-                max={50}
-                step={1}
-              />
-            </div>
-            <div className="flex w-full max-w-[280px] flex-col items-center gap-3">
-              <label className="text-2xl font-semibold">
-                Offset Y da Sombra
-              </label>
-              <Slider
-                value={[shadowOffsetY]}
-                onValueChange={(value) => setShadowOffsetY(Number(value[0]))}
-                max={50}
-                step={1}
-              />
-            </div>
-            <div className="flex w-full max-w-[280px] flex-col items-center gap-3">
-              <label className="text-2xl font-semibold">Habilitar Sombra</label>
-              <input
-                type="checkbox"
-                checked={isShadowEnabled}
-                onChange={(e) => setIsShadowEnabled(e.target.checked)}
-              />
-            </div> */}
-            {isWhiteImage && !loadingImage && (
-              <div className="flex w-full max-w-[280px] flex-col items-center gap-3">
-                <label className="text-2xl font-semibold">
-                  Cor da figurinha
-                </label>
-                <div className="flex w-full gap-1">
-                  <button
-                    className="relative w-full rounded-md border-2 border-gray-300 px-2 py-1 text-center"
-                    style={{ backgroundColor: imageColor }}
-                    onClick={() =>
-                      setIsColorPickerVisible(!isColorPickerVisible)
-                    }
-                  >
-                    {imageColor || 'Selecione uma cor'}
-                  </button>
-                  <div className="flex flex-1 items-center gap-1">
-                    {imageColor && (
-                      <div
-                        onClick={handleCopyHexColor}
-                        className="flex h-full items-center justify-center rounded-md bg-purple-500 px-2"
-                      >
-                        <CopyIcon color="#fff" size={20} />
-                      </div>
-                    )}
-                    {clipboardHexColor && (
-                      <div
-                        onClick={handlePasteHexColor}
-                        className="flex h-full w-full flex-1 items-center justify-center rounded-md bg-purple-500 px-2"
-                      >
-                        <ClipboardPaste color="#fff" size={20} />
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {isColorPickerVisible && (
-                  <HexColorPicker color={imageColor} onChange={setImageColor} />
-                )}
-                {imageColor && (
-                  <button
-                    className="mt-2 w-full rounded-md border-2 border-gray-300 px-2 py-1 text-center"
-                    onClick={resetImageColor}
-                  >
-                    Resetar Cor
-                  </button>
-                )}
+    <Drawer
+      size="full"
+      placement="bottom"
+      open={isOpen}
+      onClose={() => setIsModalOpen(false)}
+      dialogClassName="bg-white dark:bg-[#281d32]"
+      closeButton={false}
+    >
+      <div className="relative py-5">
+        <Cross2Icon
+          onClick={() => setIsModalOpen(false)}
+          className="absolute right-4 top-4 h-8 w-8 cursor-pointer"
+        />
+        <p className="text-center text-2xl">Editar</p>
+      </div>
+      <div className="mb-8 mt-2 flex max-h-[800px] flex-col items-center justify-center gap-5 overflow-y-auto text-center text-lg sm:flex-row sm:gap-16">
+        <div className="relative">
+          {!loadingImage && image ? (
+            <>
+              <div className="overflow-hidden rounded-2xl bg-[#3F3F3F]">
+                <canvas ref={canvasRef} width={100} height={100} />
               </div>
-            )}
-          </div>
+              <div
+                className="absolute bottom-0 left-1/2 flex w-fit -translate-x-1/2 transform cursor-pointer items-center gap-2 rounded-lg px-4 py-4"
+                onClick={() => handleCopyImage()}
+              >
+                <CopyIcon className="h-8 w-16 text-white sm:h-10" />
+                <span className="text-xl font-normal text-white sm:text-2xl">
+                  Copiar
+                </span>
+              </div>
+            </>
+          ) : (
+            <Loader2 className="my-4 h-8 w-8 animate-spin" />
+          )}
         </div>
-      </DrawerContent>
+        <div className="mb-8 flex w-full flex-col items-center justify-center gap-5 sm:w-fit">
+          <div className="flex w-full max-w-[280px] flex-col items-center gap-3">
+            <label className="text-2xl font-semibold">Opacidade</label>
+            <Slider
+              value={[imageOpacity]}
+              onValueChange={(value) => {
+                setImageOpacity(Number(value[0]));
+              }}
+              max={1}
+              step={0.01}
+            />
+          </div>
+          {isWhiteImage && !loadingImage && (
+            <div className="flex w-full max-w-[280px] flex-col items-center gap-3">
+              <label className="text-2xl font-semibold">Cor da figurinha</label>
+              <div className="flex w-full gap-1">
+                <button
+                  className="relative w-full rounded-md border-2 border-gray-300 px-2 py-1 text-center"
+                  style={{ backgroundColor: imageColor }}
+                  onClick={() => setIsColorPickerVisible(!isColorPickerVisible)}
+                >
+                  {imageColor || 'Selecione uma cor'}
+                </button>
+                <div className="flex flex-1 items-center gap-1">
+                  {imageColor && (
+                    <div
+                      onClick={handleCopyHexColor}
+                      className="flex h-full items-center justify-center rounded-md bg-purple-500 px-2"
+                    >
+                      <CopyIcon color="#fff" size={20} />
+                    </div>
+                  )}
+                  {clipboardHexColor && (
+                    <div
+                      onClick={handlePasteHexColor}
+                      className="flex h-full w-full flex-1 items-center justify-center rounded-md bg-purple-500 px-2"
+                    >
+                      <ClipboardPaste color="#fff" size={20} />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {isColorPickerVisible && (
+                <HexColorPicker color={imageColor} onChange={setImageColor} />
+              )}
+              {imageColor && (
+                <button
+                  className="mt-2 w-full rounded-md border-2 border-gray-300 px-2 py-1 text-center"
+                  onClick={resetImageColor}
+                >
+                  Resetar Cor
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
     </Drawer>
   );
 };

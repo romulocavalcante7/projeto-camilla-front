@@ -80,6 +80,11 @@
   height: 100px !important;
 }
 
+.rs-drawer-content {
+  background-color: transparent !important;
+  overflow-y: auto;
+}
+
 @layer utilities {
   .min-h-screen {
     min-height: 100vh; /* Fallback */

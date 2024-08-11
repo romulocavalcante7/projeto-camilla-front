@@ -44,13 +44,11 @@ const SubnicheList = ({ params }: SubnicheProps) => {
         'true'
       );
       //@ts-ignore
-      setSubniches((prev) => {
-        const newSubniches = data.subniches.map((subniche) => ({
-          id: subniche.id,
-          name: subniche.name,
-          attachment: subniche.attachment
-        }));
-        return [...prev, ...newSubniches];
+      setSubniches((prevSubniches) => {
+        const newSubniches = data.subniches.filter(
+          (subniche) => !prevSubniches.some((prev) => prev.id === subniche.id)
+        );
+        return [...prevSubniches, ...newSubniches];
       });
       setTotalPage(data.totalPages);
       setHasMore(page < data.totalPages);
@@ -60,7 +58,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
   };
 
   useEffect(() => {
-    fetchSubniches(page, search);
+    fetchSubniches(page, search ? search : undefined);
   }, [page, search]);
 
   useEffect(() => {
@@ -82,7 +80,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
 
   const handleSearch = (newSearch: string) => {
     if (!newSearch) {
-      return setSearch(newSearch);
+      return setSearch('');
     }
     setSearch(newSearch);
     setPage(1);
@@ -160,9 +158,10 @@ const SubnicheList = ({ params }: SubnicheProps) => {
           next={loadMore}
           threshold={1}
         >
-          {hasMore && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
+          {hasMore ||
+            (loading && <Loader2 className="my-4 h-8 w-8 animate-spin" />)}
         </InfiniteScroll>
-        {!hasMore && subniches.length === 0 && (
+        {!hasMore && subniches.length === 0 && !loading && (
           <p className="text-xl text-gray-500">Não foi encontrado subnichos</p>
         )}
       </ul>

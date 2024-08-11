@@ -31,6 +31,7 @@ import {
   User,
   User2Icon,
   UserX2Icon,
+  VideoIcon,
   X
 } from 'lucide-react';
 
@@ -44,6 +45,7 @@ export const Icons = {
   subnichos: GalleryVerticalEnd,
   nichos: GalleryVertical,
   figurinhas: Sticker,
+  tutoriais: VideoIcon,
   profile: User2Icon,
   spinner: Loader2,
   kanban: CircuitBoardIcon,

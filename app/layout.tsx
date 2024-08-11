@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import NextTopLoader from 'nextjs-toploader';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import 'rsuite/dist/rsuite-no-reset.min.css';
 import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });

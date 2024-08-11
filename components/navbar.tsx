@@ -11,15 +11,6 @@ export function Navbar() {
   return (
     <div className="fixed bottom-5 left-1/2 mx-auto flex w-full max-w-[360px] -translate-x-1/2 transform items-center justify-between gap-0 rounded-[18px] border border-stone-300/90 bg-white px-5 py-3 backdrop-blur-[14px] sm:max-w-md dark:border-stone-300/20 dark:bg-neutral-900/70">
       <Link href="/" passHref>
-        {/* <Image
-          className={`cursor-pointer ${
-            pathname === '/' ? 'bg-blue-500' : ''
-          }`}
-          src="/icons/home.svg"
-          width={30}
-          height={30}
-          alt="icone home"
-        /> */}
         <svg
           className="transition-all"
           width="30"
@@ -37,23 +28,16 @@ export function Navbar() {
           />
         </svg>
       </Link>
-      <Image
-        className="cursor-pointer"
-        src="/icons/search.svg"
-        width={30}
-        height={30}
-        alt="icone search"
-      />
+      <Link href="/search" passHref>
+        <Image
+          className="cursor-pointer"
+          src="/icons/search.svg"
+          width={30}
+          height={30}
+          alt="icone search"
+        />
+      </Link>
       <Link href="/favoritos" passHref>
-        {/* <Image
-          className={`cursor-pointer ${
-            pathname === '/favoritos' ? 'bg-blue-500' : ''
-          }`}
-          src="/icons/heart.svg"
-          width={35}
-          height={35}
-          alt="icone heart"
-        /> */}
         <svg
           width="35"
           height="35"
@@ -73,13 +57,15 @@ export function Navbar() {
           />
         </svg>
       </Link>
-      <Image
-        className="cursor-pointer"
-        src="/icons/reels.svg"
-        width={30}
-        height={30}
-        alt="icone reels"
-      />
+      <Link href="/tutoriais" passHref>
+        <Image
+          className="cursor-pointer"
+          src="/icons/reels.svg"
+          width={30}
+          height={30}
+          alt="icone reels"
+        />
+      </Link>
       <Link href="/perfil" passHref>
         {user?.avatar?.url ? (
           <Image

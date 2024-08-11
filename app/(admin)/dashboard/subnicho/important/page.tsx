@@ -183,10 +183,10 @@ export default function Page() {
                               {subniche.attachment && (
                                 <Image
                                   className="rounded-lg"
-                                  src={subniche.attachment.url}
+                                  src={subniche.attachment?.url}
                                   width={180}
                                   height={40}
-                                  alt={subniche.attachment.filename}
+                                  alt={subniche.attachment?.filename}
                                 />
                               )}
                               <p>{subniche.name}</p>

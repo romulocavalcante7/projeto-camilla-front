@@ -134,5 +134,11 @@ export const navItems: NavItem[] = [
     href: '/dashboard/figurinha',
     icon: 'figurinhas',
     label: 'Figurinhas'
+  },
+  {
+    title: 'Tutoriais',
+    href: '/dashboard/tutorial',
+    icon: 'tutoriais',
+    label: 'Tutoriais'
   }
 ];

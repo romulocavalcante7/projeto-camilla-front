@@ -3,18 +3,18 @@ import { useEffect, useState } from 'react';
 import { getAllCategories, Category } from '@/services/categoryService';
 import Link from 'next/link';
 import Image from 'next/image';
-import InfiniteScroll from '@/components/ui/InfiniteScroll';
 import { Loader2 } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
+import InfiniteScroll from '@/components/ui/InfiniteScroll';
 import Search from './search';
+import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 const CategoryList = () => {
+  const searchParams = useSearchParams();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState(0);
-  const searchParams = useSearchParams();
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [search, setSearch] = useState<string | undefined>(
     searchParams.get('search') || undefined
@@ -48,7 +48,7 @@ const CategoryList = () => {
   };
 
   useEffect(() => {
-    fetchCategories(page, search);
+    fetchCategories(page, search ? search : undefined);
   }, [page, search]);
 
   const loadMore = () => {
@@ -61,7 +61,7 @@ const CategoryList = () => {
 
   const handleSearch = (newSearch: string) => {
     if (!newSearch) {
-      setSearch(newSearch);
+      setSearch('');
       setPage(1);
       setCategories([]);
       return;
@@ -122,9 +122,10 @@ const CategoryList = () => {
         next={loadMore}
         threshold={1}
       >
-        {hasMore && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
+        {hasMore ||
+          (loading && <Loader2 className="my-4 h-8 w-8 animate-spin" />)}
       </InfiniteScroll>
-      {!hasMore && categories.length === 0 && (
+      {!hasMore && categories.length === 0 && !loading && (
         <p className="text-center text-xl text-gray-500">
           Não foi encontrado nichos
         </p>
