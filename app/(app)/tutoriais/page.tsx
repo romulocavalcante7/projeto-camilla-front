@@ -159,8 +159,7 @@ const Page = () => {
           next={loadMore}
           threshold={1}
         >
-          {hasMore ||
-            (loading && <Loader2 className="my-4 h-8 w-8 animate-spin" />)}
+          {hasMore && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
         </InfiniteScroll>
         {!hasMore && tutorials.length === 0 && !loading && (
           <p className="text-center text-xl text-gray-500">

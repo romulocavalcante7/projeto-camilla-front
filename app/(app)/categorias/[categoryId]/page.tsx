@@ -158,8 +158,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
           next={loadMore}
           threshold={1}
         >
-          {hasMore ||
-            (loading && <Loader2 className="my-4 h-8 w-8 animate-spin" />)}
+          {hasMore && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
         </InfiniteScroll>
         {!hasMore && subniches.length === 0 && !loading && (
           <p className="text-xl text-gray-500">Não foi encontrado subnichos</p>

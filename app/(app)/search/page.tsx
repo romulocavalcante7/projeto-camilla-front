@@ -192,8 +192,7 @@ const Page = () => {
               </Link>
             ))}
           </div>
-          {hasMore ||
-            (loading && <Loader2 className="my-4 h-8 w-8 animate-spin" />)}
+          {hasMore && <Loader2 className="my-4 h-8 w-8 animate-spin" />}
         </InfiniteScroll>
 
         {!hasMore &&
