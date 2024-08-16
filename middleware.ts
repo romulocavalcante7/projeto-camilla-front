@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
 }
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|auth|favicon.ico|robots.txt|images|login|public|sw.js).*)',
+    '/((?!api|_next/static|_next/image|auth|favicon.ico|robots.txt|images|login|public|sw.js|manifest.webmanifest|workbox-7144475a.js|icons.json|ios|android|windows11).*)',
     '/dashboard/:path*'
   ]
 };
