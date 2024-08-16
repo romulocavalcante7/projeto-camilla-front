@@ -15,11 +15,7 @@ export const metadata: Metadata = {
   description: 'Story Plus sua plataforma de figurinhas!',
   keywords: ['Valquiria Brito', 'Story', 'Story Plus', 'Figurinhas'],
   creator: 'Valquiria Brito',
-  manifest: '/manifest.webmanifest',
-  icons: [
-    { rel: 'apple-touch-icon', url: 'ios/1024.png' },
-    { rel: 'icon', url: 'ios/1024.png' }
-  ]
+  manifest: '/manifest.webmanifest'
 };
 
 export default async function RootLayout({
