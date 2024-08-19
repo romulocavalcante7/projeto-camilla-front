@@ -126,7 +126,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
           defaultValues={{ search }}
         />
       </motion.div>
-      <div className="grid h-full w-full grid-cols-1 items-center justify-items-center gap-10 overflow-y-auto px-5 lg:grid-cols-2">
+      <div className="grid w-full grid-cols-1 items-center justify-items-center gap-10 px-5 lg:grid-cols-2">
         {subniches.map((subniche) => (
           <Link
             className="w-full"
