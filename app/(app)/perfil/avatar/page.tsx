@@ -20,6 +20,10 @@ import { deleteFile, uploadMultipleFiles } from '@/services/uploadService';
 import AuthContext from '@/contexts/auth-context';
 import toast from 'react-hot-toast';
 import { ArrowLeft, Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useScroll, motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 const registrationSchema = z.object({
   image: z
@@ -32,7 +36,9 @@ type AvatarFormValues = z.infer<typeof registrationSchema>;
 export default function RegisterForm() {
   const { user, getSession } = useContext(AuthContext);
   const router = useRouter();
+  const { scrollY } = useScroll();
   const [preview, setPreview] = useState('');
+  const [scrollAbove10, setScrollAbove10] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -40,6 +46,15 @@ export default function RegisterForm() {
       setPreview(user.avatar.url);
     }
   }, [user]);
+
+  useEffect(() => {
+    const unsubscribe = scrollY.onChange((latest) => {
+      setScrollAbove10(latest > 10);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [scrollY]);
 
   const form = useForm<AvatarFormValues>({
     mode: 'onSubmit',
@@ -82,14 +97,38 @@ export default function RegisterForm() {
   }
 
   return (
-    <div className="mt-20 flex flex-col items-center justify-center">
-      <div className="flex gap-5 self-start px-5">
-        <ArrowLeft
-          className="cursor-pointer"
-          size={30}
-          onClick={() => router.push('/perfil')}
-        />
-      </div>
+    <div className="flex flex-col items-center justify-center gap-2">
+      <motion.div
+        initial={{ opacity: 0, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          type: 'tween',
+          duration: 0.4,
+          ease: [0.25, 0.25, 0.25, 0.75]
+        }}
+        className={cn(
+          'sticky left-0 top-0 z-[2] flex w-full flex-col gap-5 bg-white px-5 py-5 transition-all dark:bg-transparent',
+          scrollAbove10 && 'dark:bg-[#1a101b]/80 dark:backdrop-blur-md'
+        )}
+      >
+        <div className="relative flex flex-col gap-2">
+          <Link className="w-fit" href="/">
+            <Image
+              src="/logo-v2.png"
+              width={160}
+              height={40}
+              alt="icone logo"
+            />
+          </Link>
+          <div className="flex items-center gap-5">
+            <ArrowLeft
+              className="cursor-pointer"
+              size={30}
+              onClick={() => router.back()}
+            />
+          </div>
+        </div>
+      </motion.div>
       <Form {...form}>
         <form
           className="flex flex-col space-y-8"
