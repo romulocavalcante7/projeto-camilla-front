@@ -126,7 +126,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
           defaultValues={{ search }}
         />
       </motion.div>
-      <ul className="grid h-full w-full grid-cols-1 items-center justify-items-center gap-10 overflow-y-auto px-5 lg:grid-cols-2">
+      <div className="grid h-full w-full grid-cols-1 items-center justify-items-center gap-10 overflow-y-auto px-5 lg:grid-cols-2">
         {subniches.map((subniche) => (
           <Link
             className="w-full"
@@ -135,7 +135,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
               subniche.name
             )}`}
           >
-            <li className="relative flex h-40 w-full items-center justify-center rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white">
+            <div className="relative flex h-40 w-full items-center justify-center rounded-2xl bg-[#3F3F3F] text-2xl font-bold text-white">
               {subniche?.attachment?.url && (
                 <Image
                   className="absolute left-0 top-0 h-full w-full rounded-2xl object-cover object-bottom"
@@ -147,7 +147,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
                 />
               )}
               <p>{subniche.name}</p>
-            </li>
+            </div>
           </Link>
         ))}
         <InfiniteScroll
@@ -163,7 +163,7 @@ const SubnicheList = ({ params }: SubnicheProps) => {
         {!hasMore && subniches.length === 0 && !loading && (
           <p className="text-xl text-gray-500">Não foi encontrado subnichos</p>
         )}
-      </ul>
+      </div>
     </div>
   );
 };
