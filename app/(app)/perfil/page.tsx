@@ -118,7 +118,7 @@ const Perfil = () => {
               <HelpCircle />
             </div>
             <a
-              className="flex w-fit text-gray-300"
+              className="flex w-fit dark:text-gray-300"
               href="mailto:portalstoryplus@hotmail.com"
               target="_blank"
             >
