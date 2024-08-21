@@ -1,13 +1,13 @@
 'use client';
 
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight, HelpCircle } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import AuthContext from '@/contexts/auth-context';
 
 import { Switch } from '@/components/ui/switch';
@@ -16,7 +16,6 @@ import { useTheme } from 'next-themes';
 const Perfil = () => {
   const router = useRouter();
   const { user } = useContext(AuthContext);
-  const [loading, setLoading] = useState<boolean>(true);
   const { setTheme, theme } = useTheme();
 
   const ChangeToogle = () => {
@@ -109,6 +108,22 @@ const Perfil = () => {
               onCheckedChange={ChangeToogle}
             />
             Claro
+          </div>
+        </div>
+
+        <div className="mx-auto flex w-full max-w-lg flex-col gap-3">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <p className="text-xl">Suporte</p>
+              <HelpCircle />
+            </div>
+            <a
+              className="flex w-fit text-gray-300"
+              href="mailto:portalstoryplus@hotmail.com"
+              target="_blank"
+            >
+              portalstoryplus@hotmail.com
+            </a>
           </div>
         </div>
       </div>
