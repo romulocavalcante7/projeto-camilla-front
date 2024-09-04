@@ -126,7 +126,7 @@ export default function UserAuthForm() {
           </Button>
         </form>
         <Link
-          href="https://pay.kiwify.com.br/Koo7c0u"
+          href="https://www.valquiriabrito.com"
           target="_blank"
           className="mt-8 flex cursor-pointer items-center justify-center text-center font-semibold text-[#AA47B3] sm:text-lg"
         >
