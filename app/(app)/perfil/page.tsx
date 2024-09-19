@@ -119,10 +119,10 @@ const Perfil = () => {
             </div>
             <a
               className="flex w-fit dark:text-gray-300"
-              href="mailto:portalstoryplus@hotmail.com"
+              href="mailto:portalstoryplus@gmail.com"
               target="_blank"
             >
-              portalstoryplus@hotmail.com
+              portalstoryplus@gmail.com
             </a>
           </div>
         </div>
