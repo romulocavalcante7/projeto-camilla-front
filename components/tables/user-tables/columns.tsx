@@ -1,7 +1,6 @@
 'use client';
 import { ColumnDef } from '@tanstack/react-table';
 import { CellAction } from './cell-action';
-import { Checkbox } from '@/components/ui/checkbox';
 import { format } from 'date-fns';
 import { DataTableColumnHeader } from '../data-header';
 import { Attachment } from '@/services/types/entities';
@@ -22,6 +21,8 @@ interface UserData {
   subscription?: Subscription;
   orderStatus?: string;
   status: boolean;
+  isManuallyCreated: boolean;
+  expirationDate?: string;
 }
 
 type OrderStatusKey = keyof typeof OrderStatus;
@@ -34,12 +35,17 @@ export const columns: ColumnDef<UserData>[] = [
     ),
     cell: ({ row }) => {
       const status = row.original.status;
+      const isManuallyCreated = row.original.isManuallyCreated;
       return (
         <div className="flex items-center justify-center gap-2">
           {status ? (
             <div className="h-2 w-2 rounded-full bg-green-500" />
           ) : (
             <div className="h-2 w-2 rounded-full bg-red-500" />
+          )}
+
+          {isManuallyCreated && (
+            <div className="h-2 w-2 rounded-full bg-blue-500" />
           )}
         </div>
       );

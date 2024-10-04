@@ -53,6 +53,9 @@ export interface User {
   avatar: Attachment;
   subscription?: Subscription;
   orderStatus?: string;
+  status: boolean;
+  isManuallyCreated: boolean;
+  expirationDate?: string;
 }
 
 export interface AuthTokens {
@@ -87,10 +90,24 @@ export interface UsersResponse {
   }[];
 }
 
+export interface CreateUserPayload {
+  email: string;
+  password: string;
+  name: string;
+  role?: string;
+  isManuallyCreated: boolean;
+  expirationDate: string | null;
+}
+
 export interface UpdateUserPayload {
   email?: string;
   role?: string;
 }
+
+export const createUser = async (payload: CreateUserPayload): Promise<User> => {
+  const response = await Api.post<User>(`${prefix}/create`, payload);
+  return response.data;
+};
 
 export const getUser = async (userId: string): Promise<LoginResponse> => {
   const response = await Api.post<LoginResponse>(`${prefix}/user`, { userId });

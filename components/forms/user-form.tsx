@@ -200,6 +200,15 @@ export const UserForm = () => {
                     {user.favorites.length}
                   </div>
                 </div>
+
+                {user.isManuallyCreated && user.expirationDate && (
+                  <div className="flex flex-col gap-2">
+                    <FormLabel>Expiração</FormLabel>
+                    <div className="mt-1 rounded-md bg-gray-100 px-3 py-2 dark:border dark:bg-transparent">
+                      {new Date(user.expirationDate).toLocaleDateString()}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {user.orders[0]?.subscription && (

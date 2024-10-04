@@ -118,7 +118,12 @@ export const UserClient: React.FC = () => {
           title={`Usuários (${totalUsers})`}
           description="Gerenciar usuários"
         />
-        <Button className="text-lg dark:text-black" onClick={() => {}}>
+        <Button
+          className="text-lg dark:text-black"
+          onClick={() => {
+            router.push(`/dashboard/usuarios/new`);
+          }}
+        >
           <Plus className="mr-2 h-4 w-4" /> Criar
         </Button>
       </div>

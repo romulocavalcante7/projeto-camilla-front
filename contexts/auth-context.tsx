@@ -30,6 +30,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { getUser } from '@/services/userService';
 import { PaymentStatusEnum } from '@/services/types/entities';
+import { isExpired } from '@/utils/dataExpired';
 
 interface AuthContextType {
   user: User | null;
@@ -80,34 +81,48 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      if (user.orderStatus !== PaymentStatusEnum.Paid) {
-        let message = '';
-        switch (user.orderStatus) {
-          case PaymentStatusEnum.WaitingPayment:
-            message =
-              'Seu pagamento está pendente. Por favor, efetue o pagamento para continuar.';
-            break;
-          case PaymentStatusEnum.Refused:
-            message =
-              'Seu pagamento foi recusado. Por favor, entre em contato com o suporte.';
-            break;
-          case PaymentStatusEnum.Refunded:
-            message =
-              'Seu pagamento foi reembolsado. Verifique sua conta ou entre em contato.';
-            break;
-          case PaymentStatusEnum.Chargeback:
-            message =
-              'Houve um estorno no seu pagamento. Acesso negado até que o problema seja resolvido.';
-            break;
-          default:
-            message =
-              'Você não possui acesso à plataforma. Verifique seu status de pagamento.';
+      // Usuários manuais: Verifica expiração
+      if (user.isManuallyCreated) {
+        if (isExpired(user.expirationDate)) {
+          setModalMessage(
+            'Você não possui acesso à plataforma. Tempo expirado.'
+          );
+          setOpenModal(true);
+          return;
         }
+      } else {
+        // Usuários normais: Verifica status do pagamento
+        if (user.orderStatus !== PaymentStatusEnum.Paid) {
+          let message = '';
+          switch (user.orderStatus) {
+            case PaymentStatusEnum.WaitingPayment:
+              message =
+                'Seu pagamento está pendente. Por favor, efetue o pagamento para continuar.';
+              break;
+            case PaymentStatusEnum.Refused:
+              message =
+                'Seu pagamento foi recusado. Por favor, entre em contato com o suporte.';
+              break;
+            case PaymentStatusEnum.Refunded:
+              message =
+                'Seu pagamento foi reembolsado. Verifique sua conta ou entre em contato.';
+              break;
+            case PaymentStatusEnum.Chargeback:
+              message =
+                'Houve um estorno no seu pagamento. Acesso negado até que o problema seja resolvido.';
+              break;
+            default:
+              message =
+                'Você não possui acesso à plataforma. Verifique seu status de pagamento.';
+          }
 
-        setModalMessage(message);
-        setOpenModal(true);
-        return;
+          setModalMessage(message);
+          setOpenModal(true);
+          return;
+        }
       }
+
+      // Caso esteja tudo certo, salva os tokens e dados do usuário
       const tokenExpiry = tokens.access.expires;
       const authToken = `${tokens.access.token}|${tokenExpiry}`;
       await setCookie('accessToken', authToken);
@@ -149,44 +164,71 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const accessToken = await getCookie('accessToken');
       const userData = await getCookie('userData');
+
       if (accessToken) {
         setIsAuthenticated(true);
+
         if (userData) {
           const parsedUserData = JSON.parse(userData.value);
 
-          if (parsedUserData.orderStatus !== PaymentStatusEnum.Paid) {
-            let message = '';
-            switch (parsedUserData.orderStatus) {
-              case PaymentStatusEnum.WaitingPayment:
-                message =
-                  'Seu pagamento está pendente. Por favor, efetue o pagamento para continuar.';
-                break;
-              case PaymentStatusEnum.Refused:
-                message =
-                  'Seu pagamento foi recusado. Por favor, entre em contato com o suporte.';
-                break;
-              case PaymentStatusEnum.Refunded:
-                message =
-                  'Seu pagamento foi reembolsado. Verifique sua conta ou entre em contato.';
-                break;
-              case PaymentStatusEnum.Chargeback:
-                message =
-                  'Houve um estorno no seu pagamento. Acesso negado até que o problema seja resolvido.';
-                break;
-              default:
-                message =
-                  'Você não possui acesso à plataforma. Verifique seu status de pagamento.';
+          // Verifica se o usuário foi criado manualmente
+          if (parsedUserData.isManuallyCreated) {
+            // Verifica se a data de expiração já passou
+            const hasExpired = isExpired(parsedUserData.expirationDate);
+            if (hasExpired) {
+              setModalMessage(
+                'Você não possui acesso à plataforma. Tempo expirado'
+              );
+              setOpenModal(true);
+              setIsAuthenticated(false);
+              await logout();
+              router.replace('/login');
+              return;
             }
 
-            setModalMessage(message);
-            setOpenModal(true);
-            setIsAuthenticated(false);
-            await logout();
-            router.replace('/login');
-            return;
+            // Se não expirou, busca o usuário
+            const user = await fetchUser(parsedUserData.id);
+            setUser(user);
+          } else {
+            // Verifica o status do pedido para usuários que NÃO foram criados manualmente
+            if (parsedUserData.orderStatus !== PaymentStatusEnum.Paid) {
+              let message = '';
+
+              switch (parsedUserData.orderStatus) {
+                case PaymentStatusEnum.WaitingPayment:
+                  message =
+                    'Seu pagamento está pendente. Por favor, efetue o pagamento para continuar.';
+                  break;
+                case PaymentStatusEnum.Refused:
+                  message =
+                    'Seu pagamento foi recusado. Por favor, entre em contato com o suporte.';
+                  break;
+                case PaymentStatusEnum.Refunded:
+                  message =
+                    'Seu pagamento foi reembolsado. Verifique sua conta ou entre em contato.';
+                  break;
+                case PaymentStatusEnum.Chargeback:
+                  message =
+                    'Houve um estorno no seu pagamento. Acesso negado até que o problema seja resolvido.';
+                  break;
+                default:
+                  message =
+                    'Você não possui acesso à plataforma. Verifique seu status de pagamento.';
+              }
+
+              // Exibe mensagem e desloga o usuário
+              setModalMessage(message);
+              setOpenModal(true);
+              setIsAuthenticated(false);
+              await logout();
+              router.replace('/login');
+              return;
+            }
+
+            // Caso o status do pedido esteja pago, busca o usuário
+            const user = await fetchUser(parsedUserData.id);
+            setUser(user);
           }
-          const user = await fetchUser(parsedUserData.id);
-          setUser(user);
         }
       }
     } catch (error) {

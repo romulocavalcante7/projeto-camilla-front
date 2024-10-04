@@ -14,7 +14,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders }) => {
   const [activeTab, setActiveTab] = useState<'pedidos' | 'assinaturas'>(
     'pedidos'
   );
-  console.log('orders', orders);
+
   return (
     <div className="mt-8">
       <Heading
@@ -156,14 +156,7 @@ const PedidosTable: React.FC<PedidosTableProps> = ({ orders }) => {
 
                 {/* Data de Criação */}
                 <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900 dark:text-white">
-                  {format(
-                    new Date(
-                      new Date(order.createdAt).setHours(
-                        new Date(order.createdAt).getHours() + 3
-                      )
-                    ), // Adiciona 3 horas
-                    'dd/MM/yyyy HH:mm'
-                  )}
+                  {format(new Date(order.createdAt), 'dd/MM/yyyy HH:mm')}
                 </td>
 
                 {/* Data de Aprovação */}

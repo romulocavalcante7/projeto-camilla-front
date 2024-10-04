@@ -40,6 +40,8 @@ export interface User {
   subscription?: Subscription;
   orderStatus?: string;
   status: boolean;
+  isManuallyCreated: boolean;
+  expirationDate?: string;
 }
 
 export interface AuthTokens {
