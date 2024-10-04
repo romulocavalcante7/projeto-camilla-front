@@ -39,6 +39,7 @@ export interface User {
   avatar: Attachment;
   subscription?: Subscription;
   orderStatus?: string;
+  status: boolean;
 }
 
 export interface AuthTokens {

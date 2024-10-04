@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
     parsedUserData = JSON.parse(userData.value);
   }
   if (
-    parsedUserData.role !== 'ADMIN' &&
+    parsedUserData?.role !== 'ADMIN' &&
     request.nextUrl.pathname.startsWith('/dashboard')
   ) {
     if (tokenCookie) {

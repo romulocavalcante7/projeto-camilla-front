@@ -16,7 +16,11 @@ export const metadata: Metadata = {
     'Portal Story Plus - A sua plataforma completa para figurinhas! Copie e cole figurinhas diretamente nos seus stories, altere cores, ajuste a opacidade e favorite suas figurinhas preferidas sem precisar baixar nada no celular. Torne seus stories únicos e criativos de forma prática e rápida!',
   keywords: ['Valquiria Brito', 'Story', 'Story Plus', 'Figurinhas'],
   creator: 'Valquiria Brito',
-  manifest: '/manifest.webmanifest'
+  manifest: '/manifest.webmanifest',
+  icons: [
+    { rel: 'apple-touch-icon', url: 'ios/1024.png' },
+    { rel: 'icon', url: 'ios/1024.png' }
+  ]
 };
 
 export default async function RootLayout({

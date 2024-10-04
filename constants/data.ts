@@ -140,5 +140,11 @@ export const navItems: NavItem[] = [
     href: '/dashboard/tutorial',
     icon: 'tutoriais',
     label: 'Tutoriais'
+  },
+  {
+    title: 'Usuários',
+    href: '/dashboard/usuarios',
+    icon: 'user',
+    label: 'Tutoriais'
   }
 ];

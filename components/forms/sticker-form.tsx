@@ -279,7 +279,6 @@ export const StickerForm = () => {
               control={form.control}
               name="subniche"
               render={({ field }) => {
-                console.log('field', field);
                 return (
                   <FormItem>
                     <FormLabel>Subnicho</FormLabel>

@@ -19,6 +19,7 @@ import { deleteFile } from '@/services/uploadService';
 import { Edit, MoreHorizontal, Star, StarOff, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import React from 'react';
 
 interface CellActionProps {
   data: Tutorial;

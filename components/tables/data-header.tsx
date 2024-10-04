@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -18,7 +19,7 @@ import {
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>;
-  title: string;
+  title?: string;
   order?: string;
 }
 
@@ -72,7 +73,7 @@ export function DataTableColumnHeader<TData, TValue>({
             size="sm"
             className="-ml-3 h-8 data-[state=open]:bg-accent"
           >
-            <span className="text-sm">{title}</span>
+            {title && <span className="text-sm">{title}</span>}
             {column.getCanSort() && column.getIsSorted() === 'desc' ? (
               <ArrowDownIcon className="ml-2 size-4" aria-hidden="true" />
             ) : column.getIsSorted() === 'asc' ? (
@@ -94,7 +95,11 @@ export function DataTableColumnHeader<TData, TValue>({
                   className="mr-2 size-3.5 text-muted-foreground/70"
                   aria-hidden="true"
                 />
-                {order === 'A' ? 'Abc' : 'Antigo'}
+                {order === 'A'
+                  ? 'Abc'
+                  : order === 'Active'
+                  ? 'Inativo'
+                  : 'Antigo'}
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"
@@ -105,7 +110,11 @@ export function DataTableColumnHeader<TData, TValue>({
                   className="mr-2 size-3.5 text-muted-foreground/70"
                   aria-hidden="true"
                 />
-                {order === 'A' ? 'Zxy' : 'Recente'}
+                {order === 'A'
+                  ? 'Zxy'
+                  : order === 'Active'
+                  ? 'Ativo'
+                  : 'Recente'}
               </DropdownMenuItem>
             </>
           )}

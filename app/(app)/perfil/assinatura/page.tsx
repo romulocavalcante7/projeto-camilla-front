@@ -11,6 +11,7 @@ import AuthContext from '@/contexts/auth-context';
 import { PaymentStatusEnum } from '@/services/types/entities';
 import { getUserPaymentStatus, PaymentStatus } from '@/services/paymentService';
 import { Badge } from '@/components/ui/badge';
+import React from 'react';
 
 const Signature = () => {
   const router = useRouter();

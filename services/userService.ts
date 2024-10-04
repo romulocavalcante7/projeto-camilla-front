@@ -27,9 +27,19 @@ export interface ResetPasswordPayload {
 }
 
 export interface Subscription {
+  id: string;
   status: string;
   frequency: string;
   nextPayment: string;
+  planName: string;
+  plan: {
+    id: string;
+    name: string;
+    frequency: string;
+    qtyCharges: number;
+    createdAt: string;
+    updatedAt: string;
+  };
 }
 export interface User {
   id: string;
@@ -60,7 +70,71 @@ export interface LoginResponse {
   user: User;
 }
 
+export interface UsersResponse {
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  users: {
+    id: string;
+    email: string;
+    name: string;
+    role: string;
+    isEmailVerified: boolean;
+    createdAt: string;
+    updatedAt: string;
+    status: boolean;
+  }[];
+}
+
+export interface UpdateUserPayload {
+  email?: string;
+  role?: string;
+}
+
 export const getUser = async (userId: string): Promise<LoginResponse> => {
   const response = await Api.post<LoginResponse>(`${prefix}/user`, { userId });
+  return response.data;
+};
+
+export const getUserDetail = async (userId: string): Promise<any> => {
+  const response = await Api.post<any>(`${prefix}/userDetail`, { userId });
+  return response.data;
+};
+
+export const updateUser = async (
+  userId: string,
+  payload: UpdateUserPayload
+): Promise<User> => {
+  const response = await Api.patch<User>(`${prefix}/${userId}`, payload);
+  return response.data;
+};
+
+export const deleteUser = async (userId: string): Promise<void> => {
+  await Api.delete(`${prefix}/${userId}`);
+};
+
+export const InactiveUser = async (
+  userId: string,
+  status: boolean
+): Promise<void> => {
+  await Api.post(`${prefix}/${userId}`, { status });
+};
+
+export const getUsers = async (
+  page: number,
+  pageSize: number,
+  search?: string,
+  sortField?: string,
+  sortOrder?: string
+): Promise<UsersResponse> => {
+  const params = {
+    page,
+    pageSize,
+    search,
+    sortField,
+    sortOrder
+  };
+  const response = await Api.get<UsersResponse>(`${prefix}/`, { params });
   return response.data;
 };

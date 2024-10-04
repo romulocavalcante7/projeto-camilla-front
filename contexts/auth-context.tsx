@@ -7,7 +7,8 @@ import {
   useEffect,
   ReactNode,
   Dispatch,
-  SetStateAction
+  SetStateAction,
+  useCallback
 } from 'react';
 import {
   Credenza,
@@ -57,6 +58,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [openModal, setOpenModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [modalMessage, setModalMessage] = useState('');
   const { toast } = useToast();
   const router = useRouter();
 
@@ -70,8 +72,41 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { tokens, user } = await loginService({ email, password });
 
+      if (!user.status) {
+        setModalMessage(
+          'Seu usuário está inativo. Por favor, entre em contato com o suporte.'
+        );
+        setOpenModal(true);
+        return;
+      }
+
       if (user.orderStatus !== PaymentStatusEnum.Paid) {
-        return setOpenModal(true);
+        let message = '';
+        switch (user.orderStatus) {
+          case PaymentStatusEnum.WaitingPayment:
+            message =
+              'Seu pagamento está pendente. Por favor, efetue o pagamento para continuar.';
+            break;
+          case PaymentStatusEnum.Refused:
+            message =
+              'Seu pagamento foi recusado. Por favor, entre em contato com o suporte.';
+            break;
+          case PaymentStatusEnum.Refunded:
+            message =
+              'Seu pagamento foi reembolsado. Verifique sua conta ou entre em contato.';
+            break;
+          case PaymentStatusEnum.Chargeback:
+            message =
+              'Houve um estorno no seu pagamento. Acesso negado até que o problema seja resolvido.';
+            break;
+          default:
+            message =
+              'Você não possui acesso à plataforma. Verifique seu status de pagamento.';
+        }
+
+        setModalMessage(message);
+        setOpenModal(true);
+        return;
       }
       const tokenExpiry = tokens.access.expires;
       const authToken = `${tokens.access.token}|${tokenExpiry}`;
@@ -109,7 +144,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const getSession = async () => {
+  const getSession = useCallback(async () => {
     setIsLoading(true);
     try {
       const accessToken = await getCookie('accessToken');
@@ -118,18 +153,52 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(true);
         if (userData) {
           const parsedUserData = JSON.parse(userData.value);
+
+          if (parsedUserData.orderStatus !== PaymentStatusEnum.Paid) {
+            let message = '';
+            switch (parsedUserData.orderStatus) {
+              case PaymentStatusEnum.WaitingPayment:
+                message =
+                  'Seu pagamento está pendente. Por favor, efetue o pagamento para continuar.';
+                break;
+              case PaymentStatusEnum.Refused:
+                message =
+                  'Seu pagamento foi recusado. Por favor, entre em contato com o suporte.';
+                break;
+              case PaymentStatusEnum.Refunded:
+                message =
+                  'Seu pagamento foi reembolsado. Verifique sua conta ou entre em contato.';
+                break;
+              case PaymentStatusEnum.Chargeback:
+                message =
+                  'Houve um estorno no seu pagamento. Acesso negado até que o problema seja resolvido.';
+                break;
+              default:
+                message =
+                  'Você não possui acesso à plataforma. Verifique seu status de pagamento.';
+            }
+
+            setModalMessage(message);
+            setOpenModal(true);
+            setIsAuthenticated(false);
+            await logout();
+            router.replace('/login');
+            return;
+          }
           const user = await fetchUser(parsedUserData.id);
           setUser(user);
         }
       }
+    } catch (error) {
+      console.error('Error fetching session:', error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [router]);
 
   useEffect(() => {
     getSession();
-  }, []);
+  }, [getSession]);
 
   return (
     <AuthContext.Provider
@@ -152,7 +221,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               Acesso negado
             </CredenzaTitle>
             <CredenzaBody className="mb-5 text-center text-lg">
-              Você não possui acesso a plataforma!
+              {modalMessage}
             </CredenzaBody>
           </CredenzaHeader>
           <CredenzaFooter className="sm:w-full sm:justify-center">

@@ -1,16 +1,15 @@
+import React, { Suspense } from 'react';
 import BreadCrumb from '@/components/breadcrumb';
-import { TutorialClient } from '@/components/tables/tutorial-tables/client';
-import React from 'react';
-import { Suspense } from 'react';
+import { UserClient } from '@/components/tables/user-tables/client';
 
-const breadcrumbItems = [{ title: 'Tutorial', link: '/dashboard/tutorial' }];
+const breadcrumbItems = [{ title: 'Usuários', link: '/dashboard/user' }];
 export default function page() {
   return (
     <>
       <div className="flex-1 space-y-4  p-4 pt-6 md:p-8">
         <BreadCrumb items={breadcrumbItems} />
         <Suspense>
-          <TutorialClient />
+          <UserClient />
         </Suspense>
       </div>
     </>
