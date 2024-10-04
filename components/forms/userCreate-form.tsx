@@ -212,7 +212,12 @@ export const UserCreateForm = () => {
           />
         )}
 
-        <Button type="submit">Criar Usuário</Button>
+        <Button
+          className=" ml-auto w-full text-lg sm:w-fit sm:px-10 dark:border dark:bg-transparent dark:hover:bg-gray-800"
+          type="submit"
+        >
+          Criar Usuário
+        </Button>
       </form>
     </Form>
   );
