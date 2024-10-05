@@ -171,9 +171,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (userData) {
           const parsedUserData = JSON.parse(userData.value);
 
-          // Verifica se o usuário foi criado manualmente
           if (parsedUserData.isManuallyCreated) {
-            // Verifica se a data de expiração já passou
             const hasExpired = isExpired(parsedUserData.expirationDate);
             if (hasExpired) {
               setModalMessage(
@@ -186,11 +184,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               return;
             }
 
-            // Se não expirou, busca o usuário
             const user = await fetchUser(parsedUserData.id);
             setUser(user);
           } else {
-            // Verifica o status do pedido para usuários que NÃO foram criados manualmente
             if (parsedUserData.orderStatus !== PaymentStatusEnum.Paid) {
               let message = '';
 
@@ -216,7 +212,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     'Você não possui acesso à plataforma. Verifique seu status de pagamento.';
               }
 
-              // Exibe mensagem e desloga o usuário
               setModalMessage(message);
               setOpenModal(true);
               setIsAuthenticated(false);
@@ -225,7 +220,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               return;
             }
 
-            // Caso o status do pedido esteja pago, busca o usuário
             const user = await fetchUser(parsedUserData.id);
             setUser(user);
           }

@@ -4,7 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/app/assets/logo.png';
 import { motion } from 'framer-motion';
-export default function page() {
+
+export default function Page() {
   return (
     <div className="flex flex-col items-center justify-center gap-10">
       <motion.div
@@ -87,21 +88,6 @@ export default function page() {
             </div>
             <p className="font-semibold">Tutoriais</p>
           </Link>
-          {/* <Link href="/fonts" className="flex flex-col items-center gap-1">
-            <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-purple-500 p-1">
-              <div className="h-full w-full rounded-full bg-white p-[4px]">
-                <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-300">
-                  <Image
-                    src="/icons/fonts.svg"
-                    width={40}
-                    height={40}
-                    alt="icone fontes"
-                  />
-                </div>
-              </div>
-            </div>
-            <p className="font-semibold">Fontes</p>
-          </Link> */}
         </div>
       </motion.div>
       <CategoryList />

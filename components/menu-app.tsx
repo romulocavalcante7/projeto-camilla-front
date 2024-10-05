@@ -14,14 +14,17 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useContext } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import ThemeToggle from './layout/ThemeToggle/theme-toggle';
+import useSocketStore from '@/store/useSocketStore';
 
 export const Menu = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { logout, user } = useContext(AuthContext);
+  const disconnectSocket = useSocketStore((state) => state.disconnectSocket);
 
   const handleLogout = async () => {
     logout();
+    disconnectSocket();
     router.replace('/login');
   };
 
