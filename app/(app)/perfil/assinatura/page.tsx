@@ -88,15 +88,32 @@ const Signature = () => {
         <div className="flex w-fit gap-5">
           {paymentStatus && user?.orderStatus === PaymentStatusEnum.Paid && (
             <>
-              <Badge className="py-1 text-base" variant="default">
-                Status: {paymentStatus.status && 'Ativo'}
-              </Badge>
-              <Badge className="py-1 text-base" variant="secondary">
+              <div
+                className={cn(
+                  'flex items-center rounded-md px-2.5 py-0.5 font-medium',
+                  paymentStatus.status === 'active'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
+                )}
+              >
+                <p>
+                  Status:{' '}
+                  {paymentStatus.status === 'active' ? 'Ativo' : 'Inativo'}
+                </p>
+              </div>
+              <Badge
+                className="bg-gray-200 py-1 text-base dark:bg-gray-600"
+                variant="secondary"
+              >
                 Plano:{' '}
                 {paymentStatus.planType === 'monthly' ? 'Mensal' : 'Anual'}
               </Badge>
             </>
           )}
+        </div>
+        <div className="flex flex-col gap-1">
+          <div className="text-xl">Próximo pagamento</div>
+          {new Date(user?.subscription?.nextPayment!).toLocaleDateString()}
         </div>
       </div>
     </div>
