@@ -32,7 +32,9 @@ import {
   User2Icon,
   UserX2Icon,
   VideoIcon,
-  X
+  X,
+  FileType,
+  StickyNote
 } from 'lucide-react';
 
 export type Icon = LucideIcon;
@@ -45,6 +47,8 @@ export const Icons = {
   subnichos: GalleryVerticalEnd,
   nichos: GalleryVertical,
   figurinhas: Sticker,
+  fontes: FileType,
+  icones: StickyNote,
   tutoriais: VideoIcon,
   profile: User2Icon,
   spinner: Loader2,

@@ -4,10 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/app/assets/logo.png';
 import { motion } from 'framer-motion';
+import { FolderHeart } from 'lucide-react';
 
 export default function Page() {
   return (
-    <div className="flex flex-col items-center justify-center gap-10">
+    <div className="flex flex-col items-center justify-center gap-5 sm:gap-10">
       <motion.div
         initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
@@ -20,7 +21,7 @@ export default function Page() {
       >
         <div>
           <Image
-            className="w-48"
+            className="w-36"
             src={Logo}
             width={200}
             height={120}
@@ -28,21 +29,6 @@ export default function Page() {
           />
         </div>
         <div className="flex w-full max-w-[380px] items-center gap-6 overflow-x-auto px-5 sm:max-w-full [&::-webkit-scrollbar]:hidden">
-          <Link href="/categorias" className="flex flex-col items-center gap-1">
-            <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-purple-500 p-1">
-              <div className="h-full w-full rounded-full bg-white p-[4px]">
-                <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-300">
-                  <Image
-                    src="/icons/nicho.svg"
-                    width={30}
-                    height={30}
-                    alt="icone nichos"
-                  />
-                </div>
-              </div>
-            </div>
-            <p className="font-semibold">Nichos</p>
-          </Link>
           <Link href="/favoritos" className="flex flex-col items-center gap-1">
             <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-purple-500 p-1">
               <div className="h-full w-full rounded-full bg-white p-[4px]">
@@ -72,6 +58,17 @@ export default function Page() {
               </div>
             </div>
             <p className="font-semibold">Recentes</p>
+          </Link>
+
+          <Link href="/criadas" className="flex flex-col items-center gap-1">
+            <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-purple-500 p-1">
+              <div className="h-full w-full rounded-full bg-white p-[4px]">
+                <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-300">
+                  <FolderHeart color="#F85548" size={40} />
+                </div>
+              </div>
+            </div>
+            <p className="font-semibold">Criações</p>
           </Link>
           <Link href="/tutoriais" className="flex flex-col items-center gap-1">
             <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-purple-500 p-1">

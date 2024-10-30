@@ -98,7 +98,17 @@ export function FileUploader(props: FileUploaderProps) {
     onValueChange,
     onUpload,
     progresses,
-    accept = { 'image/*': [] },
+    accept = {
+      'image/*': [],
+      'font/ttf': ['.ttf'],
+      'font/otf': ['.otf'],
+      'font/woff': ['.woff'],
+      'font/woff2': ['.woff2'],
+      'application/x-font-ttf': ['.ttf'],
+      'application/x-font-opentype': ['.otf'],
+      'application/x-font-woff': ['.woff'],
+      'application/font-woff2': ['.woff2']
+    },
     maxSize = 1024 * 1024 * 2,
     maxFiles = 1,
     multiple = false,
@@ -112,7 +122,7 @@ export function FileUploader(props: FileUploaderProps) {
     prop: valueProp,
     onChange: onValueChange
   });
-  console.log('files', files);
+
   const onDrop = React.useCallback(
     (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
       if (!multiple && maxFiles === 1 && acceptedFiles.length > 1) {
@@ -125,13 +135,18 @@ export function FileUploader(props: FileUploaderProps) {
         return;
       }
 
-      const newFiles = acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
-      );
+      const sanitizedFiles = acceptedFiles.map((file) => {
+        const sanitizedFile = new File([file], file.name.replace(/\s+/g, ''), {
+          type: file.type
+        });
+        return Object.assign(sanitizedFile, {
+          preview: URL.createObjectURL(sanitizedFile)
+        });
+      });
 
-      const updatedFiles = files ? [...files, ...newFiles] : newFiles;
+      const updatedFiles = files
+        ? [...files, ...sanitizedFiles]
+        : sanitizedFiles;
 
       setFiles(updatedFiles);
 
@@ -159,7 +174,6 @@ export function FileUploader(props: FileUploaderProps) {
         });
       }
     },
-
     [files, maxFiles, multiple, onUpload, setFiles]
   );
 
@@ -282,20 +296,59 @@ interface FileCardProps {
   progress?: number;
 }
 
+function isFontFile(file: File): boolean {
+  return (
+    file.type.startsWith('font/') ||
+    ['.ttf', '.otf', '.woff', '.woff2'].some((ext) => file.name.endsWith(ext))
+  );
+}
+
 function FileCard({ file, progress, onRemove }: FileCardProps) {
+  const [fontName, setFontName] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (file && isFontFile(file)) {
+      const fontURL = URL.createObjectURL(file);
+      const fontName = file.name.split('.')[0];
+      const font = new FontFace(fontName, `url(${fontURL})`);
+
+      font
+        .load()
+        .then((loadedFont) => {
+          document.fonts.add(loadedFont);
+          setFontName(fontName);
+        })
+        .catch((error) => {
+          console.error('Erro ao carregar a fonte:', error);
+        });
+
+      return () => {
+        URL.revokeObjectURL(fontURL);
+      };
+    }
+  }, [file]);
+
   return (
     <div className="relative flex flex-col">
       <div className="flex flex-1 flex-col gap-5">
-        {isFileWithPreview(file) ? (
-          <Image
-            src={file.preview}
-            alt={file.name}
-            width={300}
-            height={300}
-            loading="lazy"
-            className="h-64 w-full shrink-0 rounded-md bg-cover object-cover"
-          />
-        ) : null}
+        {fontName ? (
+          <div className="flex flex-col items-center justify-center gap-2">
+            <p style={{ fontFamily: fontName, fontSize: '42px' }}>
+              {file.name.split('.')[0]}
+            </p>
+          </div>
+        ) : (
+          isFileWithPreview(file) && (
+            <Image
+              src={file.preview}
+              alt={file.name}
+              width={300}
+              height={300}
+              loading="lazy"
+              className="h-64 w-full shrink-0 rounded-md bg-cover object-cover"
+            />
+          )
+        )}
         <div className="flex w-full justify-between gap-2">
           <div className="space-y-px">
             <p className="line-clamp-1 text-sm font-medium text-foreground/80">
