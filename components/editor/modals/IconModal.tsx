@@ -59,7 +59,7 @@ export const IconModal = () => {
     try {
       const data = await getAllIcons(
         pageNum,
-        10,
+        900,
         searchTerm,
         undefined,
         undefined,
