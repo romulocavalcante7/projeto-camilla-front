@@ -150,8 +150,9 @@ const TextEditor = () => {
 
     const updateCanvasSize = () => {
       const width = window.innerWidth;
+      const height = window.innerHeight - 180;
       canvasElement.setWidth(width);
-      canvasElement.setHeight(canvasHeight);
+      canvasElement.setHeight(height);
     };
 
     updateCanvasSize();
