@@ -1,5 +1,3 @@
-'use client';
-
 import { useState, useEffect } from 'react';
 import { Drawer } from 'rsuite';
 import { Cross2Icon } from '@radix-ui/react-icons';
@@ -21,9 +19,9 @@ export const IconModal = () => {
   const { saveState } = useCanvasHistoryStore();
 
   const [icons, setIcons] = useState<Icon[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [search, setSearch] = useState<string | undefined>(undefined);
 
@@ -75,8 +73,6 @@ export const IconModal = () => {
       });
       setTotalPage(data.totalPages);
       setHasMore(pageNum < data.totalPages);
-    } catch (error) {
-      console.error('Erro ao buscar ícones:', error);
     } finally {
       setLoading(false);
     }
@@ -84,23 +80,28 @@ export const IconModal = () => {
 
   useEffect(() => {
     if (isOpen) {
-      setPage(1);
-      setIcons([]);
-      fetchIcons(1, search);
+      setIcons([]); // Limpa ícones ao abrir o modal
+      setPage(1); // Reseta a página ao abrir o modal
+      fetchIcons(1, search); // Inicia o carregamento da primeira página
     }
   }, [isOpen, search]);
 
-  const loadMoreIcons = () => {
+  useEffect(() => {
+    if (page > 1 || icons.length === 0) {
+      fetchIcons(page, search);
+    }
+  }, [page]);
+
+  const loadMore = () => {
     if (!loading && page < totalPage) {
       setPage((prevPage) => prevPage + 1);
-      fetchIcons(page + 1, search);
     }
   };
 
   const handleSearch = (newSearch: string) => {
     setSearch(newSearch || undefined);
-    setPage(1);
-    setIcons([]);
+    setPage(1); // Reseta a página para nova busca
+    setIcons([]); // Limpa ícones para nova busca
   };
 
   return (
@@ -133,7 +134,7 @@ export const IconModal = () => {
           totalPage={totalPage}
           hasMore={hasMore}
           isLoading={loading}
-          next={loadMoreIcons}
+          next={loadMore}
         >
           <ul className="grid grid-cols-3 gap-4 pb-10">
             {icons.map((icon) => (
