@@ -348,12 +348,12 @@ const TextEditor = () => {
       if (activeObject) {
         dataURL = activeObject.toDataURL({
           format: 'png',
-          multiplier: 2
+          multiplier: 5
         });
       } else {
         dataURL = canvasRef.current?.toDataURL({
           format: 'png',
-          multiplier: 2
+          multiplier: 5
         });
       }
 
