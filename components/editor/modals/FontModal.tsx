@@ -31,7 +31,7 @@ export const FontModal = ({ saveChanges }: FontModalProps) => {
     try {
       const data = await getAllFonts(
         pageNum,
-        10,
+        999,
         searchTerm,
         undefined,
         undefined,
