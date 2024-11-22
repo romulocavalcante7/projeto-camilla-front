@@ -92,6 +92,10 @@ const TextEditor = () => {
         const textObj = obj as FabricText;
         const updatedProps: Partial<FabricText> = {};
 
+        if (textObj.underline !== undefined) {
+          updatedProps.underline = textObj.underline;
+        }
+
         if (
           fontWeight !== null &&
           fontWeight !== undefined &&

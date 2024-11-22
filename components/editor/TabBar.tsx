@@ -289,24 +289,29 @@ export const TabBar = () => {
 
             <button
               onClick={() => {
-                //@ts-ignore
-                setTextDecoration((prev) =>
-                  prev.includes('underline')
-                    ? prev.filter((dec: string) => dec !== 'underline')
-                    : [...prev, 'underline']
-                );
+                const activeObject =
+                  canvasRef.current?.getActiveObject() as FabricText;
+                if (activeObject && activeObject.type === 'i-text') {
+                  const isUnderlined = activeObject.underline;
+                  activeObject.set('underline', !isUnderlined);
+                  canvasRef.current?.renderAll();
+                }
               }}
               disabled={
                 !selectedObject ||
                 selectedObject.some((item) => item.type === 'image')
               }
               className={`flex w-20 flex-col items-center gap-1 ${
-                textDecoration.includes('underline')
+                selectedObject &&
+                selectedObject.some(
+                  //@ts-ignore
+                  (item) => item.type === 'i-text'
+                )
                   ? 'text-[#e269f0]'
                   : 'text-white'
               } ${
                 !selectedObject ||
-                selectedObject.some((item) => item.type === 'image')
+                selectedObject.some((item) => item.type !== 'i-text')
                   ? 'cursor-not-allowed opacity-50'
                   : 'cursor-pointer'
               }`}
