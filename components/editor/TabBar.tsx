@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import {
   BaselineIcon,
@@ -27,8 +27,6 @@ export const TabBar = () => {
     setFontWeight,
     setFontStyle,
     fontStyle,
-    setTextDecoration,
-    textDecoration,
     setIsColorModalOpen,
     setIsFontModalOpen,
     setIsIconModalOpen,
@@ -44,6 +42,8 @@ export const TabBar = () => {
     setIsGradientModalOpen,
     setSelectedText
   } = useCanvasEditorStore();
+
+  const [textDecoration, setTextDecoration] = useState(false);
 
   const handleOpenCurvedTextModal = () => {
     const activeObject = canvasRef.current?.getActiveObject() as FabricText;
@@ -293,6 +293,7 @@ export const TabBar = () => {
                   canvasRef.current?.getActiveObject() as FabricText;
                 if (activeObject && activeObject.type === 'i-text') {
                   const isUnderlined = activeObject.underline;
+                  setTextDecoration(!isUnderlined);
                   activeObject.set('underline', !isUnderlined);
                   canvasRef.current?.renderAll();
                 }
@@ -302,14 +303,6 @@ export const TabBar = () => {
                 selectedObject.some((item) => item.type === 'image')
               }
               className={`flex w-20 flex-col items-center gap-1 ${
-                selectedObject &&
-                selectedObject.some(
-                  //@ts-ignore
-                  (item) => item.type === 'i-text'
-                )
-                  ? 'text-[#e269f0]'
-                  : 'text-white'
-              } ${
                 !selectedObject ||
                 selectedObject.some((item) => item.type !== 'i-text')
                   ? 'cursor-not-allowed opacity-50'
@@ -317,12 +310,20 @@ export const TabBar = () => {
               }`}
             >
               <span
-                className="text-lg text-black dark:text-white"
+                className={cn(
+                  'text-lg text-black',
+                  textDecoration ? 'text-[#e269f0]' : 'dark:text-white'
+                )}
                 style={{ textDecoration: 'underline' }}
               >
                 U
               </span>
-              <span className="mt-1 text-xs text-black dark:text-white">
+              <span
+                className={cn(
+                  'mt-1 text-xs text-black',
+                  textDecoration ? 'text-[#e269f0]' : 'dark:text-white'
+                )}
+              >
                 Sublinhar
               </span>
             </button>
