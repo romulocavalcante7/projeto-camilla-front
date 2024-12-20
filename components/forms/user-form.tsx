@@ -22,7 +22,8 @@ import { Input } from '@/components/ui/input';
 import {
   getUserDetail,
   updateUser,
-  InactiveUser
+  InactiveUser,
+  UpdateUserPayload
 } from '@/services/userService';
 import Image from 'next/image';
 import OrdersTable from '../orders-table';
@@ -39,7 +40,8 @@ import { cn } from '@/lib/utils';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Email inválido' }),
-  role: z.enum(['USER', 'ADMIN'], { required_error: 'Função é obrigatória' })
+  role: z.enum(['USER', 'ADMIN'], { required_error: 'Função é obrigatória' }),
+  expirationDate: z.string().optional()
 });
 
 type UserFormValues = z.infer<typeof formSchema>;
@@ -56,7 +58,8 @@ export const UserForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
-      role: 'USER'
+      role: 'USER',
+      expirationDate: ''
     }
   });
 
@@ -68,7 +71,10 @@ export const UserForm = () => {
       setIsUserInactive(!data.status);
       form.reset({
         email: data.email,
-        role: data.role as 'USER' | 'ADMIN'
+        role: data.role as 'USER' | 'ADMIN',
+        expirationDate: data.expirationDate
+          ? new Date(data.expirationDate).toISOString().split('T')[0]
+          : ''
       });
     } catch (error) {
       console.error('Erro ao buscar detalhes do usuário:', error);
@@ -88,7 +94,13 @@ export const UserForm = () => {
   const onSubmit = async (data: UserFormValues) => {
     try {
       setLoading(true);
-      const payload: { email?: string; role: string } = { role: data.role };
+      const payload: UpdateUserPayload = {
+        email: data.email !== user?.email ? data.email : undefined,
+        role: data.role,
+        expirationDate: data.expirationDate
+          ? new Date(data.expirationDate).toISOString()
+          : undefined
+      };
 
       if (data.email !== user?.email) {
         payload.email = data.email;
@@ -202,12 +214,25 @@ export const UserForm = () => {
                 </div>
 
                 {user.isManuallyCreated && user.expirationDate && (
-                  <div className="flex flex-col gap-2">
-                    <FormLabel>Expiração</FormLabel>
-                    <div className="mt-1 rounded-md bg-gray-100 px-3 py-2 dark:border dark:bg-transparent">
-                      {new Date(user.expirationDate).toLocaleDateString()}
-                    </div>
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="expirationDate"
+                    render={({ field }) => {
+                      return (
+                        <FormItem>
+                          <FormLabel>Data de Expiração</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="date"
+                              placeholder="Selecione a data de expiração"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
+                  />
                 )}
               </div>
 
