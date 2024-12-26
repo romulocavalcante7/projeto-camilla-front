@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import {
   Form,
   FormControl,
@@ -54,6 +55,8 @@ export const UserForm = () => {
   const [user, setUser] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [isUserInactive, setIsUserInactive] = useState<boolean>(false);
+  const [isManuallyCreated, setIsManuallyCreated] = useState(false);
+  console.log('isManuallyCreated', isManuallyCreated);
   const form = useForm<UserFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,7 +70,9 @@ export const UserForm = () => {
     setLoading(true);
     try {
       const data = await getUserDetail(userId);
+      console.log('data', data);
       setUser(data);
+      setIsManuallyCreated(data?.isManuallyCreated);
       setIsUserInactive(!data.status);
       form.reset({
         email: data.email,
@@ -128,6 +133,34 @@ export const UserForm = () => {
     } catch (error) {
       toast.error('Erro ao inativar usuário.');
       console.error('Erro ao inativar usuário:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleToggle = async () => {
+    try {
+      setLoading(true);
+      const updatedUser = {
+        isManuallyCreated: !isManuallyCreated,
+        expirationDate: !isManuallyCreated ? null : user?.expirationDate
+      };
+      await updateUser(userId, updatedUser);
+      setIsManuallyCreated(!isManuallyCreated);
+      form.reset({
+        email: user.email,
+        role: user.role as 'USER' | 'ADMIN',
+        expirationDate: user.expirationDate
+          ? new Date(user.expirationDate).toISOString().split('T')[0]
+          : ''
+      });
+      toast.success('Atualizado com sucesso!');
+      if (userId) {
+        fetchUserDetail(userId);
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar "isManuallyCreated":', error);
+      toast.error('Erro ao atualizar "isManuallyCreated".');
     } finally {
       setLoading(false);
     }
@@ -213,7 +246,7 @@ export const UserForm = () => {
                   </div>
                 </div>
 
-                {user.isManuallyCreated && user.expirationDate && (
+                {isManuallyCreated && (
                   <FormField
                     control={form.control}
                     name="expirationDate"
@@ -234,8 +267,18 @@ export const UserForm = () => {
                     }}
                   />
                 )}
+                <div className="mb-2 flex flex-col gap-2 space-y-2">
+                  <FormLabel>Ativar expiração</FormLabel>
+                  <Switch
+                    checked={isManuallyCreated}
+                    onCheckedChange={handleToggle}
+                    className="data-[state=checked]:bg-gray-200 data-[state=unchecked]:bg-gray-200"
+                    //@ts-ignore
+                    classNameThumb="data-[state=unchecked]:bg-red-500 data-[state=checked]:bg-green-500"
+                    // disabled={loading}
+                  />
+                </div>
               </div>
-
               {user.orders[0]?.subscription && (
                 <div>
                   Plano:{' '}

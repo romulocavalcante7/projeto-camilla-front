@@ -102,7 +102,8 @@ export interface CreateUserPayload {
 export interface UpdateUserPayload {
   email?: string;
   role?: string;
-  expirationDate?: string | undefined;
+  expirationDate?: string | undefined | null;
+  isManuallyCreated?: boolean;
 }
 
 export const createUser = async (payload: CreateUserPayload): Promise<User> => {
