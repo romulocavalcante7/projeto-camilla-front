@@ -10,7 +10,7 @@ export default function CreateLayout({
 }) {
   return (
     <main>
-      <div className="relative mx-auto max-w-7xl flex-1">
+      <div className="relative mx-auto max-w-xl flex-1">
         {/* <Menu /> */}
         <Suspense fallback={<></>}>{children}</Suspense>
       </div>

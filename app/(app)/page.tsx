@@ -1,10 +1,7 @@
 'use client';
-import CategoryList from '@/components/categories';
 import Image from 'next/image';
-import Link from 'next/link';
 import Logo from '@/app/assets/logo.png';
 import { motion } from 'framer-motion';
-import { FolderHeart } from 'lucide-react';
 
 export default function Page() {
   return (
@@ -19,7 +16,7 @@ export default function Page() {
         }}
         className="flex flex-col items-center gap-5"
       >
-        <div>
+        {/* <div>
           <Image
             className="w-36"
             src={Logo}
@@ -27,67 +24,8 @@ export default function Page() {
             height={120}
             alt="logo versão 2"
           />
-        </div>
-        <div className="flex w-full max-w-[380px] items-center gap-6 overflow-x-auto px-5 sm:max-w-full [&::-webkit-scrollbar]:hidden">
-          <Link href="/favoritos" className="flex flex-col items-center gap-1">
-            <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-purple-500 p-1">
-              <div className="h-full w-full rounded-full bg-white p-[4px]">
-                <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-300">
-                  <Image
-                    src="/icons/favorite.svg"
-                    width={40}
-                    height={40}
-                    alt="icone favoritos"
-                  />
-                </div>
-              </div>
-            </div>
-            <p className="font-semibold">Favoritos</p>
-          </Link>
-          <Link href="/recentes" className="flex flex-col items-center gap-1">
-            <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-purple-500 p-1">
-              <div className="h-full w-full rounded-full bg-white p-[3px]">
-                <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-300">
-                  <Image
-                    src="/icons/recent.svg"
-                    width={40}
-                    height={40}
-                    alt="icone recentes"
-                  />
-                </div>
-              </div>
-            </div>
-            <p className="font-semibold">Recentes</p>
-          </Link>
-
-          <Link href="/criadas" className="flex flex-col items-center gap-1">
-            <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-purple-500 p-1">
-              <div className="h-full w-full rounded-full bg-white p-[4px]">
-                <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-300">
-                  <FolderHeart color="#F85548" size={40} />
-                </div>
-              </div>
-            </div>
-            <p className="font-semibold">Criações</p>
-          </Link>
-          <Link href="/tutoriais" className="flex flex-col items-center gap-1">
-            <div className="h-20 w-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-purple-500 p-1">
-              <div className="h-full w-full rounded-full bg-white p-[4px]">
-                <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-300">
-                  <Image
-                    src="/icons/tutorial.svg"
-                    width={40}
-                    height={40}
-                    alt="icone tutoriais"
-                  />
-                </div>
-              </div>
-            </div>
-            <p className="font-semibold">Tutoriais</p>
-          </Link>
-        </div>
+        </div> */}
       </motion.div>
-      <CategoryList />
     </div>
   );
 }
