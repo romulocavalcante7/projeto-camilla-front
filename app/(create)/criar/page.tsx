@@ -222,6 +222,22 @@ const TextEditor = () => {
         <p className="flex flex-1 items-center justify-center text-center">
           Editar
         </p>
+
+        <button
+          //@ts-ignore
+          onClick={() => document.getElementById('imageInput').click()}
+          className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white"
+        >
+          Inserir Imagem
+        </button>
+        <input
+          type="file"
+          id="imageInput"
+          style={{ display: 'none' }}
+          accept="image/*"
+          onChange={handleImageUpload}
+        />
+
         <div className="flex items-center gap-4">
           <div className="flex flex-col items-center gap-1">
             <Copy
@@ -279,23 +295,6 @@ const TextEditor = () => {
         <canvas
           ref={canvasElementRef}
           className="relative mx-auto w-full max-w-xl cursor-crosshair rounded-xl"
-        />
-      </div>
-
-      <div className="flex items-center gap-4">
-        <button
-          //@ts-ignore
-          onClick={() => document.getElementById('imageInput').click()}
-          className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white"
-        >
-          Inserir Imagem
-        </button>
-        <input
-          type="file"
-          id="imageInput"
-          style={{ display: 'none' }}
-          accept="image/*"
-          onChange={handleImageUpload}
         />
       </div>
 

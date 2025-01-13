@@ -1,44 +1,13 @@
-import AuthContext from '@/contexts/auth-context';
-import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useContext } from 'react';
 
 export function Navbar() {
-  const pathname = usePathname();
-  const { user } = useContext(AuthContext);
-
   return (
-    <div className="fixed bottom-5 left-1/2 mx-auto flex w-full max-w-[360px] -translate-x-1/2 transform items-center justify-between gap-12 rounded-[18px] border border-stone-300/90 bg-white px-5 py-3 backdrop-blur-[14px] sm:max-w-md sm:px-10 dark:border-stone-300/20 dark:bg-neutral-900/70">
-      <div className="flex items-center gap-10 sm:gap-12">
-        <Link href="/criar" passHref>
-          <svg
-            className="transition-all"
-            width="30"
-            height="30"
-            viewBox="0 0 1150 1150"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              className="transition-all"
-              d="M531.282 39.6652C538.71 38.0137 546.552 35.9492 548.822 35.5364C551.092 34.917 565.124 34.917 579.775 35.1235C600.41 35.7428 609.903 36.9815 621.046 40.491C629.094 42.9683 640.03 47.5101 645.808 50.4003C651.38 53.2905 744.858 116.05 853.194 189.956C1029.21 309.694 1052.12 326.003 1067.8 341.899C1080.39 354.492 1087.82 364.402 1094.01 376.169C1098.76 385.046 1104.53 398.465 1106.8 405.897C1109.07 413.329 1111.96 426.335 1113.2 434.799C1114.85 445.328 1115.26 533.686 1114.85 714.531C1114.23 962.264 1113.82 979.605 1110.31 991.166C1108.25 997.979 1103.5 1010.57 1099.37 1019.04C1095.45 1027.5 1088.23 1040.09 1083.49 1046.91C1078.53 1053.72 1068.63 1064.87 1061.2 1071.68C1053.77 1078.49 1040.36 1088.19 1031.48 1093.36C1022.4 1098.52 1007.75 1104.92 982.165 1112.97L735.572 1114V948.432C735.572 808.05 735.16 781.212 732.683 773.367C730.826 768.206 725.667 760.155 720.715 754.787C715.762 749.833 707.714 743.846 702.556 741.369C693.476 737.446 689.762 737.24 574.616 737.24C459.47 737.24 455.756 737.446 446.676 741.369C441.518 743.846 433.47 749.833 428.517 754.787C423.565 760.155 418.406 768.206 416.549 773.367C414.073 781.212 413.66 808.05 413.66 1114L167.067 1112.97L150.558 1107.81C141.479 1104.92 126.621 1098.52 117.748 1093.36C108.875 1088.19 95.049 1078.08 87.0012 1070.65C79.1598 1063.21 69.0484 1052.07 64.9213 1045.87C60.5879 1039.68 54.3973 1028.74 50.6829 1021.72C47.1749 1014.49 42.2224 1001.49 35 976.715V431.702L39.7461 414.155C42.4287 404.452 48.8257 388.349 54.1909 378.027C61.6197 363.989 68.0167 355.318 81.4297 341.899C97.1126 326.003 119.399 310.107 293.974 191.195C401.279 118.114 495.376 54.9421 503.424 50.8132C511.472 46.4779 523.853 41.5232 531.282 39.6652Z"
-              fill={pathname === '/' ? '#B743D0' : ''}
-              stroke="#B743D0"
-              strokeWidth="70"
-            />
-          </svg>
-        </Link>
-        <Link href="/search" passHref>
-          <Image
-            className="cursor-pointer"
-            src="/icons/search.svg"
-            width={30}
-            height={30}
-            alt="icone search"
-          />
-        </Link>
-      </div>
-    </div>
+    <Link
+      href="/ficha"
+      className="fixed bottom-5 left-1/2 mx-auto flex w-full max-w-[360px] -translate-x-1/2 transform items-center justify-center gap-12 rounded-[18px] border border-stone-300/90 bg-white px-5 py-3 backdrop-blur-[14px] sm:max-w-md sm:px-10 dark:border-stone-300/20 dark:bg-neutral-900/70"
+      passHref
+    >
+      Iniciar
+    </Link>
   );
 }

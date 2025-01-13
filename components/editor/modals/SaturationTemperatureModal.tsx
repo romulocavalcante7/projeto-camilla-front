@@ -19,9 +19,9 @@ export const SaturationTemperatureModal = ({
   } = useCanvasEditorStore();
 
   const [intensity, setIntensity] = useState(0.5);
-  const [red, setRed] = useState(1);
-  const [green, setGreen] = useState(1);
-  const [blue, setBlue] = useState(1);
+  const [red, setRed] = useState(1.2);
+  const [green, setGreen] = useState(0);
+  const [blue, setBlue] = useState(0);
 
   const applyFilters = (
     intensity: number,
@@ -89,7 +89,7 @@ export const SaturationTemperatureModal = ({
 
   return (
     <Drawer
-      size="xs"
+      size={220}
       placement="bottom"
       open={isOpen}
       onClose={handleClose}
@@ -106,52 +106,16 @@ export const SaturationTemperatureModal = ({
         </p>
       </div>
 
-      <div className="max-h-[320px] overflow-y-auto p-4">
+      <div className="max-h-[200px] overflow-y-auto p-4">
         {/* Intensidade */}
-        <div className="mb-6">
-          <p className="text-center text-lg">Intensidade</p>
+        <div className="mb-6 flex flex-col gap-4">
+          <p className="text-center text-lg">Intensidade Marrom</p>
           <Slider
             value={[intensity]}
             onValueChange={(value) => setIntensity(Number(value[0]))}
             min={0}
             max={10}
             step={0.01}
-          />
-        </div>
-
-        {/* Vermelho */}
-        <div className="mb-6">
-          <p className="text-center text-lg">Vermelho</p>
-          <Slider
-            value={[red]}
-            onValueChange={(value) => setRed(Number(value[0]))}
-            min={0}
-            max={2}
-            step={0.1}
-          />
-        </div>
-
-        {/* Verde */}
-        <div className="mb-6">
-          <p className="text-center text-lg">Verde</p>
-          <Slider
-            value={[green]}
-            onValueChange={(value) => setGreen(Number(value[0]))}
-            min={0}
-            max={2}
-            step={0.1}
-          />
-        </div>
-
-        {/* Azul */}
-        <div className="mb-6">
-          <p className="text-center text-lg">Azul</p>
-          <Slider
-            value={[blue]}
-            onValueChange={(value) => setBlue(Number(value[0]))}
-            min={0}
-            max={2}
-            step={0.1}
           />
         </div>
       </div>

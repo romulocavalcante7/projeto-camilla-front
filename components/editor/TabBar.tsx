@@ -1,13 +1,6 @@
 'use client';
 import React from 'react';
 // import { cn } from '@/lib/utils';
-// import {
-//   BaselineIcon,
-//   CircleDashed,
-//   Rainbow,
-//   TriangleRight,
-//   TypeIcon
-// } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useCanvasEditorStore } from '@/store/canvasEditorStore';
 
@@ -17,14 +10,13 @@ export const TabBar = () => {
     currentMenu,
     setCurrentMenu,
     selectedObject,
-    setIsColorModalOpen,
     setIsIconModalOpen,
     setIsOpacityModalOpen,
     setIsSaturationTemperatureModalOpen
   } = useCanvasEditorStore();
 
   return (
-    <div className="fixed bottom-5 mx-auto flex w-full max-w-[370px] items-center gap-2 rounded-lg border bg-gray-50 pt-3  backdrop-blur-[14px] sm:max-w-lg sm:px-10 dark:border-none dark:border-stone-300/20 dark:bg-[#2E2B2B]">
+    <div className="fixed bottom-5 mx-auto flex w-full max-w-[370px] items-center justify-center gap-2 rounded-lg border bg-gray-50 pt-3  backdrop-blur-[14px] sm:max-w-lg sm:px-10 dark:border-none dark:border-stone-300/20 dark:bg-[#2E2B2B]">
       {currentMenu !== 'main' && (
         <button
           onClick={() => setCurrentMenu('main')}
@@ -39,13 +31,12 @@ export const TabBar = () => {
         </button>
       )}
 
-      <div className="flex items-center justify-start gap-2 overflow-x-auto pb-3">
+      <div className="flex items-center justify-center gap-2 overflow-x-auto pb-3">
         {currentMenu !== 'style' && currentMenu !== 'align' && (
           <div className="flex items-center justify-start gap-2 pr-5">
             <button
-              onClick={() => setIsColorModalOpen(true)}
-              // disabled={selectedObject.some((item) => item.type === 'image')}
-              className={`flex w-20 cursor-pointer flex-col items-center gap-0`}
+              onClick={() => setIsSaturationTemperatureModalOpen(true)}
+              className="flex w-20 cursor-pointer flex-col items-center gap-0"
             >
               <svg
                 width="30"
@@ -90,33 +81,8 @@ export const TabBar = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-
-              <span className="mt-2 text-xs text-black dark:text-white">
-                Cor
-              </span>
-            </button>
-
-            <button
-              onClick={() => setIsSaturationTemperatureModalOpen(true)}
-              className="flex w-20 cursor-pointer flex-col items-center gap-0"
-            >
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 1V5C12 5.53043 12.2107 6.03914 12.5858 6.41421C12.9609 6.78929 13.4696 7 14 7H18M6 11H6.01M14 11H14.01M8 14C8 14 8.8 15 10 15C11.3 15 12 14 12 14M13.5 1H3C2.46957 1 1.96086 1.21071 1.58579 1.58579C1.21071 1.96086 1 2.46957 1 3V17C1 18.1 1.9 19 3 19H17C17.5304 19 18.0391 18.7893 18.4142 18.4142C18.7893 18.0391 19 17.5304 19 17V6.5L13.5 1Z"
-                  stroke="#000"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
               <span className="mt-[10px] text-xs text-black dark:text-white">
-                Filtros
+                Cor
               </span>
             </button>
 
@@ -125,22 +91,25 @@ export const TabBar = () => {
               className={`flex w-20 cursor-pointer flex-col items-center gap-0`}
             >
               <svg
-                width="28"
-                height="28"
-                viewBox="0 0 20 20"
-                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="lucide lucide-eye-closed"
               >
-                <path
-                  d="M12 1V5C12 5.53043 12.2107 6.03914 12.5858 6.41421C12.9609 6.78929 13.4696 7 14 7H18M6 11H6.01M14 11H14.01M8 14C8 14 8.8 15 10 15C11.3 15 12 14 12 14M13.5 1H3C2.46957 1 1.96086 1.21071 1.58579 1.58579C1.21071 1.96086 1 2.46957 1 3V17C1 18.1 1.9 19 3 19H17C17.5304 19 18.0391 18.7893 18.4142 18.4142C18.7893 18.0391 19 17.5304 19 17V6.5L13.5 1Z"
-                  stroke={theme === 'dark' ? '#fff' : '#000'}
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+                <path d="m15 18-.722-3.25" />
+                <path d="M2 8a10.645 10.645 0 0 0 20 0" />
+                <path d="m20 15-1.726-2.05" />
+                <path d="m4 15 1.726-2.05" />
+                <path d="m9 18 .722-3.25" />
               </svg>
               <span className="mt-[10px] text-xs text-black dark:text-white">
-                Ícone
+                Cílios
               </span>
             </button>
 

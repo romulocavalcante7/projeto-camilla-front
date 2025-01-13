@@ -118,7 +118,7 @@ export const IconModal = () => {
           onClick={() => onClose(false)}
           className="absolute right-4 top-5 h-8 w-8 cursor-pointer"
         />
-        <p className="text-center text-2xl font-semibold">Selecione um Ícone</p>
+        <p className="text-center text-2xl font-semibold">Selecione</p>
       </div>
 
       <div className="max-h-full overflow-y-auto p-4 pb-16">
