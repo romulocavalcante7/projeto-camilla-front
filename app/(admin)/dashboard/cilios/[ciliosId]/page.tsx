@@ -1,19 +1,19 @@
 'use client';
 import BreadCrumb from '@/components/breadcrumb';
-import { TutorialsForm } from '@/components/forms/tutorials-form';
+import { StickerForm } from '@/components/forms/sticker-form';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default function Page() {
   const breadcrumbItems = [
-    { title: 'Tutorial', link: '/dashboard/tutorial' },
-    { title: 'Criar', link: '/dashboard/tutorial/create' }
+    { title: 'Cílios', link: '/dashboard/cilios' },
+    { title: 'Criar', link: '/dashboard/cilios/create' }
   ];
 
   return (
     <ScrollArea className="h-full">
       <div className="flex-1 space-y-4 p-5">
         <BreadCrumb items={breadcrumbItems} />
-        <TutorialsForm />
+        <StickerForm />
       </div>
     </ScrollArea>
   );

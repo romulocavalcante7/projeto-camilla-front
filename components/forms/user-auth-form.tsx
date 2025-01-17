@@ -62,7 +62,9 @@ export default function UserAuthForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="text-white dark:text-white">
+                    Email
+                  </FormLabel>
                   <FormControl>
                     <Input
                       startIcon={User}
@@ -84,7 +86,9 @@ export default function UserAuthForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Senha</FormLabel>
+                  <FormLabel className="text-white dark:text-white">
+                    Senha
+                  </FormLabel>
                   <FormControl>
                     <Input
                       startIcon={Lock}
@@ -103,7 +107,7 @@ export default function UserAuthForm() {
             />
             <Link
               href="/login/esquecer-senha"
-              className="cursor-pointer self-end text-sm font-semibold text-[#AA47B3]"
+              className="cursor-pointer self-end text-sm font-semibold text-[#fff]"
             >
               Esqueceu a senha?
             </Link>
@@ -115,7 +119,7 @@ export default function UserAuthForm() {
 
           <Button
             disabled={loading}
-            className="ml-auto w-full rounded-lg bg-gradient-to-r from-purple-600 to-red-500 py-6 text-lg font-semibold uppercase"
+            className="ml-auto w-full rounded-lg bg-gradient-to-r from-white to-white py-6 text-lg font-semibold uppercase text-black"
             type="submit"
           >
             {loading ? (
@@ -126,9 +130,9 @@ export default function UserAuthForm() {
           </Button>
         </form>
         <Link
-          href="https://www.valquiriabrito.com"
+          href="/"
           target="_blank"
-          className="mt-8 flex cursor-pointer items-center justify-center text-center font-semibold text-[#AA47B3] sm:text-lg"
+          className="mt-8 flex cursor-pointer items-center justify-center text-center font-semibold text-[#fff] sm:text-lg"
         >
           Cadastre-se
         </Link>

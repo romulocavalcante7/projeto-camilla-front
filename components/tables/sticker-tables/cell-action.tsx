@@ -31,7 +31,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         await deleteFile(data.attachment.id);
       }
       toast.success('Figurinha deletada.');
-      router.push(`/dashboard/figurinha`);
+      router.push(`/dashboard/cilios`);
       window.location.reload();
     } catch (error: any) {
       console.log('error', error);
@@ -64,7 +64,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => router.push(`/dashboard/figurinha/${data.id}`)}
+            onClick={() => router.push(`/dashboard/cilios/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4 cursor-pointer" /> Editar
           </DropdownMenuItem>

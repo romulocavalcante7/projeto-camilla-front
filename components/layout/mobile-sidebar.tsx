@@ -6,7 +6,7 @@ import { navItems } from '@/constants/data';
 import { MenuIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Logo from '@/public/logo-v2.png';
+import Logo from '@/public/logo-dark.png';
 
 export function MobileSidebar() {
   const [open, setOpen] = useState(false);
@@ -21,7 +21,7 @@ export function MobileSidebar() {
             <div className="px-3 py-2">
               <Link className="mb-3 flex" href="/">
                 <Image
-                  className="w-48 px-3"
+                  className="w-36 px-3"
                   src={Logo}
                   width={800}
                   height={600}
@@ -29,9 +29,7 @@ export function MobileSidebar() {
                   alt="logo"
                 />
               </Link>
-              <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-                Overview
-              </h2>
+
               <div className="space-y-1">
                 <DashboardNav
                   items={navItems}

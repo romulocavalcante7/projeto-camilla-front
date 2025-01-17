@@ -118,40 +118,22 @@ export const navItems: NavItem[] = [
     label: 'Dashboard'
   },
   {
-    title: 'Nichos',
+    title: 'Categorias',
     href: '/dashboard/nichos',
     icon: 'nichos',
-    label: 'Nichos'
+    label: 'Categorias'
   },
   {
-    title: 'Subnichos',
-    href: '/dashboard/subnicho',
-    icon: 'subnichos',
-    label: 'Subnichos'
-  },
-  {
-    title: 'Figurinhas',
-    href: '/dashboard/figurinha',
+    title: 'Cílios',
+    href: '/dashboard/cilios',
     icon: 'figurinhas',
-    label: 'Figurinhas'
-  },
-  {
-    title: 'Fontes',
-    href: '/dashboard/fontes',
-    icon: 'fontes',
-    label: 'fontes'
+    label: 'Cílios'
   },
   {
     title: 'Ícones',
     href: '/dashboard/icones',
     icon: 'icones',
     label: 'Ícones'
-  },
-  {
-    title: 'Tutoriais',
-    href: '/dashboard/tutorial',
-    icon: 'tutoriais',
-    label: 'Tutoriais'
   },
   {
     title: 'Usuários',

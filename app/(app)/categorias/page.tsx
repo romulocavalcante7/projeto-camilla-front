@@ -53,7 +53,7 @@ const Category = () => {
               size={30}
               onClick={() => router.back()}
             />
-            <p className="text-2xl font-bold">Nichos</p>
+            <p className="text-2xl font-bold">Categorias</p>
           </div>
         </div>
       </motion.div>

@@ -11,7 +11,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { DataTableComponent } from '../data-table';
 import { getAllStickers, Sticker } from '@/services/stickerService';
 
-const breadcrumbItems = [{ title: 'Figurinhas', link: '/dashboard/figurinha' }];
+const breadcrumbItems = [{ title: 'Cílios', link: '/dashboard/cilios' }];
 
 const createQueryString = (
   params: Record<string, string | number | undefined>
@@ -114,11 +114,11 @@ export const StickerClient = () => {
       <BreadCrumb items={breadcrumbItems} />
       <div className="flex items-start justify-between">
         <Heading
-          title={`Figurinhas (${totalStickers})`}
-          description="Gerencie as figurinhas"
+          title={`Cílios (${totalStickers})`}
+          description="Gerencie Cílios"
         />
         <Button
-          onClick={() => router.push(`/dashboard/figurinha/new`)}
+          onClick={() => router.push(`/dashboard/cilios/new`)}
           className="text-lg dark:text-black"
         >
           <Plus className="mr-2 h-4 w-4" /> Criar
@@ -129,7 +129,7 @@ export const StickerClient = () => {
         columns={columns}
         data={stickers}
         searchKey="subniche"
-        placeholderInput="Pesquise por nicho ou subnicho"
+        placeholderInput="Pesquise por Cílios"
         pageCount={pageCount}
         pageSize={pageSize}
         page={page}

@@ -11,11 +11,10 @@ import { Suspense } from 'react';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Portal Story Plus',
-  description:
-    'Portal Story Plus - A sua plataforma completa para figurinhas! Copie e cole figurinhas diretamente nos seus stories, altere cores, ajuste a opacidade e favorite suas figurinhas preferidas sem precisar baixar nada no celular. Torne seus stories únicos e criativos de forma prática e rápida!',
-  keywords: ['Valquiria Brito', 'Story', 'Story Plus', 'Figurinhas'],
-  creator: 'Valquiria Brito',
+  title: 'VISALASH PRO',
+  description: 'VISALASH PRO',
+  keywords: ['VISALASH PRO'],
+  creator: 'Milla',
   manifest: '/manifest.webmanifest',
   icons: [
     { rel: 'apple-touch-icon', url: 'ios/1024.png' },
@@ -29,9 +28,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-br" className="min-h-screen" suppressHydrationWarning>
+    <html
+      lang="pt-br"
+      className="min-h-screen bg-black bg-[url('/mobile.png')] bg-cover bg-[center_bottom_1rem] bg-no-repeat md:bg-[url('/desktop.png')] md:bg-[0px]"
+      suppressHydrationWarning
+    >
       <body className={`${inter.className} dark:bg-dark-gradient`}>
-        <NextTopLoader showSpinner color="#B743D0" />
+        <NextTopLoader showSpinner color="#fff" />
         <Providers>
           <Toaster />
           <Suspense>{children}</Suspense>

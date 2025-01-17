@@ -110,8 +110,8 @@ export const NichoClient = () => {
     <div className="flex-1 space-y-4 overflow-auto">
       <div className="flex flex-wrap items-start justify-between gap-5 sm:gap-0">
         <Heading
-          title={`Nichos (${totalCategories})`}
-          description="Gerencie os nichos"
+          title={`Categorias (${totalCategories})`}
+          description="Gerencie os categorias"
         />
         <div className="flex flex-wrap items-center gap-5">
           <Button
@@ -134,7 +134,7 @@ export const NichoClient = () => {
         columns={columns}
         data={categories}
         searchKey="name"
-        placeholderInput="Pesquise por nicho"
+        placeholderInput="Pesquise por categorias"
         pageCount={pageCount}
         pageSize={pageSize}
         page={page}

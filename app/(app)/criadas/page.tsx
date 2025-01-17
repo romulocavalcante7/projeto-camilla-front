@@ -123,7 +123,7 @@ const UserStickerList = () => {
 
               <Button
                 asChild
-                className="w-full max-w-[200px] bg-[#B743D0] hover:bg-[#b351c9]"
+                className="w-full max-w-[200px] bg-[#fff] hover:bg-[#fff]"
               >
                 <Link href="/criar">Criar</Link>
               </Button>

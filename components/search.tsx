@@ -58,7 +58,7 @@ const Search = ({
               <FormItem className="w-full">
                 <FormControl>
                   <Input
-                    className="flex h-10 w-full rounded-2xl border border-gray-400/10 bg-gray-200/60 px-5 py-6 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-400 placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex h-10 w-full rounded-2xl border border-gray-400/10 bg-white px-5 py-6 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-100 placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     placeholder={placeholder}
                     {...field}
                   />
@@ -68,7 +68,7 @@ const Search = ({
             )}
           />
           <Button
-            className="absolute right-0 rounded-2xl bg-[#B743D0] px-5 py-6 hover:bg-[#851b9c]"
+            className="absolute right-0 rounded-2xl bg-black px-5 py-6 hover:bg-[#4b4b4b]"
             variant="default"
             type="submit"
           >

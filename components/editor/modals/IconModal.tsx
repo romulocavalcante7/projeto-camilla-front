@@ -39,8 +39,8 @@ export const IconModal = () => {
         top: canvas.height! / 2,
         originX: 'center',
         originY: 'center',
-        scaleX: 0.3,
-        scaleY: 0.3
+        scaleX: 0.2,
+        scaleY: 0.2
       });
 
       canvas.add(fabricImg);
@@ -110,22 +110,24 @@ export const IconModal = () => {
       placement="bottom"
       open={isOpen}
       onClose={() => onClose(false)}
-      dialogClassName="bg-white relative rounded-2xl dark:bg-[#2a292a]"
+      dialogClassName="bg-black/60 backdrop-blur-[20px] relative rounded-2xl"
       closeButton={false}
     >
       <div className="py-5">
         <Cross2Icon
           onClick={() => onClose(false)}
-          className="absolute right-4 top-5 h-8 w-8 cursor-pointer"
+          className="absolute right-4 top-5 h-8 w-8 cursor-pointer text-white"
         />
-        <p className="text-center text-2xl font-semibold">Selecione</p>
+        <p className="text-center text-2xl font-semibold text-white">
+          Selecione
+        </p>
       </div>
 
       <div className="max-h-full overflow-y-auto p-4 pb-16">
         <Search
           className="mb-5"
           onSearch={handleSearch}
-          placeholder="Busque um ícone"
+          placeholder="Busque um cílio"
           defaultValues={{ search }}
         />
 
@@ -136,11 +138,11 @@ export const IconModal = () => {
           isLoading={loading}
           next={loadMore}
         >
-          <ul className="grid grid-cols-3 gap-4 pb-10">
+          <ul className="grid grid-cols-2 gap-4 pb-10">
             {icons.map((icon) => (
               <li
                 key={icon.id}
-                className="w-full cursor-pointer rounded-2xl bg-[#3b3b3b] p-2 text-center transition-all duration-200 ease-in-out hover:bg-[#4e4d4d] dark:hover:bg-[#1e1e1e]"
+                className="w-full cursor-pointer rounded-2xl border-2 border-none bg-[#7e7e7e63] p-2 text-center backdrop-blur-[20px] transition-all duration-200 ease-in-out hover:bg-[#4e4d4d] dark:hover:bg-[#1e1e1e]"
                 onClick={() => {
                   handleIconSelect(icon.attachment.url);
                   onClose(false);

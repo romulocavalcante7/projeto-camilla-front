@@ -20,7 +20,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }, [connectToSocket, listenToEvent, setActiveUsers]);
 
   return (
-    <main>
+    <main className="">
       <div className="relative mx-auto max-w-7xl flex-1 pb-32">
         <Menu />
         <Suspense fallback={<></>}>{children}</Suspense>

@@ -211,46 +211,47 @@ const TextEditor = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pb-5 pt-3">
+    <div className="flex flex-col items-center bg-black pb-5 pt-3">
       <ToastContainer />
-      <div className="flex w-full items-center justify-between pb-4">
+      <div className="justify-betweenp flex w-full items-center px-5 pb-4">
         <ArrowLeft
-          className="cursor-pointer"
+          className="cursor-pointer text-white"
           size={30}
           onClick={() => router.back()}
         />
-        <p className="flex flex-1 items-center justify-center text-center">
+        <p className="flex flex-1 items-center justify-center text-center text-white">
           Editar
         </p>
+        <div className="flex gap-8">
+          <button
+            //@ts-ignore
+            onClick={() => document.getElementById('imageInput').click()}
+            className="cursor-pointer rounded bg-gray-700 px-4 py-2 text-white"
+          >
+            Inserir Imagem
+          </button>
+          <input
+            type="file"
+            id="imageInput"
+            style={{ display: 'none' }}
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
 
-        <button
-          //@ts-ignore
-          onClick={() => document.getElementById('imageInput').click()}
-          className="cursor-pointer rounded bg-blue-500 px-4 py-2 text-white"
-        >
-          Inserir Imagem
-        </button>
-        <input
-          type="file"
-          id="imageInput"
-          style={{ display: 'none' }}
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
-
-        <div className="flex items-center gap-4">
-          <div className="flex flex-col items-center gap-1">
-            <Copy
-              className="cursor-pointer"
-              onClick={handleCopyCanvas}
-              size={23}
-            />
+          <div className="flex items-center gap-4">
+            <div className="flex flex-col items-center gap-1">
+              <Copy
+                className="cursor-pointer text-white"
+                onClick={handleCopyCanvas}
+                size={23}
+              />
+            </div>
           </div>
         </div>
       </div>
 
       <div className="relative mx-auto flex max-w-xl items-center justify-center">
-        <div className="absolute top-[12px] z-10 mx-auto flex w-full max-w-[370px] items-center justify-between rounded-xl border border-white/20 bg-white px-3 py-2 sm:max-w-3xl lg:max-w-xl dark:bg-[#2E2B2B]">
+        <div className="absolute top-[12px] z-10 mx-auto flex w-full max-w-[370px] items-center justify-between rounded-xl border border-white/20 bg-black/60 px-3 py-2 backdrop-blur-[12px] sm:max-w-3xl lg:max-w-xl dark:bg-[#2E2B2B]">
           <div className="flex items-center gap-5">
             <button
               onClick={handleUndo}
@@ -258,7 +259,7 @@ const TextEditor = () => {
               className={`${
                 history.length <= 1
                   ? 'cursor-not-allowed text-gray-400'
-                  : 'cursor-pointer'
+                  : 'cursor-pointer text-white'
               }`}
             >
               <Undo size={30} />
@@ -278,7 +279,7 @@ const TextEditor = () => {
 
           {selectedObject && (
             <Trash2
-              className="cursor-pointer"
+              className="cursor-pointer text-white"
               size={25}
               onClick={deleteSelectedObject}
             />

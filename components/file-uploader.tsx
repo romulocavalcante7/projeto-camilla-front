@@ -388,7 +388,7 @@ function FileCardSticker({ file, progress, onRemove }: FileCardProps) {
             width={300}
             height={300}
             loading="lazy"
-            className="h-40 w-40 shrink-0 rounded-md bg-[#3F3F3F] bg-cover object-cover"
+            className="h-40 w-full shrink-0 rounded-md  bg-cover object-cover"
           />
         ) : null}
         <div className="flex w-full justify-between gap-2">

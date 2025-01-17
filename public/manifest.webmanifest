@@ -4,8 +4,8 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Story Plus",
-  "short_name": "Story Plus",
+  "name": "VISALASH PRO",
+  "short_name": "VISALASH PRO",
   "icons": [
     {
       "src": "windows11/SmallTile.scale-100.png",

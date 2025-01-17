@@ -44,7 +44,7 @@ export const Menu = () => {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle className="text-2xl">Story Plus</SheetTitle>
+          <SheetTitle className="text-2xl">VISALASH PRO</SheetTitle>
           <div className="flex w-full flex-col gap-5 pt-5">
             <div className="flex items-center gap-3">
               <Avatar className="bg-gray-300">

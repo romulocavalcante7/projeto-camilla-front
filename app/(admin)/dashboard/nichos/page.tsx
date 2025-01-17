@@ -2,7 +2,7 @@ import BreadCrumb from '@/components/breadcrumb';
 import { NichoClient } from '@/components/tables/nicho-tables/client';
 import { Suspense } from 'react';
 
-const breadcrumbItems = [{ title: 'Nichos', link: '/dashboard/nichos' }];
+const breadcrumbItems = [{ title: 'Categorias', link: '/dashboard/nichos' }];
 export default function page() {
   return (
     <>

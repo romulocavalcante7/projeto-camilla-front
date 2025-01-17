@@ -84,6 +84,11 @@
   background-color: transparent !important;
   overflow-y: auto;
 }
+.rs-drawer-full {
+  background-color: rgb(156 163 175 / 0.1) !important;
+  backdrop-filter: blur(20px) !important;
+  overflow-y: auto;
+}
 
 @layer utilities {
   .min-h-screen {

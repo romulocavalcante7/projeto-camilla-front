@@ -57,7 +57,7 @@ export default function Page() {
     }
   };
   const breadcrumbItems = [
-    { title: 'Nichos', link: '/dashboard/nichos' },
+    { title: 'Categorias', link: '/dashboard/nichos' },
     { title: 'Mais Usados', link: '/dashboard/nichos/important' }
   ];
   return (
@@ -86,13 +86,6 @@ export default function Page() {
                       className="flex flex-wrap items-center justify-between gap-5 rounded-lg bg-gray-200 p-4 dark:bg-[#202020b2]"
                     >
                       <div className="flex flex-col flex-wrap gap-2 sm:flex-row sm:items-center sm:gap-10">
-                        <Image
-                          className="rounded-lg"
-                          src={category.attachment?.url}
-                          width={180}
-                          height={40}
-                          alt={category.attachment?.filename}
-                        />
                         <p> {category.name}</p>
                       </div>
                       <Button

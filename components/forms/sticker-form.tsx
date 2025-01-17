@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Loader2, Trash } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,7 +22,7 @@ import { FileUploader } from '../file-uploader';
 import { deleteFile, uploadMultipleFiles } from '@/services/uploadService';
 import { AlertModal } from '../modal/alert-modal';
 import Image from 'next/image';
-import { Subniche, getAllSubniches } from '@/services/subnicheService';
+import { Category, getAllCategories } from '@/services/categoryService';
 import { AutoComplete } from '../autocomplete';
 import {
   createSticker,
@@ -33,7 +34,8 @@ import {
 export const IMG_MAX_LIMIT = 50;
 
 const formSchema = z.object({
-  subniche: z.string().min(1, { message: 'Selecione um subnicho' }),
+  name: z.string().min(1, { message: 'O campo nome é obrigatório.' }),
+  categories: z.string().min(1, { message: 'Selecione uma categoria' }),
   images: z
     .array(z.instanceof(File))
     .max(IMG_MAX_LIMIT, { message: 'Você pode adicionar até 20 imagens' })
@@ -44,7 +46,7 @@ type FigurinhaFormValues = z.infer<typeof formSchema>;
 
 export const StickerForm = () => {
   const params = useParams();
-  const { figurinhaId } = params;
+  const { ciliosId } = params;
   const router = useRouter();
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
@@ -58,38 +60,38 @@ export const StickerForm = () => {
   );
 
   const [stickers, setStickers] = useState<Sticker | null>(null);
-  const [subniches, setSubniches] = useState<Subniche[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const fetchStickersById = async (stickerId: string) => {
     setLoading(true);
     try {
       const data = await getStickerById(stickerId);
-      console.log('data', data);
       setStickers(data);
     } catch (error) {
-      console.error('Error fetching subnicho:', error);
+      console.error('Error fetching sticker:', error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchStickersById(figurinhaId.toString());
+    fetchStickersById(ciliosId.toString());
   }, []);
 
   useEffect(() => {
     if (stickers) {
       form.reset({
-        subniche: stickers.subnicheId!,
+        name: stickers?.name,
+        categories: stickers.categoryId!,
         images: []
       });
     }
   }, [stickers]);
 
-  const fetchSubniches = async (pageNum: number, search?: string) => {
+  const fetchCategories = async (pageNum: number, search?: string) => {
     setLoading(true);
     try {
-      const data = await getAllSubniches(pageNum, 9000, search);
-      setSubniches(data.subniches);
+      const data = await getAllCategories(pageNum, 9000, search);
+      setCategories(data.categories);
       setHasMore(pageNum < data.totalPages);
     } catch (error) {
       console.error('Error fetching subniches:', error);
@@ -99,22 +101,21 @@ export const StickerForm = () => {
   };
 
   useEffect(() => {
-    fetchSubniches(page, search);
+    fetchCategories(page, search);
   }, [page, search]);
 
-  const title = stickers?.id ? 'Editar Figuirinha' : 'Criar Figurinha';
+  const title = stickers?.id ? 'Editar Figuirinha' : 'Criar Cílio';
   const description = stickers?.id
-    ? 'Edite uma Figurinha'
-    : 'Adicione uma nova Figurinha';
-  const toastMessage = stickers?.id
-    ? 'Figurinha atualizada'
-    : 'Figurinha criada';
+    ? 'Edite um Cílio'
+    : 'Adicione um novo Cílio';
+  const toastMessage = stickers?.id ? 'Cílio atualizado' : 'Cílio criado';
   const action = stickers?.id ? 'Salvar alterações' : 'Criar';
 
   const form = useForm<FigurinhaFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      subniche: stickers?.subnicheId!,
+      name: stickers?.name,
+      categories: stickers?.categoryId!,
       images: []
     }
   });
@@ -133,30 +134,30 @@ export const StickerForm = () => {
         attachmentIds = uploadedImages.files.map((img) => img.id);
       }
 
-      const subniche = subniches.find(
-        (subniche) => subniche.id === data.subniche
+      const catogory = categories.find(
+        (catogory) => catogory.id === data.categories
       );
 
       if (stickers) {
         for (let attachmentId of attachmentIds) {
           await updateSticker(stickers.id, {
-            subnicheId: data.subniche,
-            categoryId: subniche?.categoryId!,
+            name: data.name,
+            categoryId: catogory?.id!,
             attachmentId
           });
         }
       } else {
         for (let attachmentId of attachmentIds) {
           await createSticker({
-            subnicheId: data.subniche,
-            categoryId: subniche?.categoryId!,
+            name: data.name,
+            categoryId: catogory?.id!,
             attachmentId
           });
         }
       }
 
       router.refresh();
-      router.push(`/dashboard/figurinha`);
+      router.push(`/dashboard/cilios`);
       toast.success(toastMessage);
     } catch (error: any) {
       toast.error('Ops, algo deu errado.');
@@ -174,8 +175,8 @@ export const StickerForm = () => {
         }
       }
       router.refresh();
-      router.push(`/dashboard/figurinha`);
-      toast.success('Figurinha removida');
+      router.push(`/dashboard/cilios`);
+      toast.success('Cílios removido');
     } catch (error: any) {
     } finally {
       setLoading(false);
@@ -240,10 +241,10 @@ export const StickerForm = () => {
                 <FormLabel>Imagem</FormLabel>
                 <FormControl>
                   {stickers?.attachment?.id ? (
-                    <div className="relative w-fit rounded-md bg-[#3F3F3F]">
+                    <div className="relative w-fit rounded-md ">
                       <Image
                         loading="lazy"
-                        className="h-64 w-64 shrink-0 rounded-md bg-cover object-cover"
+                        className="h-64 w-full shrink-0 rounded-md bg-cover object-cover"
                         src={stickers?.attachment.url}
                         width={600}
                         height={800}
@@ -277,19 +278,38 @@ export const StickerForm = () => {
           <div className="gap-8 md:grid md:grid-cols-3">
             <FormField
               control={form.control}
-              name="subniche"
+              name="name"
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <FormLabel>Subnicho</FormLabel>
+                    <FormLabel>Nome</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="Nome do Cílio"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+            <FormField
+              control={form.control}
+              name="categories"
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel>Categorias</FormLabel>
                     <FormControl>
                       <AutoComplete
-                        options={subniches.map((item) => ({
+                        options={categories.map((item) => ({
                           label: item.name,
                           value: item.id
                         }))}
                         emptyMessage="Sem resultados"
-                        placeholder="Pesquise por subnicho"
+                        placeholder="Pesquise por categorias"
                         onValueChange={field.onChange}
                         value={field.value}
                       />
@@ -300,6 +320,7 @@ export const StickerForm = () => {
               }}
             />
           </div>
+
           <Button
             disabled={loading}
             className="ml-auto w-full text-lg sm:w-fit sm:px-10 dark:text-black"

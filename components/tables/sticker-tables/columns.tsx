@@ -8,33 +8,14 @@ import { Sticker } from '@/services/stickerService';
 import { DataTableColumnHeader } from '../data-header';
 
 export const columns: ColumnDef<Sticker>[] = [
-  // {
-  //   id: 'select',
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={table.getIsAllPageRowsSelected()}
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false
-  // },
   {
     accessorKey: 'attachment',
     header: 'Imagem',
     cell: ({ row }) =>
       row.original?.attachment?.url ? (
-        <div className="relative w-fit rounded-md bg-[#3F3F3F]">
+        <div className="relative w-full rounded-md ">
           <Image
-            className="aspect-square h-20 w-20 rounded-lg object-cover"
+            className="aspect-square h-20 w-full rounded-lg object-contain"
             src={row.original.attachment.url}
             width={300}
             height={200}
@@ -46,22 +27,18 @@ export const columns: ColumnDef<Sticker>[] = [
       )
   },
   {
-    accessorKey: 'category',
+    accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} order="A" title="Nicho" />
-    ),
-    cell: ({ row }) => {
-      return <p>{row.original.subniche.category.name}</p>;
-    }
+      <DataTableColumnHeader column={column} order="A" title="Nome" />
+    )
   },
   {
-    accessorKey: 'subniche',
-    // header: 'Subnicho',
+    accessorKey: 'category',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} order="A" title="Subnicho" />
+      <DataTableColumnHeader column={column} order="A" title="Categoria" />
     ),
     cell: ({ row }) => {
-      return <p>{row.original.subniche.name}</p>;
+      return <p>{row.original.category.name}</p>;
     }
   },
   {

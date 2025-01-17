@@ -61,7 +61,7 @@ export const DeleteStickerUserModal = ({
             onClick={() => handleRemoveStickerUser(stickerId)}
             variant="default"
             size="lg"
-            className="bg-[#B743D0] text-xl hover:bg-[#b351c9]"
+            className="bg-[#fff] text-xl hover:bg-[#fff]"
             disabled={isLoading}
           >
             {isLoading ? (

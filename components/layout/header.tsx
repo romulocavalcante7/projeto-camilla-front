@@ -1,9 +1,8 @@
 import ThemeToggle from '@/components/layout/ThemeToggle/theme-toggle';
 import { cn } from '@/lib/utils';
 import { MobileSidebar } from './mobile-sidebar';
-import { UserNav } from './user-nav';
 import Link from 'next/link';
-import Logo from '@/public/logo-v2.png';
+import Logo from '@/public/logo-dark.png';
 import Image from 'next/image';
 export default function Header() {
   return (
@@ -12,7 +11,7 @@ export default function Header() {
         <div className="hidden lg:block">
           <Link href="/">
             <Image
-              className="w-32"
+              className="w-16"
               src={Logo}
               width={800}
               height={600}
@@ -25,7 +24,6 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          <UserNav />
           <ThemeToggle />
         </div>
       </nav>
