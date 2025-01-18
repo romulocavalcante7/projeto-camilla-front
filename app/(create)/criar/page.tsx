@@ -19,7 +19,7 @@ import { OpacityModal } from '@/components/editor/modals/OpacityModal';
 import { ColorModal } from '@/components/editor/modals/ColorModal';
 import { TabBar } from '@/components/editor/TabBar';
 import { copyImageToClipboard } from '@/utils/copyImageToClipboard';
-import { IconModal } from '@/components/editor/modals/IconModal';
+import { EyelashModal } from '@/components/editor/modals/IconModal';
 import { useCanvasEditorStore } from '@/store/canvasEditorStore';
 import { SaturationTemperatureModal } from '@/components/editor/modals/SaturationTemperatureModal';
 
@@ -303,7 +303,7 @@ const TextEditor = () => {
 
       <ColorModal saveChanges={saveChanges} />
       <SaturationTemperatureModal saveChanges={saveChanges} />
-      <IconModal />
+      <EyelashModal />
 
       <OpacityModal saveChanges={saveChanges} />
     </div>

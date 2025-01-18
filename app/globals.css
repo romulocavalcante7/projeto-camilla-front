@@ -85,8 +85,8 @@
   overflow-y: auto;
 }
 .rs-drawer-full {
-  background-color: rgb(156 163 175 / 0.1) !important;
-  backdrop-filter: blur(20px) !important;
+  background-color: #00000058 !important;
+  backdrop-filter: blur(40px) !important;
   overflow-y: auto;
 }
 

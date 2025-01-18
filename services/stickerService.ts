@@ -123,3 +123,18 @@ export const getStickersBySubnicheId = async (
   );
   return response.data;
 };
+
+export const getStickersByCategoryId = async (
+  categoryId: string,
+  page: number = 1,
+  pageSize: number = 10,
+  search?: string
+): Promise<StickerResponse> => {
+  const response = await Api.get<StickerResponse>(
+    `${prefix}/category/${categoryId}`,
+    {
+      params: { page, pageSize, search }
+    }
+  );
+  return response.data;
+};

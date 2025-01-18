@@ -93,15 +93,15 @@ export const SaturationTemperatureModal = ({
       placement="bottom"
       open={isOpen}
       onClose={handleClose}
-      dialogClassName="bg-white relative rounded-2xl dark:bg-[#2a292a]"
+      dialogClassName="relative rounded-2xl backdrop-blur-[20px] bg-[#000000c6]"
       closeButton={false}
     >
       <div className="py-5">
         <Cross2Icon
           onClick={handleClose}
-          className="absolute right-4 top-4 h-8 w-8 cursor-pointer"
+          className="absolute right-4 top-4 h-8 w-8 cursor-pointer text-white"
         />
-        <p className="text-center text-2xl font-semibold">
+        <p className="text-center text-2xl font-semibold text-white">
           Efeito de tonalizadade
         </p>
       </div>
@@ -109,7 +109,7 @@ export const SaturationTemperatureModal = ({
       <div className="max-h-[200px] overflow-y-auto p-4">
         {/* Intensidade */}
         <div className="mb-6 flex flex-col gap-4">
-          <p className="text-center text-lg">Intensidade Marrom</p>
+          <p className="text-center text-lg text-white">Intensidade Marrom</p>
           <Slider
             value={[intensity]}
             onValueChange={(value) => setIntensity(Number(value[0]))}

@@ -44,19 +44,21 @@ export const OpacityModal = ({ saveChanges }: OpacityModalProps) => {
 
   return (
     <Drawer
-      size="xs"
+      size={220}
       placement="bottom"
       open={isOpen}
       onClose={() => onClose(false)}
-      dialogClassName="bg-white relative rounded-2xl dark:bg-[#2a292a]"
+      dialogClassName="relative rounded-2xl backdrop-blur-[20px] bg-[#000000c6]"
       closeButton={false}
     >
       <div className="py-5">
         <Cross2Icon
           onClick={() => onClose(false)}
-          className="absolute right-4 top-4 h-8 w-8 cursor-pointer"
+          className="absolute right-4 top-4  h-8 w-8 cursor-pointer text-white"
         />
-        <p className="text-center text-2xl font-semibold">Opacidade</p>
+        <p className="text-center text-2xl font-semibold text-white">
+          Opacidade
+        </p>
       </div>
 
       <div className="max-h-[240px] overflow-y-auto p-4 pt-20">

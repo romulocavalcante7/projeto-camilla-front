@@ -12,66 +12,9 @@ export const ColorModal = ({ saveChanges }: ColorModalProps) => {
   const {
     isColorModalOpen: isOpen,
     setIsColorModalOpen: onClose,
-    // fontColor,
     canvasRef
-    // setFontColor
   } = useCanvasEditorStore();
   const [tempColor, setTempColor] = useState('#fff');
-
-  const updateTextColor = (color: string) => {
-    if (!canvasRef.current) return;
-
-    const activeObjects =
-      canvasRef.current.getActiveObjects() as FabricObject[];
-
-    // activeObjects.forEach((obj) => {
-    //   if (obj.type === 'i-text') {
-    //     const textObj = obj as FabricText;
-
-    //     if (
-    //       textObj.fill &&
-    //       //@ts-ignore
-    //       textObj.fill.type === 'linear' &&
-    //       !isOpen
-    //     ) {
-    //       // Mantém gradiente
-    //       textObj.set('fill', textObj.fill);
-    //     } else if (color !== textObj.fill?.toString()) {
-    //       textObj.set('fill', color);
-    //     }
-    //   }
-    // });
-
-    canvasRef.current.renderAll();
-  };
-
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     const canvas = canvasRef.current;
-  //     if (!canvas) return;
-
-  //     const activeObject = canvas.getActiveObject() as FabricText;
-  //     if (activeObject && activeObject.type === 'i-text' && activeObject.fill) {
-  //       setTempColor(activeObject.fill.toString());
-  //     } else {
-  //       if (activeObject.fill) {
-  //         setTempColor(fontColor);
-  //       }
-  //     }
-  //   }
-  // }, [isOpen, canvasRef]);
-
-  useEffect(() => {
-    if (isOpen) {
-      updateTextColor(tempColor);
-    }
-  }, [tempColor, isOpen]);
-
-  // useEffect(() => {
-  //   return () => {
-  //     setTempColor(fontColor);
-  //   };
-  // }, [isOpen]);
 
   return (
     <Drawer
