@@ -71,22 +71,26 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col justify-center gap-4 px-5">
+    <div className="flex min-h-screen flex-col justify-center gap-4 px-5 backdrop-blur-[12px]">
       <div
         onClick={() => router.push('/')}
         className="mx-auto flex w-full max-w-lg  cursor-pointer  items-center gap-5"
       >
-        <ArrowLeft className="cursor-pointer" size={30} />
-        <p className="text-xl">Voltar</p>
+        <ArrowLeft className="cursor-pointer text-white" size={30} />
+        <p className="text-xl text-white">Voltar</p>
       </div>
-      <Card className="mx-auto w-full  max-w-lg bg-[#89898938]">
+      <Card className="mx-auto w-full max-w-lg border-none bg-[#313131]">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Redefinir Senha</CardTitle>
+          <CardTitle className="text-2xl font-bold text-white">
+            Redefinir Senha
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="newPassword">Nova Senha</Label>
+              <Label htmlFor="newPassword" className="text-white">
+                Nova Senha
+              </Label>
               <Input
                 id="newPassword"
                 className="rounded-lg border border-neutral-200 bg-zinc-100 py-6 backdrop-blur-[12.16px] disabled:cursor-not-allowed disabled:opacity-50"
@@ -101,7 +105,9 @@ const ResetPassword = () => {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirmar Senha</Label>
+              <Label htmlFor="confirmPassword" className="text-white">
+                Confirmar Senha
+              </Label>
               <Input
                 id="confirmPassword"
                 className="rounded-lg border border-neutral-200 bg-zinc-100 py-6 backdrop-blur-[12.16px] disabled:cursor-not-allowed disabled:opacity-50"
@@ -115,7 +121,10 @@ const ResetPassword = () => {
                 </p>
               )}
             </div>
-            <Button type="submit" className="w-full dark:text-black">
+            <Button
+              type="submit"
+              className="w-full bg-white text-black hover:bg-gray-400 dark:bg-black/80 dark:text-white"
+            >
               {loading ? (
                 <Loader2 className="my-4 h-4 w-4 animate-spin" />
               ) : (

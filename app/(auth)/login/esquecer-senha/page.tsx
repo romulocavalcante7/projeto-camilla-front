@@ -69,7 +69,7 @@ const Password = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex h-screen flex-col justify-center gap-2 backdrop-blur-[12px]">
       <motion.div
         initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
@@ -79,40 +79,36 @@ const Password = () => {
           ease: [0.25, 0.25, 0.25, 0.75]
         }}
         className={cn(
-          'sticky left-0 top-0 z-[2] flex w-full flex-col gap-5 bg-white px-5 py-5 transition-all dark:bg-transparent',
-          scrollAbove10 && 'dark:bg-[#1a101b]/80 dark:backdrop-blur-md'
+          'sticky left-0 top-0 z-[2] flex w-full flex-col gap-5 px-5 py-5 transition-all dark:bg-transparent',
+          scrollAbove10 && 'dark:backdrop-blur-md'
         )}
       >
         <div className="relative flex flex-col gap-2">
-          <Link className="w-fit" href="/">
-            <Image
-              src="/logo-v2.png"
-              width={160}
-              height={40}
-              alt="icone logo"
-            />
-          </Link>
           <div className="flex items-center gap-5">
             <ArrowLeft
-              className="cursor-pointer"
+              className="cursor-pointer text-white"
               size={30}
               onClick={() => router.back()}
             />
           </div>
         </div>
       </motion.div>
-      <div className="px-5">
-        <Card className="mx-auto w-full max-w-lg bg-[#89898938] ">
+      <div className="flex h-full items-center px-5">
+        <Card className="mx-auto w-full max-w-lg border-none bg-[#313131]">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold">Alterar senha</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-2xl font-bold text-white">
+              Alterar senha
+            </CardTitle>
+            <CardDescription className="text-white">
               Digite seu e-mail para receber um link.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-white">
+                  Email
+                </Label>
                 <Input
                   startIcon={User}
                   className="rounded-lg border border-neutral-200 bg-zinc-100 py-6 backdrop-blur-[12.16px] disabled:cursor-not-allowed disabled:opacity-50"
@@ -129,7 +125,7 @@ const Password = () => {
               </div>
               <Button
                 type="submit"
-                className="w-full dark:text-black"
+                className="w-full bg-white text-black hover:bg-gray-400 dark:bg-black/80 dark:text-white"
                 disabled={loading}
               >
                 {loading ? (
