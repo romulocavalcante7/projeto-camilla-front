@@ -21,7 +21,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <main className="">
-      <div className="relative mx-auto max-w-7xl flex-1 pb-32">
+      <div className="relative mx-auto max-w-7xl flex-1">
         <Menu />
         <Suspense fallback={<></>}>{children}</Suspense>
         <Navbar />

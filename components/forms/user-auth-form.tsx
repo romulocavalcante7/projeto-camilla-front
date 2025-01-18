@@ -119,7 +119,7 @@ export default function UserAuthForm() {
 
           <Button
             disabled={loading}
-            className="ml-auto w-full rounded-lg bg-gradient-to-r from-white to-white py-6 text-lg font-semibold uppercase text-black"
+            className="ml-auto w-full rounded-lg bg-white py-6 text-lg font-semibold uppercase text-black hover:bg-gray-500/40 dark:bg-neutral-900/70 dark:text-white"
             type="submit"
           >
             {loading ? (

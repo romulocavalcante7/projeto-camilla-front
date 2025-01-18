@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function AuthenticationPage() {
   return (
-    <div className="relative h-screen flex-col items-center justify-center backdrop-blur-[12px] lg:px-0 dark:bg-dark-gradient">
+    <div className="relative h-screen flex-col items-center justify-center backdrop-blur-[12px] lg:px-0">
       <div className="flex h-full items-center p-4 lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col items-center gap-5 text-center">

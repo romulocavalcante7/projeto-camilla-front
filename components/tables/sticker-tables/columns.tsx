@@ -15,7 +15,7 @@ export const columns: ColumnDef<Sticker>[] = [
       row.original?.attachment?.url ? (
         <div className="relative w-full rounded-md ">
           <Image
-            className="aspect-square h-20 w-full rounded-lg object-contain"
+            className="aspect-square h-20 w-full rounded-lg object-contain dark:bg-white"
             src={row.original.attachment.url}
             width={300}
             height={200}

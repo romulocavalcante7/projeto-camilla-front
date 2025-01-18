@@ -33,7 +33,7 @@ export default async function RootLayout({
       className="min-h-screen bg-black bg-[url('/mobile.png')] bg-cover bg-[center_bottom_1rem] bg-no-repeat md:bg-[url('/desktop.png')] md:bg-[0px]"
       suppressHydrationWarning
     >
-      <body className={`${inter.className} dark:bg-dark-gradient`}>
+      <body className={`${inter.className}`}>
         <NextTopLoader showSpinner color="#fff" />
         <Providers>
           <Toaster />
