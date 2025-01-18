@@ -30,7 +30,7 @@ export default async function RootLayout({
   return (
     <html
       lang="pt-br"
-      className="min-h-screen  bg-[url('/mobile.png')] bg-cover bg-[center_bottom_1rem] bg-no-repeat md:bg-[url('/desktop.png')] md:bg-[0px]"
+      className="min-h-screen bg-black bg-[url('/mobile.png')] bg-cover bg-[center_bottom_1rem] bg-no-repeat md:bg-[url('/desktop.png')] md:bg-[0px]"
       suppressHydrationWarning
     >
       <body className={`${inter.className}`}>
