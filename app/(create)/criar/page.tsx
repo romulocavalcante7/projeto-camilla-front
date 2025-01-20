@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Canvas as FabricCanvas,
   Object as FabricObject,
   Image as FabricImage,
-  InteractiveFabricObject
+  InteractiveFabricObject,
+  Point,
+  TEvent
 } from 'fabric';
 import 'react-toastify/dist/ReactToastify.css';
 import Background from '@/app/assets/backgroundPng.png';
@@ -30,6 +32,7 @@ const TextEditor = () => {
   const router = useRouter();
   // const canvasHeight = 560;
   const { history, redoStack, saveState, undo, redo } = useCanvasHistoryStore();
+  const [isZoomEnabled, setIsZoomEnabled] = useState(false);
 
   useEffect(() => {
     const canvasElement = new FabricCanvas(
@@ -72,6 +75,7 @@ const TextEditor = () => {
     const handleSelection = (e: any) => {
       const selected = e.selected as FabricObject[];
       setSelectedObject(selected);
+      setIsZoomEnabled(false);
     };
 
     canvasElement.on('selection:created', handleSelection);
@@ -94,6 +98,57 @@ const TextEditor = () => {
       canvasElement.off('selection:cleared');
     };
   }, []);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    let isDragging = false;
+    let lastPosX = 0;
+    let lastPosY = 0;
+
+    const startPan = (e: TEvent<Event>) => {
+      isDragging = true;
+      //@ts-ignore
+      const pointer = canvasRef.current!.getPointer(e.e);
+      lastPosX = pointer.x;
+      lastPosY = pointer.y;
+      canvasRef.current!.selection = false;
+    };
+
+    const pan = (e: TEvent<Event>) => {
+      if (isDragging) {
+        //@ts-ignore
+        const pointer = canvasRef.current!.getPointer(e.e);
+        const deltaX = pointer.x - lastPosX;
+        const deltaY = pointer.y - lastPosY;
+        canvasRef.current!.relativePan(new Point(deltaX, deltaY));
+        lastPosX = pointer.x;
+        lastPosY = pointer.y;
+      }
+    };
+
+    const endPan = () => {
+      isDragging = false;
+      canvasRef.current!.selection = true;
+    };
+
+    if (isZoomEnabled) {
+      canvasRef.current.on('mouse:down', startPan);
+      canvasRef.current.on('mouse:move', pan);
+      canvasRef.current.on('mouse:up', endPan);
+    } else {
+      canvasRef.current.off('mouse:down', startPan);
+      canvasRef.current.off('mouse:move', pan);
+      canvasRef.current.off('mouse:up', endPan);
+      canvasRef.current.selection = true;
+    }
+
+    return () => {
+      canvasRef.current?.off('mouse:down', startPan);
+      canvasRef.current?.off('mouse:move', pan);
+      canvasRef.current?.off('mouse:up', endPan);
+    };
+  }, [isZoomEnabled]);
 
   const saveChanges = () => {
     const { isUndoingOrRedoing } = useCanvasHistoryStore.getState();
@@ -121,11 +176,13 @@ const TextEditor = () => {
       let dataURL;
 
       if (activeObject) {
+        canvasRef.current!.setViewportTransform([1, 0, 0, 1, 0, 0]);
         dataURL = activeObject.toDataURL({
           format: 'png',
           multiplier: 5
         });
       } else {
+        canvasRef.current!.setViewportTransform([1, 0, 0, 1, 0, 0]);
         dataURL = canvasRef.current?.toDataURL({
           format: 'png',
           multiplier: 5
@@ -210,6 +267,53 @@ const TextEditor = () => {
     }
   };
 
+  const zoomCanvas = (factor: number, center?: { x: number; y: number }) => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+
+    // Define o ponto de zoom
+    const zoomPoint = center || {
+      x: canvas.width! / 2,
+      y: canvas.height! / 2
+    };
+
+    // Calcula o novo nível de zoom
+    const zoom = canvas.getZoom() * factor;
+
+    // Limita o zoom entre 0.5x e 3x (ou ajustável)
+    const clampedZoom = Math.min(Math.max(zoom, 0.5), 5);
+
+    // Aplica o zoom no ponto especificado
+    canvas.zoomToPoint(new Point(zoomPoint.x, zoomPoint.y), clampedZoom);
+    canvas.renderAll();
+  };
+
+  const handleZoomClick = (
+    event: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
+    factor: number
+  ) => {
+    if (!canvasRef.current || !isZoomEnabled) return;
+
+    // Obtém a posição do clique do mouse no canvas
+    const rect = canvasElementRef.current!.getBoundingClientRect();
+    const pointer = {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top
+    };
+
+    zoomCanvas(factor, pointer);
+  };
+
+  const resetZoomAndPan = () => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    canvas.setViewportTransform([1, 0, 0, 1, 0, 0]); // Reseta transformações
+    canvas.renderAll();
+    setIsZoomEnabled(false);
+  };
+
   return (
     <div className="flex flex-col items-center bg-black pb-5 pt-3">
       <ToastContainer />
@@ -275,6 +379,104 @@ const TextEditor = () => {
             >
               <Redo size={30} />
             </button>
+
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setIsZoomEnabled(!isZoomEnabled)}
+                className={`cursor-pointer rounded px-2 py-2 ${
+                  isZoomEnabled ? 'bg-blue-600' : 'transparent'
+                } text-white`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="lucide lucide-scan-eye"
+                >
+                  <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+                  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+                  <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+                  <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+                  <circle cx="12" cy="12" r="1" />
+                  <path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0" />
+                </svg>
+              </button>
+
+              <button
+                onClick={() => zoomCanvas(1.1)}
+                className="cursor-pointer px-2 py-2 text-white"
+                title="Zoom In"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="lucide lucide-zoom-in"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" x2="16.65" y1="21" y2="16.65" />
+                  <line x1="11" x2="11" y1="8" y2="14" />
+                  <line x1="8" x2="14" y1="11" y2="11" />
+                </svg>
+              </button>
+
+              <button
+                onClick={() => zoomCanvas(0.9)}
+                className="cursor-pointer px-2 py-2 text-white"
+                title="Zoom Out"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="lucide lucide-zoom-out"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" x2="16.65" y1="21" y2="16.65" />
+                  <line x1="8" x2="14" y1="11" y2="11" />
+                </svg>
+              </button>
+
+              <button
+                onClick={resetZoomAndPan}
+                className="cursor-pointer px-2 py-2 text-white"
+                title="Reset View"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="lucide lucide-rotate-ccw"
+                >
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                  <path d="M3 3v5h5" />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {selectedObject && (
@@ -295,6 +497,14 @@ const TextEditor = () => {
         />
         <canvas
           ref={canvasElementRef}
+          onClick={(e) => {
+            console.log('e', e);
+            handleZoomClick(e, 1.1);
+          }} // Zoom In no clique
+          onContextMenu={(e) => {
+            e.preventDefault();
+            handleZoomClick(e, 0.9); // Zoom Out no clique com botão direito
+          }}
           className="relative mx-auto w-full max-w-xl cursor-crosshair rounded-xl"
         />
       </div>
