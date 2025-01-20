@@ -36,6 +36,61 @@ export const TabBar = () => {
         {currentMenu !== 'style' && currentMenu !== 'align' && (
           <div className="flex items-center justify-start gap-2 pr-5">
             <button
+              // onClick={() => setIsIconModalOpen(true)}
+              onClick={() => {}}
+              className={`flex w-20 cursor-pointer flex-col items-center gap-0`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fff"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                <path d="M12 11h4" />
+                <path d="M12 16h4" />
+                <path d="M8 11h.01" />
+                <path d="M8 16h.01" />
+              </svg>
+              <span className="mt-[10px] text-xs text-white dark:text-white">
+                Ficha
+              </span>
+            </button>
+
+            <button
+              onClick={() => setIsIconModalOpen(true)}
+              className={`flex w-20 cursor-pointer flex-col items-center gap-0`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fff"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="lucide lucide-eye-closed"
+              >
+                <path d="m15 18-.722-3.25" />
+                <path d="M2 8a10.645 10.645 0 0 0 20 0" />
+                <path d="m20 15-1.726-2.05" />
+                <path d="m4 15 1.726-2.05" />
+                <path d="m9 18 .722-3.25" />
+              </svg>
+              <span className="mt-[10px] text-xs text-white dark:text-white">
+                Cílios
+              </span>
+            </button>
+
+            <button
               onClick={() => setIsSaturationTemperatureModalOpen(true)}
               className="flex w-20 cursor-pointer flex-col items-center gap-0"
             >
@@ -84,33 +139,6 @@ export const TabBar = () => {
               </svg>
               <span className="mt-[10px] text-xs text-white dark:text-white">
                 Cor
-              </span>
-            </button>
-
-            <button
-              onClick={() => setIsIconModalOpen(true)}
-              className={`flex w-20 cursor-pointer flex-col items-center gap-0`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="30"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#fff"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                className="lucide lucide-eye-closed"
-              >
-                <path d="m15 18-.722-3.25" />
-                <path d="M2 8a10.645 10.645 0 0 0 20 0" />
-                <path d="m20 15-1.726-2.05" />
-                <path d="m4 15 1.726-2.05" />
-                <path d="m9 18 .722-3.25" />
-              </svg>
-              <span className="mt-[10px] text-xs text-white dark:text-white">
-                Cílios
               </span>
             </button>
 

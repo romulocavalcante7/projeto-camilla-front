@@ -1,20 +1,17 @@
-import { useState, useEffect } from 'react';
-import { Drawer } from 'rsuite';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import { getAllIcons, Icon } from '@/services/iconService';
-import InfiniteScroll from '@/components/ui/InfiniteScroll';
-import { Loader2 } from 'lucide-react';
-import Search from '@/components/search';
-import ImageNext from 'next/image';
+import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 import { Image as FabricImage } from 'fabric';
 import { useCanvasEditorStore } from '@/store/canvasEditorStore';
 import { useCanvasHistoryStore } from '@/store/canvasHistoryStore';
-import { Category, getAllCategories } from '@/services/categoryService';
+import { getAllCategories, Category } from '@/services/categoryService';
 import {
   getStickersByCategoryId,
   Sticker,
   StickerResponse
 } from '@/services/stickerService';
+import ImageNext from 'next/image';
 import { cn } from '@/lib/utils';
 
 export const EyelashModal = () => {
@@ -25,40 +22,21 @@ export const EyelashModal = () => {
   } = useCanvasEditorStore();
   const { saveState } = useCanvasHistoryStore();
 
-  const [eyes, setEyes] = useState<Sticker[]>([]);
-  const [page, setPage] = useState<number>(1);
-  const [totalPage, setTotalPage] = useState(0);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [hasMore, setHasMore] = useState<boolean>(true);
-  const [search, setSearch] = useState<string | undefined>(undefined);
-
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null
   );
-  const [totalCategories, setTotalCategories] = useState<number>(0);
-  const [pageCount, setPageCount] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(10);
-  console.log('eyes', eyes);
-  const fetchCategories = async (
-    pageNum: number,
-    pageSize: number,
-    search?: string,
-    sortField?: string,
-    sortOrder?: string
-  ) => {
+  const [eyes, setEyes] = useState<Sticker[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const fetchCategories = async () => {
     setLoading(true);
     try {
-      const data = await getAllCategories(
-        pageNum,
-        pageSize,
-        search,
-        sortField,
-        sortOrder
-      );
+      const data = await getAllCategories(1, 10);
       setCategories(data.categories);
-      setTotalCategories(data.total);
-      setPageCount(data.totalPages);
     } catch (error) {
       console.error('Error fetching categories:', error);
     } finally {
@@ -66,30 +44,34 @@ export const EyelashModal = () => {
     }
   };
 
-  const fetchEyes = async (page: number) => {
-    setLoading(true);
+  const fetchEyes = async () => {
     if (!selectedCategoryId) return;
+    setLoading(true);
     try {
       const data: StickerResponse = await getStickersByCategoryId(
         selectedCategoryId,
-        page,
+        1,
         10
       );
       setEyes(data.stickers);
-      setTotalPage(data.totalPages);
-      // setHasMore(page < data.totalPages);
+    } catch (error) {
+      console.error('Error fetching eyes:', error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCategories(page, pageSize, search);
-  }, [page, search, pageSize]);
+    if (isOpen) {
+      fetchCategories();
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (selectedCategoryId) {
-      fetchEyes(page);
+      setSelectedCategoryId(null);
+      fetchEyes();
+      setIsSheetOpen(true);
     }
   }, [selectedCategoryId]);
 
@@ -122,166 +104,109 @@ export const EyelashModal = () => {
     };
   };
 
-  // const fetchIcons = async (pageNum: number, searchTerm?: string) => {
-  //   setLoading(true);
-  //   try {
-  //     const data = await getAllIcons(
-  //       pageNum,
-  //       900,
-  //       searchTerm,
-  //       undefined,
-  //       undefined,
-  //       'true'
-  //     );
-  //     setIcons((prevIcons) => {
-  //       const newIcons = data.icons.filter(
-  //         (icon) => !prevIcons.some((prev) => prev.id === icon.id)
-  //       );
-  //       return [...prevIcons, ...newIcons];
-  //     });
-  //     setTotalPage(data.totalPages);
-  //     setHasMore(pageNum < data.totalPages);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const handleCloseDropdown = () => {
+    onClose(false);
+  };
+
+  const handleBackdropClick = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      handleCloseDropdown();
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
-      setEyes([]); // Limpa ícones ao abrir o modal
-      setPage(1); // Reseta a página ao abrir o modal
-      // fetchIcons(1, search); // Inicia o carregamento da primeira página
+      document.addEventListener('click', handleBackdropClick);
     }
-  }, [isOpen, search]);
-
-  // useEffect(() => {
-  //   if (page > 1 || icons.length === 0) {
-  //     fetchIcons(page, search);
-  //   }
-  // }, [page]);
-
-  // const loadMore = () => {
-  //   if (!loading && page < totalPage) {
-  //     setPage((prevPage) => prevPage + 1);
-  //   }
-  // };
-
-  // const handleSearch = (newSearch: string) => {
-  //   setSearch(newSearch || undefined);
-  //   setPage(1); // Reseta a página para nova busca
-  //   setIcons([]); // Limpa ícones para nova busca
-  // };
+    return () => {
+      document.removeEventListener('click', handleBackdropClick);
+    };
+  }, [isOpen]);
 
   return (
-    <Drawer
-      size="full"
-      placement="bottom"
-      open={isOpen}
-      onClose={() => onClose(false)}
-      dialogClassName="relative rounded-2xl backdrop-blur-2xl"
-      closeButton={false}
-    >
-      <div className="py-5">
-        <Cross2Icon
-          onClick={() => onClose(false)}
-          className="absolute right-4 top-5 h-8 w-8 cursor-pointer text-white"
-        />
-        <p className="text-center text-2xl font-semibold text-white">
-          Selecione
-        </p>
-      </div>
-
-      <div className="max-h-full overflow-y-auto p-4 pb-16">
-        {/* <Search
-          className="mb-5"
-          onSearch={handleSearch}
-          placeholder="Busque um cílio"
-          defaultValues={{ search }}
-        /> */}
-
-        {/* <InfiniteScroll
-          page={page}
-          totalPage={totalPage}
-          hasMore={hasMore}
-          isLoading={loading}
-          next={loadMore}
-        > */}
-        {/* <ul className="grid grid-cols-2 gap-4 pb-10">
-            {icons.map((icon) => (
-              <li
-                key={icon.id}
-                className="w-full cursor-pointer rounded-2xl border-2 border-none bg-[#7e7e7e63] p-2 text-center backdrop-blur-[20px] transition-all duration-200 ease-in-out hover:bg-[#4e4d4d] dark:hover:bg-[#1e1e1e]"
-                onClick={() => {
-                  handleIconSelect(icon.attachment.url);
-                  onClose(false);
-                }}
-              >
-                <ImageNext
-                  src={icon.attachment.url}
-                  alt={icon.name}
-                  width={1200}
-                  height={800}
-                  className="mx-auto h-16 w-full object-cover"
-                />
-                <p className="mt-2 truncate text-sm text-white">{icon.name}</p>
-              </li>
-            ))}
-          </ul> */}
-        <div className="w-full">
-          <ul className="flex w-full flex-col gap-4 pb-10">
-            {categories.map((category) => {
-              return (
-                <li
-                  key={category.id}
-                  onClick={() => {
-                    setSelectedCategoryId(category.id);
-                  }}
-                  className={cn(
-                    'w-full cursor-pointer rounded-2xl border-2 border-none bg-black/20 p-2 transition-all duration-200 ease-in-out hover:bg-black/20',
-                    selectedCategoryId === category.id && 'bg-blue-500'
-                  )}
-                >
-                  <p className="truncate text-center text-white">
+    <>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            ref={dropdownRef}
+            className="absolute right-4 top-20 z-50 w-80 rounded-2xl bg-[#000000a9] py-4 shadow-lg backdrop-blur-[20px]"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="relative">
+              <Cross2Icon
+                onClick={handleCloseDropdown}
+                className="absolute -top-2 right-2 h-6 w-6 cursor-pointer text-white"
+              />
+            </div>
+            <div className="mt-4">
+              <ul className="flex flex-col gap-2">
+                {categories.map((category) => (
+                  <li
+                    key={category.id}
+                    onClick={() => {
+                      setSelectedCategoryId(category.id);
+                      handleCloseDropdown();
+                    }}
+                    className={cn(
+                      'cursor-pointer rounded-md p-2 text-center text-white hover:bg-blue-500',
+                      selectedCategoryId === category.id && 'bg-blue-500'
+                    )}
+                  >
                     {category.name}
-                  </p>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="flex w-full flex-col gap-4 pb-10">
-          {eyes.map((eye) => {
-            return (
-              <div
-                key={eye.id}
-                className="w-full cursor-pointer rounded-2xl border-2 border-none bg-[#7e7e7e63] p-2 text-center backdrop-blur-[20px] transition-all duration-200 ease-in-out hover:bg-[#4e4d4d] dark:hover:bg-[#1e1e1e]"
-                onClick={() => {
-                  handleIconSelect(eye.attachment.url);
-                  onClose(false);
-                }}
-              >
-                <ImageNext
-                  src={eye.attachment.url}
-                  alt={eye.name}
-                  width={1200}
-                  height={800}
-                  className="mx-auto h-full w-full object-cover"
-                />
-                <p className="mt-2 truncate text-sm text-white">{eye.name}</p>
-              </div>
-            );
-          })}
-        </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-        {/* </InfiniteScroll> */}
-
-        {/* {loading && <Loader2 className="mx-auto my-4 h-8 w-8 animate-spin" />}
-        {!hasMore && icons.length === 0 && !loading && (
-          <p className="text-center text-xl text-gray-500">
-            Não foram encontrados ícones
-          </p>
-        )} */}
-      </div>
-    </Drawer>
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+        <SheetTrigger />
+        <SheetContent
+          className="border-none bg-[#000000a9] shadow-lg backdrop-blur-[20px]"
+          side="right"
+        >
+          <div className="py-4">
+            <h2 className="pr-4 text-center text-lg font-semibold text-white">
+              Cílios
+            </h2>
+            <div className="mt-4 grid max-h-[calc(100vh-8rem)] grid-cols-1 gap-4 overflow-y-auto pr-2">
+              {eyes.map((eye) => (
+                <div
+                  key={eye.id}
+                  onClick={() => {
+                    handleIconSelect(eye.attachment.url);
+                    setIsSheetOpen(false);
+                  }}
+                  className="cursor-pointer rounded-2xl bg-white/30 p-2  hover:bg-white/10"
+                >
+                  <ImageNext
+                    src={eye.attachment.url}
+                    alt={eye.name}
+                    quality={100}
+                    width={1200}
+                    height={800}
+                    className="h-32 w-full object-cover"
+                  />
+                  <p className="text-center font-bold text-white">{eye.name}</p>
+                </div>
+              ))}
+            </div>
+            {loading && (
+              <p className="mt-4 text-center text-sm text-white">
+                Carregando...
+              </p>
+            )}
+          </div>
+        </SheetContent>
+      </Sheet>
+    </>
   );
 };
