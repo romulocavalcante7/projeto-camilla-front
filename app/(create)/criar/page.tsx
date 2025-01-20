@@ -135,7 +135,7 @@ const TextEditor = () => {
       copyImageToClipboard(
         dataURL,
         () => {
-          toast.success('Figurinha copiada com sucesso!', {
+          toast.success('Copiada com sucesso!', {
             position: 'top-center',
             autoClose: 5000,
             hideProgressBar: false,
@@ -147,7 +147,7 @@ const TextEditor = () => {
           });
         },
         (error: { message: string }) => {
-          alert('Erro ao copiar a figurinha: ' + error.message);
+          alert('Erro ao copiar: ' + error.message);
         }
       );
     }
