@@ -173,7 +173,7 @@ export const EyelashModal = () => {
           className="border-none bg-[#000000a9] shadow-lg backdrop-blur-[20px]"
           side="right"
         >
-          <div className="py-4">
+          <div className="mb-4 py-4">
             <h2 className="pr-4 text-center text-lg font-semibold text-white">
               Cílios
             </h2>
