@@ -270,7 +270,7 @@ const TextEditor = () => {
               className={`${
                 redoStack.length === 0
                   ? 'cursor-not-allowed text-gray-400'
-                  : 'cursor-pointer'
+                  : 'cursor-pointer text-white'
               }`}
             >
               <Redo size={30} />

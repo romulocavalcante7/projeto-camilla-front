@@ -84,8 +84,8 @@ export const EyelashModal = () => {
     imgElement.src = icon;
 
     imgElement.onload = () => {
-      const fabricImg = new FabricImage(imgElement, {
-        left: canvas.width! / 2,
+      const originalEyelash = new FabricImage(imgElement, {
+        left: (2 * canvas.width!) / 3,
         top: canvas.height! / 2,
         originX: 'center',
         originY: 'center',
@@ -93,8 +93,20 @@ export const EyelashModal = () => {
         scaleY: 0.2
       });
 
-      canvas.add(fabricImg);
-      canvas.setActiveObject(fabricImg);
+      const mirroredEyelash = new FabricImage(imgElement, {
+        left: canvas.width! / 3,
+        top: canvas.height! / 2,
+        originX: 'center',
+        originY: 'center',
+        scaleX: -0.2,
+        scaleY: 0.2
+      });
+
+      canvas.add(originalEyelash);
+      canvas.add(mirroredEyelash);
+
+      canvas.setActiveObject(originalEyelash);
+
       canvas.renderAll();
       saveState(canvas.toJSON());
     };
