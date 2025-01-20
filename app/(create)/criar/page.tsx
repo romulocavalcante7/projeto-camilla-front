@@ -342,13 +342,13 @@ const TextEditor = () => {
   return (
     <div className="flex flex-col items-center bg-black pb-5 pt-3">
       <ToastContainer />
-      <div className="justify-betweenp flex w-full items-center px-5 pb-4">
+      <div className="justify-betweenp flex w-full items-center px-5 pb-2">
         <ArrowLeft
           className="cursor-pointer text-white"
           size={30}
           onClick={() => router.back()}
         />
-        <p className="flex flex-1 items-center justify-center text-center text-xl text-white">
+        <p className="flex flex-1 items-center justify-center text-center text-lg text-white">
           Editar
         </p>
         <div className="flex gap-2">
@@ -414,7 +414,7 @@ const TextEditor = () => {
       </div>
 
       <div className="relative mx-auto flex max-w-xl items-center justify-center">
-        <div className="absolute top-[12px] z-10 mx-auto flex w-full max-w-[370px] items-center justify-between rounded-xl border border-white/20 bg-black/60 px-3 py-2 backdrop-blur-[12px] sm:max-w-3xl lg:max-w-xl dark:bg-[#2E2B2B]">
+        <div className="absolute top-[12px] z-10 mx-auto flex w-full max-w-[370px] items-center justify-between rounded-xl border border-white/20 bg-black/60 px-3 py-2 backdrop-blur-[12px] sm:max-w-3xl lg:max-w-xl">
           <div className="flex items-center gap-5">
             <button
               onClick={handleUndo}
