@@ -1,4 +1,4 @@
-import { Compare } from '@/components/ui/compare';
+import Compare from '@/components/ui/compare';
 import React from 'react';
 import Antes from '@/app/assets/antes.png';
 import Depois from '@/app/assets/depois.png';

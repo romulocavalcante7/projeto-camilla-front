@@ -2,19 +2,22 @@
 
 import React, { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { StaticImageData } from 'next/image';
 
 interface ImageCompareProps {
-  firstImage: string;
-  secondImage: string;
+  firstImage?: StaticImageData | undefined;
+  secondImage?: StaticImageData | undefined;
+  firstImageClassName?: string;
+  secondImageClassname?: string;
   className?: string;
-  sliderClassName?: string;
+  slideMode?: string;
 }
 
 const ImageCompare: React.FC<ImageCompareProps> = ({
   firstImage,
   secondImage,
   className,
-  sliderClassName
+  slideMode
 }) => {
   const [sliderX, setSliderX] = useState(50); // Slider inicia no centro (50%)
   const containerRef = useRef<HTMLDivElement>(null);
@@ -80,7 +83,7 @@ const ImageCompare: React.FC<ImageCompareProps> = ({
 
       {/* Slider */}
       <motion.div
-        className={`absolute bottom-0 top-0 z-10 w-1 bg-blue-500 ${sliderClassName}`}
+        className={`absolute bottom-0 top-0 z-10 w-1 bg-blue-500`}
         style={{
           left: `${sliderX}%`
         }}
