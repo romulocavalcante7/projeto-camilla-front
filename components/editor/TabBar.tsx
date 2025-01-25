@@ -12,7 +12,8 @@ export const TabBar = () => {
     selectedObject,
     setIsIconModalOpen,
     setIsOpacityModalOpen,
-    setIsSaturationTemperatureModalOpen
+    setIsSaturationTemperatureModalOpen,
+    setIsFichaModalOpen
   } = useCanvasEditorStore();
 
   return (
@@ -36,8 +37,7 @@ export const TabBar = () => {
         {currentMenu !== 'style' && currentMenu !== 'align' && (
           <div className="flex items-center justify-start gap-2 pr-5">
             <button
-              // onClick={() => setIsIconModalOpen(true)}
-              onClick={() => {}}
+              onClick={() => setIsFichaModalOpen(true)}
               className={`flex w-20 cursor-pointer flex-col items-center gap-0`}
             >
               <svg
@@ -47,9 +47,9 @@ export const TabBar = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#fff"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
                 <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
                 <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
@@ -74,9 +74,9 @@ export const TabBar = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#fff"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="lucide lucide-eye-closed"
               >
                 <path d="m15 18-.722-3.25" />

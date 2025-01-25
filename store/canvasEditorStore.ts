@@ -17,6 +17,7 @@ interface CanvasEditorState {
   isIconModalOpen: boolean;
   isColorModalOpen: boolean;
   isSaturationTemperatureModalOpen: boolean;
+  isFichaModalOpen: boolean;
 
   setCurrentMenu: (menu: string) => void;
   setIsUploading: (isUploading: boolean) => void;
@@ -26,6 +27,7 @@ interface CanvasEditorState {
   setIsOpacityModalOpen: (isOpen: boolean) => void;
   setIsIconModalOpen: (isOpen: boolean) => void;
   setIsSaturationTemperatureModalOpen: (isOpen: boolean) => void;
+  setIsFichaModalOpen: (isOpen: boolean) => void;
 }
 
 export const useCanvasEditorStore = create<CanvasEditorState>((set) => ({
@@ -41,6 +43,7 @@ export const useCanvasEditorStore = create<CanvasEditorState>((set) => ({
   isIconModalOpen: false,
   isColorModalOpen: false,
   isSaturationTemperatureModalOpen: false,
+  isFichaModalOpen: false,
   setIsColorModalOpen: (isOpen) => set({ isColorModalOpen: isOpen }),
   setCurrentMenu: (menu) => set({ currentMenu: menu }),
   setIsUploading: (isUploading) => set({ isUploading }),
@@ -49,5 +52,6 @@ export const useCanvasEditorStore = create<CanvasEditorState>((set) => ({
   setIsOpacityModalOpen: (isOpen) => set({ isOpacityModalOpen: isOpen }),
   setIsIconModalOpen: (isOpen) => set({ isIconModalOpen: isOpen }),
   setIsSaturationTemperatureModalOpen: (isOpen) =>
-    set({ isSaturationTemperatureModalOpen: isOpen })
+    set({ isSaturationTemperatureModalOpen: isOpen }),
+  setIsFichaModalOpen: (isOpen) => set({ isFichaModalOpen: isOpen })
 }));

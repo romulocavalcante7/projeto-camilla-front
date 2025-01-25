@@ -1,6 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-
+import {
+  ReactCompareSlider,
+  ReactCompareSliderImage
+} from 'react-compare-slider';
 import React, { useEffect, useState } from 'react';
 import {
   Canvas as FabricCanvas,
@@ -10,10 +13,11 @@ import {
   Point,
   TEvent
 } from 'fabric';
+import Antes from '@/app/assets/antes.png';
 import 'react-toastify/dist/ReactToastify.css';
 import Background from '@/app/assets/backgroundPng.png';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Copy, Redo, Trash2, Undo } from 'lucide-react';
+import { ArrowLeft, Eye, Redo, Trash2, Undo } from 'lucide-react';
 import ImageNext from 'next/image';
 import { ToastContainer, toast } from 'react-toastify';
 import { useCanvasHistoryStore } from '@/store/canvasHistoryStore';
@@ -24,6 +28,9 @@ import { copyImageToClipboard } from '@/utils/copyImageToClipboard';
 import { EyelashModal } from '@/components/editor/modals/IconModal';
 import { useCanvasEditorStore } from '@/store/canvasEditorStore';
 import { SaturationTemperatureModal } from '@/components/editor/modals/SaturationTemperatureModal';
+import { Modal } from '@/components/ui/modal';
+import { FichaModal } from '@/components/editor/modals/Ficha';
+// import ImageCompare, { Compare } from '@/components/ui/compare';
 
 const TextEditor = () => {
   const { canvasRef, canvasElementRef, selectedObject, setSelectedObject } =
@@ -33,6 +40,9 @@ const TextEditor = () => {
   // const canvasHeight = 560;
   const { history, redoStack, saveState, undo, redo } = useCanvasHistoryStore();
   const [isZoomEnabled, setIsZoomEnabled] = useState(false);
+  const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+  const [editedImage, setEditedImage] = useState<string | null>(null);
+  const [imageOriginal, setImageOriginal] = useState<string | null>(null);
 
   useEffect(() => {
     const canvasElement = new FabricCanvas(
@@ -254,7 +264,7 @@ const TextEditor = () => {
     const imgElement = new Image();
     imgElement.crossOrigin = 'anonymous';
     imgElement.src = imageUrl;
-
+    setImageOriginal(imgElement.src);
     imgElement.onload = () => {
       const fabricImg = new FabricImage(imgElement, {
         left: canvas.width! / 2,
@@ -339,6 +349,59 @@ const TextEditor = () => {
     setIsZoomEnabled(false);
   };
 
+  const openCompareModal = () => {
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+
+      // Gera o Data URL da imagem editada (tamanho exato do canvas)
+      const editedDataURL = canvas.toDataURL({
+        format: 'png',
+        multiplier: 1 // 1:1 sem escalonamento
+      });
+
+      // Atualiza o estado com a imagem editada
+      setEditedImage(editedDataURL);
+      setIsCompareModalOpen(true);
+    }
+  };
+
+  const alignOriginalImageToCanvas = async (): Promise<void> => {
+    if (canvasRef.current && imageOriginal) {
+      const { width, height } = canvasRef.current;
+
+      // Redimensiona a imagem original para coincidir com o canvas
+      const resizedImage = await resizeImage(imageOriginal, width, height);
+      setImageOriginal(resizedImage);
+    }
+  };
+
+  const resizeImage = (
+    imageSrc: string,
+    targetWidth: number,
+    targetHeight: number
+  ): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = imageSrc;
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+          resolve(canvas.toDataURL('image/png'));
+        }
+      };
+    });
+  };
+
+  const closeCompareModal = () => {
+    setIsCompareModalOpen(false);
+  };
+
   return (
     <div className="flex flex-col items-center bg-black pb-5 pt-3">
       <ToastContainer />
@@ -353,6 +416,13 @@ const TextEditor = () => {
         </p>
         <div className="flex gap-2">
           <button
+            onClick={openCompareModal}
+            className="flex items-center justify-center rounded-full bg-blue-500 p-2 text-white hover:bg-blue-600"
+            title="Comparar imagens"
+          >
+            <Eye size={24} />
+          </button>
+          <button
             //@ts-ignore
             onClick={() => document.getElementById('imageInput').click()}
             className="cursor-pointer rounded px-4 py-2 text-white"
@@ -364,9 +434,9 @@ const TextEditor = () => {
               viewBox="0 0 24 24"
               fill="none"
               stroke="#fff"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="lucide lucide-image-plus"
             >
               <path d="M16 5h6" />
@@ -453,9 +523,9 @@ const TextEditor = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#fff"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   className="lucide lucide-scan-eye"
                 >
                   <path d="M3 7V5a2 2 0 0 1 2-2h2" />
@@ -479,9 +549,9 @@ const TextEditor = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#fff"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   className="lucide lucide-zoom-in"
                 >
                   <circle cx="11" cy="11" r="8" />
@@ -503,9 +573,9 @@ const TextEditor = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#fff"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   className="lucide lucide-zoom-out"
                 >
                   <circle cx="11" cy="11" r="8" />
@@ -526,9 +596,9 @@ const TextEditor = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#fff"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   className="lucide lucide-rotate-ccw"
                 >
                   <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
@@ -557,19 +627,49 @@ const TextEditor = () => {
         <canvas
           ref={canvasElementRef}
           onClick={(e) => {
-            console.log('e', e);
             handleZoomClick(e, 1.1);
-          }} // Zoom In no clique
+          }}
           onContextMenu={(e) => {
             e.preventDefault();
-            handleZoomClick(e, 0.9); // Zoom Out no clique com botão direito
+            handleZoomClick(e, 0.9);
           }}
           className="relative mx-auto w-full max-w-xl cursor-crosshair rounded-xl"
         />
       </div>
 
       <TabBar />
-
+      {isCompareModalOpen && (
+        <Modal
+          description=""
+          isOpen={isCompareModalOpen}
+          onClose={closeCompareModal}
+          title="Comparar Imagens"
+        >
+          <div className="backdrop-blur-[20px]">
+            {/* <ImageCompare
+              firstImage={imageOriginal!} // Imagem original
+              secondImage={editedImage || ''} // Imagem editada
+              className="h-[400px] w-[600px] rounded-lg border"
+              sliderClassName="bg-indigo-500"
+            /> */}
+            <ReactCompareSlider
+              itemOne={
+                <ReactCompareSliderImage
+                  src={imageOriginal || ''}
+                  alt="Image one"
+                />
+              }
+              itemTwo={
+                <ReactCompareSliderImage
+                  src={editedImage || ''}
+                  alt="Image two"
+                />
+              }
+            />
+          </div>
+        </Modal>
+      )}
+      <FichaModal saveChanges={saveChanges} />
       <ColorModal saveChanges={saveChanges} />
       <SaturationTemperatureModal saveChanges={saveChanges} />
       <EyelashModal />
