@@ -68,7 +68,6 @@ export const EditSticker: React.FC<EditStickerProps> = ({
   setIsModalOpen
 }) => {
   const { theme } = useTheme();
-  console.log('theme', theme);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { clipboardHexColor, setClipboardHexColor } =
     useContext(ClipboardContext);

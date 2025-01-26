@@ -56,7 +56,7 @@ export const UserForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isUserInactive, setIsUserInactive] = useState<boolean>(false);
   const [isManuallyCreated, setIsManuallyCreated] = useState(false);
-  console.log('isManuallyCreated', isManuallyCreated);
+
   const form = useForm<UserFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -70,7 +70,6 @@ export const UserForm = () => {
     setLoading(true);
     try {
       const data = await getUserDetail(userId);
-      console.log('data', data);
       setUser(data);
       setIsManuallyCreated(data?.isManuallyCreated);
       setIsUserInactive(!data.status);

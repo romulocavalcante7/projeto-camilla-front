@@ -130,12 +130,6 @@ export const navItems: NavItem[] = [
     label: 'Cílios'
   },
   {
-    title: 'Ícones',
-    href: '/dashboard/icones',
-    icon: 'icones',
-    label: 'Ícones'
-  },
-  {
     title: 'Usuários',
     href: '/dashboard/usuarios',
     icon: 'user',

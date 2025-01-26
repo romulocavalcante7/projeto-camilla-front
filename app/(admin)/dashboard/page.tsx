@@ -1,7 +1,7 @@
 'use client';
 import { FigurinhasCard } from '@/components/admin/figurinhas';
 import { NichosCard } from '@/components/admin/nichos';
-import { SubnichosCard } from '@/components/admin/subnichos';
+// import { SubnichosCard } from '@/components/admin/subnichos';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 // import { Overview } from '@/components/overview';
 // import { RecentSales } from '@/components/recent-sales';
@@ -81,7 +81,7 @@ export default function Page() {
                 </CardContent>
               </Card>
               <NichosCard />
-              <SubnichosCard />
+              {/* <SubnichosCard /> */}
               <FigurinhasCard />
             </div>
             {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">

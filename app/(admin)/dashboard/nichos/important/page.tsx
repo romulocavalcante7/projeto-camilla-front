@@ -8,7 +8,7 @@ import {
   removeCategoryImportant,
   setCategoryDisplayOrder
 } from '@/services/categoryService';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -22,7 +22,6 @@ export default function Page() {
 
   const fetchAllImportantCategories = async () => {
     const data = await getAllImportantCategories();
-    console.log('data', data);
     setCategories(data);
   };
 

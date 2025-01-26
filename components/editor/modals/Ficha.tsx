@@ -107,6 +107,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     <input
                       type="radio"
                       id={id}
+                      //@ts-ignore
                       value={id}
                       className="hidden"
                       {...field}
@@ -164,6 +165,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     <input
                       type="radio"
                       id={id}
+                      //@ts-ignore
                       value={id}
                       className="hidden"
                       {...field}
@@ -223,6 +225,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     <input
                       type="radio"
                       id={id}
+                      //@ts-ignore
                       value={id}
                       className="hidden"
                       {...field}
@@ -274,6 +277,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     <input
                       type="radio"
                       id={id}
+                      //@ts-ignore
                       value={id}
                       className="hidden"
                       {...field}
@@ -328,6 +332,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     <input
                       type="radio"
                       id={id}
+                      //@ts-ignore
                       value={id}
                       className="hidden"
                       {...field}
@@ -379,6 +384,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     <input
                       type="radio"
                       id={id}
+                      //@ts-ignore
                       value={id}
                       className="hidden"
                       {...field}
@@ -433,6 +439,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     <input
                       type="radio"
                       id={id}
+                      //@ts-ignore
                       value={id}
                       className="hidden"
                       {...field}
@@ -651,8 +658,6 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
             <button
               type="submit"
               onClick={handleSubmit((data) => {
-                console.log('DATA');
-                console.log(data);
                 handleClose();
               })}
               className="rounded-lg bg-blue-600 px-4 py-2 text-white"

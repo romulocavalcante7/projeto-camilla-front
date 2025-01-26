@@ -39,6 +39,7 @@ interface AuthContextType {
   setUser: Dispatch<SetStateAction<User | null>>;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
   getSession: () => void;
+  updateOrderStatus: () => void;
   isAuthenticated: boolean;
   isLoading: boolean;
 }
@@ -50,6 +51,7 @@ const AuthContext = createContext<AuthContextType>({
   setUser: () => {},
   getSession: () => {},
   setIsAuthenticated: () => {},
+  updateOrderStatus: () => {},
   isAuthenticated: false,
   isLoading: true
 });
@@ -63,16 +65,83 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { toast } = useToast();
   const router = useRouter();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchUser = async (id: string) => {
     const user = await getUser(id);
     return user;
   };
 
+  const updateOrderStatus = useCallback(async () => {
+    try {
+      const userData = await getCookie('userData');
+      if (!userData) {
+        throw new Error('Usuário não encontrado nos cookies');
+      }
+      const parsedUserData = JSON.parse(userData.value);
+      const updatedUser = await fetchUser(parsedUserData.id);
+
+      if (!updatedUser.status) {
+        setModalMessage(
+          'Seu usuário está inativo. Por favor, entre em contato com o suporte.'
+        );
+        setOpenModal(true);
+        logout();
+        return;
+      }
+      if (updatedUser.isManuallyCreated) {
+        if (isExpired(updatedUser.expirationDate)) {
+          setModalMessage(
+            'Você não possui acesso à plataforma. Tempo expirado.'
+          );
+          setOpenModal(true);
+          logout();
+          return;
+        }
+      } else {
+        if (
+          updatedUser.orderStatus !== PaymentStatusEnum.Paid ||
+          updatedUser.subscription?.status !== 'active'
+        ) {
+          let message = '';
+          switch (updatedUser.orderStatus || updatedUser.subscription?.status) {
+            case PaymentStatusEnum.WaitingPayment:
+              message =
+                'Seu pagamento está pendente. Por favor, efetue o pagamento para continuar.';
+              break;
+            case PaymentStatusEnum.Refused:
+              message =
+                'Seu pagamento foi recusado. Por favor, entre em contato com o suporte.';
+              break;
+            case PaymentStatusEnum.Refunded:
+              message =
+                'Seu pagamento foi reembolsado. Verifique sua conta ou entre em contato.';
+              break;
+            case PaymentStatusEnum.Chargeback:
+              message =
+                'Houve um estorno no seu pagamento. Acesso negado até que o problema seja resolvido.';
+              break;
+            default:
+              message =
+                'Você não possui acesso à plataforma. Verifique seu status de pagamento.';
+          }
+          setModalMessage(message);
+          setOpenModal(true);
+          logout();
+          return;
+        }
+      }
+      const updatedUserData = { ...updatedUser };
+      await setCookie('userData', JSON.stringify(updatedUserData));
+      setUser(updatedUser);
+    } catch (error) {
+      console.error('Erro ao atualizar o status do pedido:', error);
+    }
+  }, [fetchUser, setUser]);
+
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
       const { tokens, user } = await loginService({ email, password });
-
       if (!user.status) {
         setModalMessage(
           'Seu usuário está inativo. Por favor, entre em contato com o suporte.'
@@ -92,9 +161,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       } else {
         // Usuários normais: Verifica status do pagamento
-        if (user.orderStatus !== PaymentStatusEnum.Paid) {
+        if (
+          user.orderStatus !== PaymentStatusEnum.Paid ||
+          user.subscription?.status !== 'active'
+        ) {
           let message = '';
-          switch (user.orderStatus) {
+          switch (user.orderStatus || user.subscription?.status) {
             case PaymentStatusEnum.WaitingPayment:
               message =
                 'Seu pagamento está pendente. Por favor, efetue o pagamento para continuar.';
@@ -244,6 +316,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         logout,
         setUser,
         getSession,
+        updateOrderStatus,
         isAuthenticated,
         setIsAuthenticated,
         isLoading

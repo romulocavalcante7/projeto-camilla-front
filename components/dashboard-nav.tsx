@@ -53,7 +53,28 @@ export function DashboardNav({
                       if (setOpen) setOpen(false);
                     }}
                   >
-                    <Icon className={`ml-3 size-5`} />
+                    {item.icon === 'figurinhas' ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="26"
+                        height="24"
+                        viewBox="0 0 25 25"
+                        fill="none"
+                        stroke="#000"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={`ml-3`}
+                      >
+                        <path d="m15 18-.722-3.25" />
+                        <path d="M2 8a10.645 10.645 0 0 0 20 0" />
+                        <path d="m20 15-1.726-2.05" />
+                        <path d="m4 15 1.726-2.05" />
+                        <path d="m9 18 .722-3.25" />
+                      </svg>
+                    ) : (
+                      <Icon className={`ml-3 size-5`} />
+                    )}
 
                     {isMobileNav || (!isMinimized && !isMobileNav) ? (
                       <span className="mr-2 truncate">{item.title}</span>
