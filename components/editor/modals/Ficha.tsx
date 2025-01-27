@@ -33,6 +33,7 @@ import Desidade2mm from '@/app/assets/ficha/densidade/densidade-2mm.webp';
 
 import SobrancelhaCurta from '@/app/assets/ficha/sobrancelhas/sobrancelha-curta.webp';
 import SobrancelhaLonga from '@/app/assets/ficha/sobrancelhas/sobrancelha-longa.webp';
+import { generateFichaPDF } from '@/lib/pdf';
 // import { cn } from '@/lib/utils';
 
 interface FichaModalProps {
@@ -455,7 +456,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
 
     {
       id: 8,
-      title: '4° - Defina Tamanhos',
+      title: '5° - Defina Tamanhos',
       content: (
         <div>
           <h3 className="mb-2 text-center text-base font-medium text-white">
@@ -537,6 +538,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
         </div>
       )
     },
+
     {
       id: 9,
       title: '6° - Defina a Colorimetria',
@@ -546,32 +548,88 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
             Pele e Cabelo
           </h3>
           <div className="grid grid-cols-2 gap-4">
+            {/* Seleção para Pele */}
             <div className="flex flex-col">
               <label htmlFor="pele" className="mb-1 text-white">
                 Pele
               </label>
-              <input
-                id="pele"
-                type="text"
-                placeholder="Ex.: Quente, Frio"
-                className="w-full rounded-lg bg-gray-800 p-2 text-white focus:outline-none focus:ring-2 focus:ring-zinc-50"
+              <Controller
+                name="pele"
+                control={control}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    id="pele"
+                    className="w-full rounded-lg bg-gray-800 p-2 text-white focus:outline-none focus:ring-2 focus:ring-zinc-50"
+                  >
+                    <option value="">Selecione</option>
+                    <option value="quente">Quente</option>
+                    <option value="frio">Frio</option>
+                  </select>
+                )}
               />
             </div>
+
+            {/* Seleção para Cabelo */}
             <div className="flex flex-col">
               <label htmlFor="cabelo" className="mb-1 text-white">
                 Cabelo
               </label>
-              <input
-                id="cabelo"
-                type="text"
-                placeholder="Ex.: Claro, Escuro"
-                className="w-full rounded-lg bg-gray-800 p-2 text-white focus:outline-none focus:ring-2 focus:ring-zinc-50"
+              <Controller
+                name="cabelo"
+                control={control}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    id="cabelo"
+                    className="w-full rounded-lg bg-gray-800 p-2 text-white focus:outline-none focus:ring-2 focus:ring-zinc-50"
+                  >
+                    <option value="">Selecione</option>
+                    <option value="quente">Quente</option>
+                    <option value="frio">Frio</option>
+                  </select>
+                )}
               />
             </div>
+          </div>
+
+          {/* Exibição do resultado da combinação */}
+          <div className="mt-4">
+            <h4 className="text-center text-lg font-medium text-white">
+              Resultado da combinação:
+            </h4>
+            {/* Resultado dinâmico com base nos valores de pele e cabelo */}
+            <Controller
+              name="pele"
+              control={control}
+              render={({ field: { value: pele } }) => (
+                <Controller
+                  name="cabelo"
+                  control={control}
+                  render={({ field: { value: cabelo } }) => {
+                    const resultado =
+                      (pele === 'quente' &&
+                        cabelo === 'quente' &&
+                        'Marrom ou Mescla') ||
+                      (pele === 'frio' && cabelo === 'frio' && 'Preto') ||
+                      (pele === 'frio' && cabelo === 'quente' && 'Mescla') ||
+                      (pele === 'quente' && cabelo === 'frio' && 'Preto') ||
+                      'Não definido';
+
+                    return (
+                      <div className="mt-2 text-center text-white">
+                        <span className="text-lg">{resultado}</span>
+                      </div>
+                    );
+                  }}
+                />
+              )}
+            />
           </div>
         </div>
       )
     },
+
     {
       id: 10,
       title: '8° - Defina o Temperamento',
@@ -658,7 +716,9 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
             <button
               type="submit"
               onClick={handleSubmit((data) => {
-                handleClose();
+                console.log('data', data);
+                generateFichaPDF(data);
+                // handleClose();
               })}
               className="rounded-lg bg-white px-4 py-2 text-black"
             >
