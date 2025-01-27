@@ -15,6 +15,7 @@ import { useContext } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import ThemeToggle from './layout/ThemeToggle/theme-toggle';
 import useSocketStore from '@/store/useSocketStore';
+import Link from 'next/link';
 
 export const Menu = () => {
   const router = useRouter();
@@ -46,18 +47,23 @@ export const Menu = () => {
         <SheetHeader>
           <SheetTitle className="text-2xl">VISALASH PRO</SheetTitle>
           <div className="flex w-full flex-col gap-5 pt-5">
-            <div className="flex items-center gap-3">
-              <Avatar className="bg-gray-300">
-                <AvatarImage src={user?.avatar?.url} className="object-cover" />
-                <AvatarFallback className="bg-gray-400" />
-              </Avatar>
-              <div className="flex flex-col items-start">
-                <p className="font-semibold">{user?.name}</p>
-                <p className="text-sm">
-                  {user?.role === 'ADMIN' ? 'Administrador' : 'Usuário'}
-                </p>
+            <Link href="/perfil">
+              <div className="flex items-center gap-3">
+                <Avatar className="bg-gray-300">
+                  <AvatarImage
+                    src={user?.avatar?.url}
+                    className="object-cover"
+                  />
+                  <AvatarFallback className="bg-gray-400" />
+                </Avatar>
+                <div className="flex flex-col items-start">
+                  <p className="font-semibold">{user?.name}</p>
+                  <p className="text-sm">
+                    {user?.role === 'ADMIN' ? 'Administrador' : 'Usuário'}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Link>
             {user?.role === 'ADMIN' && (
               <Button
                 onClick={() => router.push('/dashboard')}

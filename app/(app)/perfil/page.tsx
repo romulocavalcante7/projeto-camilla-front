@@ -27,7 +27,7 @@ const Perfil = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="z-40 flex h-screen flex-col gap-2 bg-black">
       <motion.div
         initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
@@ -37,28 +37,28 @@ const Perfil = () => {
           ease: [0.25, 0.25, 0.25, 0.75]
         }}
         className={cn(
-          'sticky left-0 top-0 z-[2] flex w-full flex-col gap-5 bg-white px-5 py-5 transition-all dark:bg-transparent'
+          'sticky left-0 top-0 z-[2] flex w-full flex-col gap-5 bg-transparent px-5 py-5 transition-all dark:bg-transparent'
         )}
       >
         <div className="relative flex flex-col gap-2">
           <Link className="w-fit" href="/">
-            <Image
+            {/* <Image
               src="/logo-v2.png"
               width={160}
               height={40}
               alt="icone logo"
-            />
+            /> */}
           </Link>
           <div className="flex items-center gap-5">
             <ArrowLeft
-              className="cursor-pointer"
+              className="cursor-pointer text-white"
               size={30}
               onClick={() => router.push('/')}
             />
           </div>
         </div>
       </motion.div>
-      <div className="flex flex-col items-center justify-center gap-8 px-5">
+      <div className="z-40 flex h-screen flex-col items-center gap-8 bg-black px-5">
         <div className="flex w-full max-w-lg flex-col items-center gap-4">
           <div className="flex w-full items-center gap-10">
             <Avatar className="h-20 w-20 sm:h-28 sm:w-28">
@@ -66,32 +66,34 @@ const Perfil = () => {
               <AvatarFallback className="bg-gray-400" />
             </Avatar>
             <div className="flex flex-col">
-              <p className="text-xl font-semibold sm:text-2xl">{user?.name}</p>
-              <p className="sm:text-lg dark:text-gray-300">{user?.email}</p>
+              <p className="text-xl font-semibold text-white sm:text-2xl">
+                {user?.name}
+              </p>
+              <p className="text-white sm:text-lg">{user?.email}</p>
             </div>
           </div>
         </div>
 
         <div className="mx-auto flex w-full max-w-lg flex-col gap-2">
-          <p className="text-xl">Informações</p>
+          <p className="text-xl text-white">Informações</p>
           <div className="flex flex-col gap-4">
             <Link
               href="/perfil/assinatura"
-              className="flex w-full flex-1 cursor-pointer items-center justify-between rounded-xl bg-[#89898938] px-5 py-3"
+              className="flex w-full flex-1 cursor-pointer items-center justify-between rounded-xl bg-[#89898938] px-5 py-3 text-white"
             >
               <p>Minha assinatura</p>
               <ChevronRight />
             </Link>
             <Link
               href="/perfil/esquecer-senha"
-              className="flex w-full flex-1 cursor-pointer items-center justify-between rounded-xl bg-[#89898938] px-5 py-3"
+              className="flex w-full flex-1 cursor-pointer items-center justify-between rounded-xl bg-[#89898938] px-5 py-3 text-white"
             >
               <p>Trocar de senha</p>
               <ChevronRight />
             </Link>
             <Link
               href="/perfil/avatar"
-              className="flex w-full flex-1 cursor-pointer items-center justify-between rounded-xl bg-[#89898938] px-5 py-3"
+              className="flex w-full flex-1 cursor-pointer items-center justify-between rounded-xl bg-[#89898938] px-5 py-3 text-white"
             >
               <p>Alterar foto de perfil</p>
               <ChevronRight />
@@ -100,8 +102,8 @@ const Perfil = () => {
         </div>
 
         <div className="mx-auto flex w-full max-w-lg flex-col gap-3">
-          <p className="text-xl">Modo de cor</p>
-          <div className="flex items-center gap-3">
+          <p className="text-xl text-white">Modo de cor</p>
+          <div className="flex items-center gap-3 text-white">
             Escuro
             <Switch
               checked={theme === 'light'}
@@ -114,15 +116,15 @@ const Perfil = () => {
         <div className="mx-auto flex w-full max-w-lg flex-col gap-3">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
-              <p className="text-xl">Suporte</p>
+              <p className="text-xl text-white">Suporte</p>
               <HelpCircle />
             </div>
             <a
-              className="flex w-fit dark:text-gray-300"
-              href="mailto:portalstoryplus@gmail.com"
+              className="flex w-fit text-white"
+              href="mailto:visalashpro@millalashes.com.br"
               target="_blank"
             >
-              portalstoryplus@gmail.com
+              visalashpro@millalashes.com.br
             </a>
           </div>
         </div>

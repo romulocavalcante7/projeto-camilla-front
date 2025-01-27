@@ -50,7 +50,7 @@ const Signature = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex h-screen flex-col gap-2 bg-black">
       <motion.div
         initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
@@ -60,22 +60,14 @@ const Signature = () => {
           ease: [0.25, 0.25, 0.25, 0.75]
         }}
         className={cn(
-          'sticky left-0 top-0 z-[2] flex w-full flex-col gap-5 bg-white px-5 py-5 transition-all dark:bg-transparent',
+          'sticky left-0 top-0 z-[2] flex w-full flex-col gap-5 bg-transparent px-5 py-5 transition-all dark:bg-transparent',
           scrollAbove10 && 'dark:bg-[#1a101b]/80 dark:backdrop-blur-md'
         )}
       >
         <div className="relative flex flex-col gap-2">
-          <Link className="w-fit" href="/">
-            <Image
-              src="/logo-v2.png"
-              width={160}
-              height={40}
-              alt="icone logo"
-            />
-          </Link>
           <div className="flex items-center gap-5">
             <ArrowLeft
-              className="cursor-pointer"
+              className="cursor-pointer text-white"
               size={30}
               onClick={() => router.back()}
             />
@@ -83,8 +75,8 @@ const Signature = () => {
         </div>
       </motion.div>
 
-      <div className="flex w-full max-w-lg flex-col  gap-3 px-5">
-        <p className="text-xl">Minha assinatura</p>
+      <div className="z-40 flex h-screen w-full max-w-lg flex-col gap-3 bg-black px-5">
+        <p className="text-xl text-white">Minha assinatura</p>
         <div className="flex w-fit gap-5">
           {paymentStatus && user?.orderStatus === PaymentStatusEnum.Paid && (
             <>
@@ -111,8 +103,8 @@ const Signature = () => {
             </>
           )}
         </div>
-        <div className="flex flex-col gap-1">
-          <div className="text-xl">Próximo pagamento</div>
+        <div className="flex flex-col gap-1 text-white">
+          <div className="text-xl text-white">Próximo pagamento</div>
           {new Date(user?.subscription?.nextPayment!).toLocaleDateString()}
         </div>
       </div>
