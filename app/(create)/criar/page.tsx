@@ -75,6 +75,33 @@ const TextEditor = () => {
 
     updateCanvasSize();
 
+    const imgElement = new Image();
+    imgElement.crossOrigin = 'anonymous';
+    imgElement.src = Background.src;
+    imgElement.onload = () => {
+      const fabricImg = new FabricImage(imgElement, {
+        left: canvasElement.width! / 2,
+        top: canvasElement.height! / 2,
+        originX: 'center',
+        originY: 'center'
+      });
+
+      const scaleX = canvasElement.width! / fabricImg.width!;
+      const scaleY = canvasElement.height! / fabricImg.height!;
+      const scale = Math.max(scaleX, scaleY);
+
+      fabricImg.set({
+        scaleX: scale,
+        scaleY: scale,
+        selectable: false,
+        evented: false
+      });
+
+      canvasElement.backgroundImage = fabricImg;
+      canvasElement.renderAll();
+      saveState(canvasElement.toJSON());
+    };
+
     canvasElement.renderAll();
     saveState(canvasElement.toJSON());
 
@@ -617,13 +644,13 @@ const TextEditor = () => {
           )}
         </div>
         <div className="- absolute left-0 top-0 " />
-        <ImageNext
+        {/* <ImageNext
           src={Background}
           alt="Fundo"
           layout="fill"
           objectFit="cover"
           className="absolute left-0 top-0"
-        />
+        /> */}
         <canvas
           ref={canvasElementRef}
           onClick={(e) => {
