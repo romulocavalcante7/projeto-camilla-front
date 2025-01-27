@@ -4,35 +4,35 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 import { useCanvasEditorStore } from '@/store/canvasEditorStore';
 import { useForm, Controller } from 'react-hook-form';
 import Image from 'next/image';
-import Amendoado from '@/app/assets/ficha/olhos/Amendoado.png';
-import PequenoFino from '@/app/assets/ficha/olhos/Pequeno-fino.png';
-import Grande from '@/app/assets/ficha/olhos/Grande.png';
-import PequenoRedondo from '@/app/assets/ficha/olhos/Pequeno-redondo.png';
+import Amendoado from '@/app/assets/ficha/olhos/Amendoado.webp';
+import PequenoFino from '@/app/assets/ficha/olhos/Pequeno-fino.webp';
+import Grande from '@/app/assets/ficha/olhos/Grande.webp';
+import PequenoRedondo from '@/app/assets/ficha/olhos/Pequeno-redondo.webp';
 
-import PequenoNormal from '@/app/assets/ficha/profundidade/profundidade-normal.png';
-import PequenoProeminente from '@/app/assets/ficha/profundidade/profundidade-proeminente.png';
-import PequenoProfundo from '@/app/assets/ficha/profundidade/profundidade-profundo.png';
+import PequenoNormal from '@/app/assets/ficha/profundidade/profundidade-normal.webp';
+import PequenoProeminente from '@/app/assets/ficha/profundidade/profundidade-proeminente.webp';
+import PequenoProfundo from '@/app/assets/ficha/profundidade/profundidade-profundo.webp';
 
-import OlhoLinear from '@/app/assets/ficha/alinhamento/olho-linear.png';
-import OlhoAscendente from '@/app/assets/ficha/alinhamento/olho-ascendentes.png';
-import OlhoDescendentes from '@/app/assets/ficha/alinhamento/olho-descendentes.png';
+import OlhoLinear from '@/app/assets/ficha/alinhamento/olho-linear.webp';
+import OlhoAscendente from '@/app/assets/ficha/alinhamento/olho-ascendentes.webp';
+import OlhoDescendentes from '@/app/assets/ficha/alinhamento/olho-descendentes.webp';
 
-import OlhoNormais from '@/app/assets/ficha/distanciamento/olhos-normais.png';
-import OlhoSeparados from '@/app/assets/ficha/distanciamento/olhos-separados.png';
-import OlhoJuntos from '@/app/assets/ficha/distanciamento/olhos-juntos.png';
+import OlhoNormais from '@/app/assets/ficha/distanciamento/olhos-normais.webp';
+import OlhoSeparados from '@/app/assets/ficha/distanciamento/olhos-separados.webp';
+import OlhoJuntos from '@/app/assets/ficha/distanciamento/olhos-juntos.webp';
 
-import PalpebrasCaidas from '@/app/assets/ficha/palpebras/palpebras-caidas.png';
-import PalpebrasEncapuzadas from '@/app/assets/ficha/palpebras/palpebras-encapuzadas.png';
+import PalpebrasCaidas from '@/app/assets/ficha/palpebras/palpebras-caidas.webp';
+import PalpebrasEncapuzadas from '@/app/assets/ficha/palpebras/palpebras-encapuzadas.webp';
 
-import CurvaturaNormal from '@/app/assets/ficha/curvatura/curvatura-normal.png';
-import CurvaturaCurvado from '@/app/assets/ficha/curvatura/curvatura-curvado.png';
-import CurvaturaReto from '@/app/assets/ficha/curvatura/curvatura-reto.png';
+import CurvaturaNormal from '@/app/assets/ficha/curvatura/curvatura-normal.webp';
+import CurvaturaCurvado from '@/app/assets/ficha/curvatura/curvatura-curvado.webp';
+import CurvaturaReto from '@/app/assets/ficha/curvatura/curvatura-reto.webp';
 
-import Desidade1mm from '@/app/assets/ficha/densidade/densidade-1mm.png';
-import Desidade2mm from '@/app/assets/ficha/densidade/densidade-2mm.png';
+import Desidade1mm from '@/app/assets/ficha/densidade/densidade-1mm.webp';
+import Desidade2mm from '@/app/assets/ficha/densidade/densidade-2mm.webp';
 
-import SobrancelhaCurta from '@/app/assets/ficha/sobrancelhas/sobrancelha-curta.png';
-import SobrancelhaLonga from '@/app/assets/ficha/sobrancelhas/sobrancelha-longa.png';
+import SobrancelhaCurta from '@/app/assets/ficha/sobrancelhas/sobrancelha-curta.webp';
+import SobrancelhaLonga from '@/app/assets/ficha/sobrancelhas/sobrancelha-longa.webp';
 // import { cn } from '@/lib/utils';
 
 interface FichaModalProps {
