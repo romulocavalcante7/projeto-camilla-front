@@ -15,7 +15,7 @@ import {
 } from 'fabric';
 import Antes from '@/app/assets/antes.png';
 import 'react-toastify/dist/ReactToastify.css';
-import Background from '@/app/assets/backgroundPng.png';
+import Background from '@/app/assets/perfil.jpg';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Eye, Redo, Trash2, Undo } from 'lucide-react';
 import ImageNext from 'next/image';
