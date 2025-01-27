@@ -90,9 +90,9 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     onClick={() => field.onChange(id)}
                     className={`flex cursor-pointer flex-col items-center rounded-lg border-2 border-white/20 p-2 ${
                       field.value === id
-                        ? 'border-blue-500 bg-blue-700 text-white backdrop-blur-[20px]'
+                        ? 'border-white bg-white text-black backdrop-blur-[20px]'
                         : 'border-transparent  text-white'
-                    } transition hover:border-blue-500`}
+                    } transition hover:border-white`}
                   >
                     <Image
                       className="h-20 w-20 object-cover"
@@ -148,9 +148,9 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     onClick={() => field.onChange(id)}
                     className={`flex cursor-pointer flex-col items-center rounded-lg border-2 border-white/20 p-2 ${
                       field.value === id
-                        ? 'border-blue-500 bg-blue-700 text-white backdrop-blur-[20px]'
+                        ? 'border-white bg-white text-black backdrop-blur-[20px]'
                         : 'border-transparent  text-white'
-                    } transition hover:border-blue-500`}
+                    } transition hover:border-white`}
                   >
                     <Image
                       className="h-20 w-20 object-cover"
@@ -210,9 +210,9 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     onClick={() => field.onChange(id)}
                     className={`flex cursor-pointer flex-col items-center rounded-lg border-2 border-white/20 p-2 ${
                       field.value === id
-                        ? 'border-blue-500 bg-blue-700 text-white backdrop-blur-[20px]'
+                        ? 'border-white bg-white text-black backdrop-blur-[20px]'
                         : 'border-transparent  text-white'
-                    } transition hover:border-blue-500`}
+                    } transition hover:border-white`}
                   >
                     <Image
                       className="h-20 w-full object-contain"
@@ -262,9 +262,9 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     onClick={() => field.onChange(id)}
                     className={`flex cursor-pointer flex-col items-center rounded-lg border-2 border-white/20 p-2 ${
                       field.value === id
-                        ? 'border-blue-500 bg-blue-700 text-white backdrop-blur-[20px]'
-                        : 'border-transparent text-white'
-                    } transition hover:border-blue-500`}
+                        ? 'border-white bg-white text-black backdrop-blur-[20px]'
+                        : 'border-transparent  text-white'
+                    } transition hover:border-white`}
                   >
                     <Image
                       className="h-20 w-full object-contain"
@@ -317,9 +317,9 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     onClick={() => field.onChange(id)}
                     className={`flex cursor-pointer flex-col items-center rounded-lg border-2 border-white/20 p-2 ${
                       field.value === id
-                        ? 'border-blue-500 bg-blue-700 text-white backdrop-blur-[20px]'
-                        : 'border-transparent text-white'
-                    } transition hover:border-blue-500`}
+                        ? 'border-white bg-white text-black backdrop-blur-[20px]'
+                        : 'border-transparent  text-white'
+                    } transition hover:border-white`}
                   >
                     <Image
                       className="h-20 w-full object-cover"
@@ -369,9 +369,9 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     onClick={() => field.onChange(id)}
                     className={`flex cursor-pointer flex-col items-center rounded-lg border-2 border-white/20 p-2 ${
                       field.value === id
-                        ? 'border-blue-500 bg-blue-700 text-white backdrop-blur-[20px]'
-                        : 'border-transparent text-white'
-                    } transition hover:border-blue-500`}
+                        ? 'border-white bg-white text-black backdrop-blur-[20px]'
+                        : 'border-transparent  text-white'
+                    } transition hover:border-white`}
                   >
                     <Image
                       className="h-20 w-20 object-cover"
@@ -424,9 +424,9 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     onClick={() => field.onChange(id)}
                     className={`flex cursor-pointer flex-col items-center rounded-lg border-2 border-white/20 p-2 ${
                       field.value === id
-                        ? 'border-blue-500 bg-blue-700 text-white backdrop-blur-[20px]'
-                        : 'border-transparent text-white'
-                    } transition hover:border-blue-500`}
+                        ? 'border-white bg-white text-black backdrop-blur-[20px]'
+                        : 'border-transparent  text-white'
+                    } transition hover:border-white`}
                   >
                     <Image
                       className="h-20 w-20 object-contain"
@@ -521,10 +521,10 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     />
                     <label
                       htmlFor={id}
-                      className={`mt-2 cursor-pointer rounded-lg border-2 border-transparent  p-2 text-center text-sm text-white transition hover:border-blue-500 ${
+                      className={`mt-2 cursor-pointer rounded-lg border-2  border-white/20 p-2 text-center text-sm transition hover:border-white ${
                         field.value === id
-                          ? 'border-blue-500 bg-blue-700 text-white backdrop-blur-[20px]'
-                          : ' text-white'
+                          ? 'border-white bg-white text-black backdrop-blur-[20px]'
+                          : 'border-transparent text-white'
                       }`}
                     >
                       {label}
@@ -554,7 +554,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                 id="pele"
                 type="text"
                 placeholder="Ex.: Quente, Frio"
-                className="w-full rounded-lg bg-gray-800 p-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-lg bg-gray-800 p-2 text-white focus:outline-none focus:ring-2 focus:ring-zinc-50"
               />
             </div>
             <div className="flex flex-col">
@@ -565,7 +565,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                 id="cabelo"
                 type="text"
                 placeholder="Ex.: Claro, Escuro"
-                className="w-full rounded-lg bg-gray-800 p-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-lg bg-gray-800 p-2 text-white focus:outline-none focus:ring-2 focus:ring-zinc-50"
               />
             </div>
           </div>
@@ -603,10 +603,10 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     />
                     <label
                       htmlFor={id}
-                      className={`mt-2 cursor-pointer rounded-lg border-2 border-transparent p-2 text-center text-white transition hover:border-blue-500 ${
+                      className={`mt-2 cursor-pointer rounded-lg border-2  border-white/20 p-2 text-center transition hover:border-white ${
                         field.value === id
-                          ? 'border-blue-500 bg-blue-700 text-white'
-                          : 'bg-gray-800 text-white'
+                          ? 'border-white bg-white text-black'
+                          : 'border-transparent bg-transparent text-white'
                       }`}
                     >
                       {label}
@@ -660,7 +660,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
               onClick={handleSubmit((data) => {
                 handleClose();
               })}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-white"
+              className="rounded-lg bg-white px-4 py-2 text-black"
             >
               Salvar
             </button>
@@ -671,7 +671,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                 e.preventDefault(); // Previne qualquer submissão acidental
                 nextStep();
               }}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-white"
+              className="rounded-lg bg-white px-4 py-2 text-black"
             >
               Avançar
             </button>

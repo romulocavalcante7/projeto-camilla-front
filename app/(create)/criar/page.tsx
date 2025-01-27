@@ -417,7 +417,7 @@ const TextEditor = () => {
         <div className="flex gap-2">
           <button
             onClick={openCompareModal}
-            className="flex items-center justify-center rounded-full bg-blue-500 p-2 text-white hover:bg-blue-600"
+            className="flex items-center justify-center rounded-full bg-gray-500 p-2 text-white hover:bg-gray-600"
             title="Comparar imagens"
           >
             <Eye size={24} />
@@ -513,7 +513,7 @@ const TextEditor = () => {
               <button
                 onClick={() => setIsZoomEnabled(!isZoomEnabled)}
                 className={`cursor-pointer rounded px-2 py-2 ${
-                  isZoomEnabled ? 'bg-blue-600' : 'transparent'
+                  isZoomEnabled ? 'bg-white' : 'transparent'
                 } text-white`}
               >
                 <svg
@@ -522,7 +522,7 @@ const TextEditor = () => {
                   height="24"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#fff"
+                  stroke={isZoomEnabled ? '#000' : '#fff'}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
