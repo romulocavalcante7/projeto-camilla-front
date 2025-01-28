@@ -191,10 +191,10 @@ export const generateFichaPDF = (formData: any) => {
           section.title === '4° - Distanciamento'
         ) {
           doc.addImage(src, 'JPEG', xPosition - 8, yPosition, 60, 30);
-          doc.text(label, xPosition + 10, yPosition + 40);
+          doc.text(label, xPosition + 5, yPosition + 40);
         } else {
           doc.addImage(src, 'JPEG', xPosition, yPosition, 50, 50);
-          doc.text(label, xPosition + 10, yPosition + 55);
+          doc.text(label, xPosition + 17, yPosition + 55);
         }
       });
       yPosition += 70; // Ajustar a posição para o próximo bloco
@@ -232,8 +232,18 @@ export const generateFichaPDF = (formData: any) => {
       });
       yPosition += 120; // Ajustar a posição para o próximo bloco
     }
+    let positionResult;
+    if (
+      section.title === '5° - Pálpebras Caídas' ||
+      section.title === '7° - Distanciamento do Fio Natural' ||
+      section.title === '8° - Distanciamento da Sobrancelhas'
+    ) {
+      positionResult = yPosition - 40;
+    } else {
+      positionResult = yPosition + 6;
+    }
     doc.setFont('helvetica', 'bold');
-    doc.text(`Resultado: ${section.result}`, 10, yPosition + 6);
+    doc.text(`Resultado: ${section.result}`, 10, positionResult);
     doc.setFont('helvetica', 'normal');
     yPosition += 20;
     itemsOnPage++;
