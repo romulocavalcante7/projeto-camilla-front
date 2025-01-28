@@ -66,18 +66,18 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
           <div className="grid grid-cols-2 gap-4">
             {[
               {
-                id: 'amendoado-redondo',
+                id: 'Olhos amendoado redondo',
                 label: 'Olhos amendoado redondo',
                 src: Amendoado
               },
-              { id: 'grande', label: 'Olhos grandes', src: Grande },
+              { id: 'Olhos grandes', label: 'Olhos grandes', src: Grande },
               {
-                id: 'pequeno-fino',
+                id: 'Olhos pequeno fino',
                 label: 'Olhos pequeno fino',
                 src: PequenoFino
               },
               {
-                id: 'pequeno-redondo',
+                id: 'Olhos pequeno redondo',
                 label: 'Olhos pequeno redondo',
                 src: PequenoRedondo
               }
@@ -132,13 +132,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
           </h3>
           <div className="grid grid-cols-3 gap-4">
             {[
-              { id: 'normal', label: 'Normal', src: PequenoNormal },
+              { id: 'Normal', label: 'Normal', src: PequenoNormal },
               {
-                id: 'proeminente',
+                id: 'Proeminente',
                 label: 'Proeminente',
                 src: PequenoProeminente
               },
-              { id: 'profundo', label: 'Profundo', src: PequenoProfundo }
+              { id: 'Profundo', label: 'Profundo', src: PequenoProfundo }
             ].map(({ id, label, src }) => (
               <Controller
                 key={id}
@@ -190,14 +190,18 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
           </h3>
           <div className="grid grid-cols-3 gap-4">
             {[
-              { id: 'lineares', label: 'Olhos Lineares', src: OlhoLinear },
               {
-                id: 'ascendentes',
+                id: 'Olhos Lineares',
+                label: 'Olhos Lineares',
+                src: OlhoLinear
+              },
+              {
+                id: 'Olhos Ascendentes',
                 label: 'Olhos Ascendentes',
                 src: OlhoAscendente
               },
               {
-                id: 'descendentes',
+                id: 'Olhos Descendentes',
                 label: 'Olhos Descendentes',
                 src: OlhoDescendentes
               }
@@ -250,9 +254,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
           </h3>
           <div className="grid grid-cols-3 gap-4">
             {[
-              { id: 'normal', label: 'Olhos Normais', src: OlhoNormais },
-              { id: 'separado', label: 'Olhos Separados', src: OlhoSeparados },
-              { id: 'proximo', label: 'Olhos Juntos', src: OlhoJuntos }
+              { id: 'Olhos Normais', label: 'Olhos Normais', src: OlhoNormais },
+              {
+                id: 'Olhos Separados',
+                label: 'Olhos Separados',
+                src: OlhoSeparados
+              },
+              { id: 'Olhos Juntos', label: 'Olhos Juntos', src: OlhoJuntos }
             ].map(({ id, label, src }) => (
               <Controller
                 key={id}
@@ -302,9 +310,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
           </h3>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { id: 'sim', label: 'Pálpebras Caídas', src: PalpebrasCaidas },
               {
-                id: 'nao',
+                id: 'Pálpebras Caídas',
+                label: 'Pálpebras Caídas',
+                src: PalpebrasCaidas
+              },
+              {
+                id: 'Pálpebras Encapuzadas',
                 label: 'Pálpebras Encapuzadas',
                 src: PalpebrasEncapuzadas
               }
@@ -357,9 +369,9 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
           </h3>
           <div className="grid grid-cols-3 gap-4">
             {[
-              { id: 'reto', label: 'Reto', src: CurvaturaReto },
-              { id: 'curvado', label: 'Curvado', src: CurvaturaCurvado },
-              { id: 'normal', label: 'Normal', src: CurvaturaNormal }
+              { id: 'Reto', label: 'Reto', src: CurvaturaReto },
+              { id: 'Curvado', label: 'Curvado', src: CurvaturaCurvado },
+              { id: 'Normal', label: 'Normal', src: CurvaturaNormal }
             ].map(({ id, label, src }) => (
               <Controller
                 key={id}
@@ -409,9 +421,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
           </h3>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { id: '1mm', label: '1mm (Mais denso)', src: Desidade1mm },
               {
-                id: '2mm',
+                id: '1mm (Mais denso)',
+                label: '1mm (Mais denso)',
+                src: Desidade1mm
+              },
+              {
+                id: '2mm ou mais (Menos denso)',
                 label: '2mm ou mais (Menos denso)',
                 src: Desidade2mm
               }
@@ -487,22 +503,22 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
           <div className="grid grid-cols-2 gap-x-4 gap-y-2">
             {[
               {
-                id: 'curto-curto',
+                id: 'Curto + Curto = Tamanho Pequeno',
                 label: 'Curto + Curto = Tamanho Pequeno',
                 description: 'Distância curta para ambas as sobrancelhas.'
               },
               {
-                id: 'longo-curto',
+                id: 'Longo + Curto = Tamanho Pequeno',
                 label: 'Longo + Curto = Tamanho Pequeno',
                 description: 'Sobrancelha longa combinada com uma curta.'
               },
               {
-                id: 'curto-longo',
+                id: 'Curto + Longo = Tamanho Pequeno',
                 label: 'Curto + Longo = Tamanho Pequeno',
                 description: 'Sobrancelha curta combinada com uma longa.'
               },
               {
-                id: 'longo-longo',
+                id: 'Longo + Longo = Tamanho Grande',
                 label: 'Longo + Longo = Tamanho Grande',
                 description: 'Distância longa para ambas as sobrancelhas.'
               }
@@ -563,8 +579,8 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     className="w-full rounded-lg bg-gray-800 p-2 text-white focus:outline-none focus:ring-2 focus:ring-zinc-50"
                   >
                     <option value="">Selecione</option>
-                    <option value="quente">Quente</option>
-                    <option value="frio">Frio</option>
+                    <option value="Quente">Quente</option>
+                    <option value="Frio">Frio</option>
                   </select>
                 )}
               />
@@ -585,8 +601,8 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     className="w-full rounded-lg bg-gray-800 p-2 text-white focus:outline-none focus:ring-2 focus:ring-zinc-50"
                   >
                     <option value="">Selecione</option>
-                    <option value="quente">Quente</option>
-                    <option value="frio">Frio</option>
+                    <option value="Quente">Quente</option>
+                    <option value="Frio">Frio</option>
                   </select>
                 )}
               />
@@ -608,12 +624,12 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                   control={control}
                   render={({ field: { value: cabelo } }) => {
                     const resultado =
-                      (pele === 'quente' &&
-                        cabelo === 'quente' &&
+                      (pele === 'Quente' &&
+                        cabelo === 'Quente' &&
                         'Marrom ou Mescla') ||
-                      (pele === 'frio' && cabelo === 'frio' && 'Preto') ||
-                      (pele === 'frio' && cabelo === 'quente' && 'Mescla') ||
-                      (pele === 'quente' && cabelo === 'frio' && 'Preto') ||
+                      (pele === 'Frio' && cabelo === 'Frio' && 'Preto') ||
+                      (pele === 'Frio' && cabelo === 'Quente' && 'Mescla') ||
+                      (pele === 'Quente' && cabelo === 'Frio' && 'Preto') ||
                       'Não definido';
 
                     return (
@@ -640,9 +656,12 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
           </h3>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { id: 'colerico', label: 'Colérico e Sanguíneo (Desconectados)' },
               {
-                id: 'melancolico',
+                id: 'Colérico e Sanguíneo (Desconectados)',
+                label: 'Colérico e Sanguíneo (Desconectados)'
+              },
+              {
+                id: 'Melancólico e Fleumático (Alinhados e Naturais)',
                 label: 'Melancólico e Fleumático (Alinhados e Naturais)'
               }
             ].map(({ id, label }) => (
@@ -716,7 +735,6 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
             <button
               type="submit"
               onClick={handleSubmit((data) => {
-                console.log('data', data);
                 generateFichaPDF(data);
                 // handleClose();
               })}

@@ -6,7 +6,7 @@ export const generateFichaPDF = (formData: any) => {
 
   // Título do PDF
   doc.setFontSize(18);
-  doc.text('Visagismo - Análise Personalizada', 105, 20, { align: 'center' });
+  doc.text('Ficha Visagismo', 105, 20, { align: 'center' });
 
   doc.setFontSize(14);
 
@@ -14,15 +14,15 @@ export const generateFichaPDF = (formData: any) => {
     {
       title: '1° - Defina a Curvatura',
       images: [
-        { src: '/ficha/olhos/Amendoado.jpg', label: 'Amendoado' },
-        { src: '/ficha/olhos/Grande.jpg', label: 'Grande' },
+        { src: '/ficha/olhos/Amendoado.jpg', label: 'Olhos amendoado redondo' },
+        { src: '/ficha/olhos/Grande.jpg', label: 'Olhos grandes' },
         {
           src: '/ficha/olhos/Pequeno-fino.jpg',
-          label: 'Pequeno Fino'
+          label: 'Olhos pequeno fino'
         },
         {
           src: '/ficha/olhos/Pequeno-redondo.jpg',
-          label: 'Pequeno Redondo'
+          label: 'Olhos pequeno redondo'
         }
       ],
       result: formData.tipoOlho || 'Não definido'
@@ -50,15 +50,15 @@ export const generateFichaPDF = (formData: any) => {
       images: [
         {
           src: '/ficha/alinhamento/olho-linear.jpg',
-          label: 'Linear'
+          label: 'Olhos Lineares'
         },
         {
           src: '/ficha/alinhamento/olho-ascendentes.jpg',
-          label: 'Ascendente'
+          label: 'Olhos Ascendentes'
         },
         {
           src: '/ficha/alinhamento/olho-descendentes.jpg',
-          label: 'Descendente'
+          label: 'Olhos Descendentes'
         }
       ],
       result: formData.alinhamento || 'Não definido'
@@ -68,15 +68,15 @@ export const generateFichaPDF = (formData: any) => {
       images: [
         {
           src: '/ficha/distanciamento/olhos-normais.jpg',
-          label: 'Normais'
+          label: 'Olhos Normais'
         },
         {
           src: '/ficha/distanciamento/olhos-separados.jpg',
-          label: 'Separados'
+          label: 'Olhos Separados'
         },
         {
           src: '/ficha/distanciamento/olhos-juntos.jpg',
-          label: 'Juntos'
+          label: 'Olhos Juntos'
         }
       ],
       result: formData.distanciamento || 'Não definido'
@@ -86,11 +86,11 @@ export const generateFichaPDF = (formData: any) => {
       images: [
         {
           src: '/ficha/palpebras/palpebras-caidas.jpg',
-          label: 'Caídas'
+          label: 'Pálpebras Caídas'
         },
         {
           src: '/ficha/palpebras/palpebras-encapuzadas.jpg',
-          label: 'Encapuzadas'
+          label: 'Pálpebras Encapuzadas'
         }
       ],
       result: formData.palpebras || 'Não definido'
@@ -149,12 +149,12 @@ export const generateFichaPDF = (formData: any) => {
     Pele: ${formData.pele || 'Não definido'}
     Cabelo: ${formData.cabelo || 'Não definido'}
     Resultado: ${
-      (formData.pele === 'quente' &&
-        formData.cabelo === 'quente' &&
+      (formData.pele === 'Quente' &&
+        formData.cabelo === 'Quente' &&
         'Marrom ou Mescla') ||
-      (formData.pele === 'frio' && formData.cabelo === 'frio' && 'Preto') ||
-      (formData.pele === 'frio' && formData.cabelo === 'quente' && 'Mescla') ||
-      (formData.pele === 'quente' && formData.cabelo === 'frio' && 'Preto') ||
+      (formData.pele === 'Frio' && formData.cabelo === 'Frio' && 'Preto') ||
+      (formData.pele === 'Frio' && formData.cabelo === 'Quente' && 'Mescla') ||
+      (formData.pele === 'Quente' && formData.cabelo === 'Frio' && 'Preto') ||
       'Não definido'
     }
     `
@@ -179,25 +179,62 @@ export const generateFichaPDF = (formData: any) => {
     yPosition += 10;
 
     if (section.images.length === 3) {
-      // Três imagens na mesma linha
+      // Centraliza as três imagens horizontalmente
+
+      const totalWidth = 3 * 50 + 2 * 10; // Largura total das imagens e espaçamentos
+      const startX = (210 - totalWidth) / 2; // Calcula o ponto inicial centralizado
       section.images.forEach(({ src, label }, index) => {
-        const xPosition = 10 + index * 60;
-        doc.addImage(src, 'JPEG', xPosition, yPosition, 50, 50);
-        doc.text(label, xPosition + 10, yPosition + 55);
+        const xPosition = startX + index * (50 + 10); // Posiciona as imagens
+
+        if (
+          section.title === '3° - Alinhamento' ||
+          section.title === '4° - Distanciamento'
+        ) {
+          doc.addImage(src, 'JPEG', xPosition - 8, yPosition, 60, 30);
+          doc.text(label, xPosition + 10, yPosition + 40);
+        } else {
+          doc.addImage(src, 'JPEG', xPosition, yPosition, 50, 50);
+          doc.text(label, xPosition + 10, yPosition + 55);
+        }
       });
       yPosition += 70; // Ajustar a posição para o próximo bloco
     } else {
       // Quatro ou menos imagens em 2x2
+      let blockWidth;
+      if (
+        section.title === '8° - Distanciamento da Sobrancelhas' ||
+        section.title === '5° - Pálpebras Caídas'
+      ) {
+        blockWidth = 2 * 60 + 50;
+      } else {
+        blockWidth = 2 * 50 + 50; // Largura do bloco 2x2 com espaçamentos
+      }
+      const startX = (210 - blockWidth) / 2; // Centraliza o bloco horizontalmente
       section.images.forEach(({ src, label }, index) => {
-        const xPosition = 10 + (index % 2) * 90; // Coloca duas imagens por linha
+        const xPosition = startX + (index % 2) * 90; // Duas imagens por linha
         const adjustedY = yPosition + Math.floor(index / 2) * 60; // Nova linha a cada 2 imagens
-        doc.addImage(src, 'JPEG', xPosition, adjustedY, 50, 50);
-        doc.text(label, xPosition + 10, adjustedY + 55);
+        let imageWidth;
+        if (
+          section.title === '8° - Distanciamento da Sobrancelhas' ||
+          section.title === '5° - Pálpebras Caídas'
+        ) {
+          imageWidth = 80;
+        } else {
+          imageWidth = 60; // Largura da imagem
+        }
+
+        const textXPosition =
+          xPosition + imageWidth / 2 - doc.getTextWidth(label) / 2; // Centraliza o texto em relação à imagem
+
+        doc.addImage(src, 'JPEG', xPosition, adjustedY, imageWidth, 50);
+
+        doc.text(label, textXPosition, adjustedY + 55); // Ajusta o texto para ficar centralizado
       });
       yPosition += 120; // Ajustar a posição para o próximo bloco
     }
-
-    doc.text(`Resultado: ${section.result}`, 10, yPosition);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Resultado: ${section.result}`, 10, yPosition + 6);
+    doc.setFont('helvetica', 'normal');
     yPosition += 20;
     itemsOnPage++;
   });
@@ -209,6 +246,7 @@ export const generateFichaPDF = (formData: any) => {
   }
   doc.text(colorimetria.title, 10, yPosition);
   yPosition += 10;
+
   doc.text(colorimetria.content, 10, yPosition);
 
   yPosition += 50;
