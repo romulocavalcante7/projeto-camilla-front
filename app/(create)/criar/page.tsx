@@ -85,10 +85,10 @@ const TextEditor = () => {
         originX: 'center',
         originY: 'center'
       });
-
+      setImageOriginal(Background.src);
       const scaleX = canvasElement.width! / fabricImg.width!;
       const scaleY = canvasElement.height! / fabricImg.height!;
-      const scale = Math.max(scaleX, scaleY);
+      const scale = Math.min(scaleX, scaleY);
 
       fabricImg.set({
         scaleX: scale,
@@ -302,7 +302,7 @@ const TextEditor = () => {
 
       const scaleX = canvas.width! / fabricImg.width!;
       const scaleY = canvas.height! / fabricImg.height!;
-      const scale = Math.max(scaleX, scaleY);
+      const scale = Math.min(scaleX, scaleY);
 
       fabricImg.set({
         scaleX: scale,
@@ -673,12 +673,6 @@ const TextEditor = () => {
           title="Comparar Imagens"
         >
           <div className="backdrop-blur-[20px]">
-            {/* <ImageCompare
-              firstImage={imageOriginal!} // Imagem original
-              secondImage={editedImage || ''} // Imagem editada
-              className="h-[400px] w-[600px] rounded-lg border"
-              sliderClassName="bg-indigo-500"
-            /> */}
             <ReactCompareSlider
               itemOne={
                 <ReactCompareSliderImage
