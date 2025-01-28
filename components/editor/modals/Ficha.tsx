@@ -124,13 +124,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
 
     {
       id: 2,
-      title: '1° - Defina a Profundidade',
+      title: '2° - Defina a Profundidade',
       content: (
         <div>
           <h3 className="mb-2 text-center text-lg font-medium text-white">
             Profundidade
           </h3>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="mt-8 grid grid-cols-3 gap-4">
             {[
               { id: 'Normal', label: 'Normal', src: PequenoNormal },
               {
@@ -182,13 +182,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
 
     {
       id: 3,
-      title: '2° - Defina o Alinhamento',
+      title: '3° - Defina o Alinhamento',
       content: (
         <div>
           <h3 className="mb-2 text-center text-lg font-medium text-white">
             Alinhamentos
           </h3>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="mt-8 grid grid-cols-3 gap-4">
             {[
               {
                 id: 'Olhos Lineares',
@@ -246,13 +246,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
 
     {
       id: 4,
-      title: '2° - Defina o Alinhamento',
+      title: '4° - Defina o Alinhamento',
       content: (
         <div>
-          <h3 className="mb-2 mt-6 text-center text-lg font-medium text-white">
+          <h3 className="mb-2 text-center text-lg font-medium text-white">
             Distanciamento
           </h3>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="mt-8 grid grid-cols-3 gap-4">
             {[
               { id: 'Olhos Normais', label: 'Olhos Normais', src: OlhoNormais },
               {
@@ -302,13 +302,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
 
     {
       id: 5,
-      title: '2° - Defina o Alinhamento',
+      title: '5° - Defina o Alinhamento',
       content: (
         <div>
-          <h3 className="mb-2 mt-6 text-center text-lg font-medium text-white">
+          <h3 className="mb-2 text-center text-lg font-medium text-white">
             Pálpebras Caídas
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="mt-8 grid grid-cols-2 gap-4">
             {[
               {
                 id: 'Pálpebras Caídas',
@@ -361,13 +361,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
 
     {
       id: 6,
-      title: '3° - Defina a Projeção',
+      title: '6° - Defina a Projeção',
       content: (
         <div>
           <h3 className="mb-2 text-center text-lg font-medium text-white">
             Curvatura dos Cílios Naturais
           </h3>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="mt-8 grid grid-cols-3 gap-4">
             {[
               { id: 'Reto', label: 'Reto', src: CurvaturaReto },
               { id: 'Curvado', label: 'Curvado', src: CurvaturaCurvado },
@@ -413,13 +413,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
 
     {
       id: 7,
-      title: '4° - Defina a Densidade',
+      title: '7° - Defina a Densidade',
       content: (
         <div>
           <h3 className="mb-2 text-center text-lg font-medium text-white">
             Distanciamento do Fio Natural
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="mt-8 grid grid-cols-2 gap-4">
             {[
               {
                 id: '1mm (Mais denso)',
@@ -472,7 +472,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
 
     {
       id: 8,
-      title: '5° - Defina Tamanhos',
+      title: '8° - Defina Tamanhos',
       content: (
         <div>
           <h3 className="mb-2 text-center text-base font-medium text-white">
@@ -557,13 +557,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
 
     {
       id: 9,
-      title: '6° - Defina a Colorimetria',
+      title: '9° - Defina a Colorimetria',
       content: (
         <div>
           <h3 className="mb-2 text-center text-lg font-medium text-white">
             Pele e Cabelo
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="mt-8 grid grid-cols-2 gap-4">
             {/* Seleção para Pele */}
             <div className="flex flex-col">
               <label htmlFor="pele" className="mb-1 text-white">
@@ -648,13 +648,13 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
 
     {
       id: 10,
-      title: '8° - Defina o Temperamento',
+      title: '10° - Defina o Temperamento',
       content: (
         <div>
           <h3 className="mb-2 text-center text-lg font-medium text-white">
             Temperamento
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="mt-8 flex flex-col gap-4">
             {[
               {
                 id: 'Colérico e Sanguíneo (Desconectados)',
@@ -680,7 +680,7 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     />
                     <label
                       htmlFor={id}
-                      className={`mt-2 cursor-pointer rounded-lg border-2  border-white/20 p-2 text-center transition hover:border-white ${
+                      className={`mt-2 w-full cursor-pointer rounded-lg border-2 border-white/20 px-2 py-4 text-center transition hover:border-white ${
                         field.value === id
                           ? 'border-white bg-white text-black'
                           : 'border-transparent bg-transparent text-white'
