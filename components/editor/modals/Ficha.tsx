@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Drawer } from 'rsuite';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { useCanvasEditorStore } from '@/store/canvasEditorStore';
 import { useForm, Controller } from 'react-hook-form';
+import AuthContext from '@/contexts/auth-context';
 import Image from 'next/image';
+import { differenceInDays } from 'date-fns';
 import Amendoado from '@/app/assets/ficha/olhos/Amendoado.webp';
 import PequenoFino from '@/app/assets/ficha/olhos/Pequeno-fino.webp';
 import Grande from '@/app/assets/ficha/olhos/Grande.webp';
@@ -43,12 +45,22 @@ interface FichaModalProps {
 export const FichaModal = ({ saveChanges }: FichaModalProps) => {
   const { isFichaModalOpen: isOpen, setIsFichaModalOpen: onClose } =
     useCanvasEditorStore();
+  const { user } = useContext(AuthContext);
   const [step, setStep] = useState(1);
   const { control, handleSubmit } = useForm();
 
   const handleClose = () => {
     onClose(false);
     saveChanges();
+  };
+
+  const canDownloadPDF = () => {
+    if (!user?.createdAt) return false;
+
+    const createdAtDate = new Date(user.createdAt);
+    const today = new Date();
+
+    return differenceInDays(today, createdAtDate) >= 7;
   };
 
   const nextStep = () => setStep((prev) => Math.min(prev + 1, steps.length));
@@ -735,10 +747,19 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
             <button
               type="submit"
               onClick={handleSubmit((data) => {
-                generateFichaPDF(data);
-                // handleClose();
+                if (canDownloadPDF()) {
+                  generateFichaPDF(data);
+                } else {
+                  alert(
+                    'O download do PDF só está disponível após 7 dias da criação do acesso.'
+                  );
+                }
               })}
-              className="rounded-lg bg-white px-4 py-2 text-black"
+              className={`rounded-lg px-4 py-2 ${
+                canDownloadPDF()
+                  ? 'bg-white text-black'
+                  : 'bg-gray-400 text-gray-700'
+              }`}
             >
               Salvar
             </button>

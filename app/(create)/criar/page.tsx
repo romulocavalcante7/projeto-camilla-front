@@ -4,7 +4,7 @@ import {
   ReactCompareSlider,
   ReactCompareSliderImage
 } from 'react-compare-slider';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Canvas as FabricCanvas,
   Object as FabricObject,
@@ -17,6 +17,7 @@ import {
 import 'react-toastify/dist/ReactToastify.css';
 import Background from '@/app/assets/perfil.jpg';
 import { useRouter } from 'next/navigation';
+
 import { ArrowLeft, Eye, Redo, Trash2, Undo } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useCanvasHistoryStore } from '@/store/canvasHistoryStore';
@@ -33,7 +34,6 @@ import { FichaModal } from '@/components/editor/modals/Ficha';
 const TextEditor = () => {
   const { canvasRef, canvasElementRef, selectedObject, setSelectedObject } =
     useCanvasEditorStore();
-
   const router = useRouter();
   // const canvasHeight = 560;
   const { history, redoStack, saveState, undo, redo } = useCanvasHistoryStore();
