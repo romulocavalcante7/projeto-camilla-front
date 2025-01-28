@@ -13,12 +13,11 @@ import {
   Point,
   TEvent
 } from 'fabric';
-import Antes from '@/app/assets/antes.png';
+
 import 'react-toastify/dist/ReactToastify.css';
 import Background from '@/app/assets/perfil.jpg';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Eye, Redo, Trash2, Undo } from 'lucide-react';
-import ImageNext from 'next/image';
 import { ToastContainer, toast } from 'react-toastify';
 import { useCanvasHistoryStore } from '@/store/canvasHistoryStore';
 import { OpacityModal } from '@/components/editor/modals/OpacityModal';
@@ -30,7 +29,6 @@ import { useCanvasEditorStore } from '@/store/canvasEditorStore';
 import { SaturationTemperatureModal } from '@/components/editor/modals/SaturationTemperatureModal';
 import { Modal } from '@/components/ui/modal';
 import { FichaModal } from '@/components/editor/modals/Ficha';
-// import ImageCompare, { Compare } from '@/components/ui/compare';
 
 const TextEditor = () => {
   const { canvasRef, canvasElementRef, selectedObject, setSelectedObject } =
@@ -59,10 +57,11 @@ const TextEditor = () => {
       cornerStyle: 'circle',
       cornerColor: '#FFF',
       padding: 10,
+      cornerSize: 20,
       transparentCorners: false,
       borderScaleFactor: 1.5,
-      cornerStrokeColor: '#3b82f6',
-      borderColor: '#3b82f6',
+      cornerStrokeColor: '#000',
+      borderColor: '#000',
       borderOpacityWhenMoving: 1
     };
 
