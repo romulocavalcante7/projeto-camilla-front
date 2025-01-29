@@ -98,10 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           return;
         }
       } else {
-        if (
-          updatedUser.orderStatus !== PaymentStatusEnum.Paid ||
-          updatedUser.subscription?.status !== 'active'
-        ) {
+        if (updatedUser.orderStatus !== PaymentStatusEnum.Paid) {
           let message = '';
           switch (updatedUser.orderStatus || updatedUser.subscription?.status) {
             case PaymentStatusEnum.WaitingPayment:
@@ -161,10 +158,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       } else {
         // Usuários normais: Verifica status do pagamento
-        if (
-          user.orderStatus !== PaymentStatusEnum.Paid ||
-          user.subscription?.status !== 'active'
-        ) {
+        if (user.orderStatus !== PaymentStatusEnum.Paid) {
           let message = '';
           switch (user.orderStatus || user.subscription?.status) {
             case PaymentStatusEnum.WaitingPayment:
