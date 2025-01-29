@@ -100,7 +100,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else {
         if (updatedUser.orderStatus !== PaymentStatusEnum.Paid) {
           let message = '';
-          switch (updatedUser.orderStatus || updatedUser.subscription?.status) {
+          switch (updatedUser.orderStatus) {
             case PaymentStatusEnum.WaitingPayment:
               message =
                 'Seu pagamento está pendente. Por favor, efetue o pagamento para continuar.';
@@ -160,7 +160,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         // Usuários normais: Verifica status do pagamento
         if (user.orderStatus !== PaymentStatusEnum.Paid) {
           let message = '';
-          switch (user.orderStatus || user.subscription?.status) {
+          switch (user.orderStatus) {
             case PaymentStatusEnum.WaitingPayment:
               message =
                 'Seu pagamento está pendente. Por favor, efetue o pagamento para continuar.';
