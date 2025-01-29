@@ -202,10 +202,14 @@ export const EyelashModal = () => {
                   <ImageNext
                     src={eye.attachment.url}
                     alt={eye.name}
+                    onContextMenu={(e) => {
+                      e.preventDefault();
+                    }}
+                    onTouchStart={(e) => e.preventDefault()}
                     quality={100}
                     width={1200}
                     height={800}
-                    className="h-32 w-full object-cover"
+                    className="pointer-events-none h-32 w-full object-cover"
                   />
                   <p className="text-center font-bold text-white">{eye.name}</p>
                 </div>

@@ -108,7 +108,11 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     } transition hover:border-white`}
                   >
                     <Image
-                      className="h-20 w-20 object-cover"
+                      className="pointer-events-none h-20 w-20 object-cover"
+                      onContextMenu={(e) => {
+                        e.preventDefault();
+                      }}
+                      onTouchStart={(e) => e.preventDefault()}
                       src={src}
                       width={1200}
                       height={800}
@@ -166,7 +170,11 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     } transition hover:border-white`}
                   >
                     <Image
-                      className="h-20 w-20 object-cover"
+                      className="pointer-events-none h-20 w-20 object-cover"
+                      onContextMenu={(e) => {
+                        e.preventDefault();
+                      }}
+                      onTouchStart={(e) => e.preventDefault()}
                       src={src}
                       width={1200}
                       height={800}
@@ -232,7 +240,11 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     } transition hover:border-white`}
                   >
                     <Image
-                      className="h-20 w-full object-contain"
+                      className="pointer-events-none h-20 w-full object-contain"
+                      onContextMenu={(e) => {
+                        e.preventDefault();
+                      }}
+                      onTouchStart={(e) => e.preventDefault()}
                       src={src}
                       width={1200}
                       height={800}
@@ -288,7 +300,11 @@ export const FichaModal = ({ saveChanges }: FichaModalProps) => {
                     } transition hover:border-white`}
                   >
                     <Image
-                      className="h-20 w-full object-contain"
+                      className="pointer-events-none h-20 w-full object-contain"
+                      onContextMenu={(e) => {
+                        e.preventDefault();
+                      }}
+                      onTouchStart={(e) => e.preventDefault()}
                       src={src}
                       width={1200}
                       height={800}
