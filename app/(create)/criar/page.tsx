@@ -66,8 +66,11 @@ const TextEditor = () => {
     };
 
     const updateCanvasSize = () => {
-      const width = 400;
+      const screenWidth = window.innerWidth;
+
+      const width = screenWidth > 700 ? 620 : 400;
       const height = window.innerHeight - 170;
+
       canvasElement.setWidth(width);
       canvasElement.setHeight(height);
     };
