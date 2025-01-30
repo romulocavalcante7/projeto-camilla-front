@@ -88,6 +88,15 @@ export const Menu = () => {
         <div className="absolute bottom-5 right-5">
           <ThemeToggle />
         </div>
+        <div className="absolute bottom-5 left-5">
+          <Link
+            className="font-medium"
+            href="https://www.instagram.com/nextgenbrothers_"
+            target="_blank"
+          >
+            Desenvolvido por NGB
+          </Link>
+        </div>
       </SheetContent>
     </Sheet>
   );
