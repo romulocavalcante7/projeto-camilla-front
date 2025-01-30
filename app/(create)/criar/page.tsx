@@ -66,8 +66,8 @@ const TextEditor = () => {
     };
 
     const updateCanvasSize = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight - 180;
+      const width = 400;
+      const height = window.innerHeight - 170;
       canvasElement.setWidth(width);
       canvasElement.setHeight(height);
     };
@@ -378,7 +378,7 @@ const TextEditor = () => {
   const openCompareModal = () => {
     if (canvasRef.current) {
       const canvas = canvasRef.current;
-
+      resetZoomAndPan();
       // Gera o Data URL da imagem editada (tamanho exato do canvas)
       const editedDataURL = canvas.toDataURL({
         format: 'png',
@@ -429,7 +429,7 @@ const TextEditor = () => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-black pb-5 pt-3">
+    <div className="flex h-screen flex-col items-center bg-black/40 pb-5 pt-3 backdrop-blur-lg sm:bg-transparent">
       <ToastContainer />
       <div className="justify-betweenp flex w-full items-center px-5 pb-2">
         <ArrowLeft
