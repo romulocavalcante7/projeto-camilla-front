@@ -17,7 +17,7 @@ export const TabBar = () => {
   } = useCanvasEditorStore();
 
   return (
-    <div className="fixed bottom-5 z-10 mx-auto flex w-full max-w-[370px] items-center justify-center gap-2 rounded-lg border border-none bg-gray-400/10 pt-3  backdrop-blur-[12px] sm:max-w-lg sm:px-10 dark:border-none dark:border-stone-300/20">
+    <div className="fixed bottom-5 z-10 mx-auto flex w-full max-w-[370px] items-center justify-center gap-2 rounded-lg border border-none bg-black/50 pt-3  backdrop-blur-[12px] sm:max-w-lg sm:px-10 dark:border-none dark:border-stone-300/20">
       {/* <div className="absolute left-0 top-0 -z-[1] h-20 w-full bg-white "></div> */}
       {currentMenu !== 'main' && (
         <button
